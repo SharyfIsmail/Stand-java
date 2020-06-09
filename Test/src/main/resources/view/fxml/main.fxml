@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="755.0" maxWidth="883.0" minHeight="755.0" minWidth="883.0" prefHeight="755.0" prefWidth="883.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stand.app.controller.MainController">
+   <children>
+      <AnchorPane layoutX="15.0" layoutY="16.0" prefHeight="720.0" prefWidth="866.0">
+         <children>
+            <TabPane layoutX="-9.0" layoutY="-12.0" prefHeight="729.0" prefWidth="874.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="-9.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="-12.0">
+              <tabs>
+                <Tab closable="false" text="Инвертор/Привод">
+                     <content>
+                        <AnchorPane prefHeight="674.0" prefWidth="806.0">
+                           <children>
+                              <AnchorPane layoutX="11.0" layoutY="5.0" prefHeight="95.0" prefWidth="857.0">
+                                 <children>
+                                    <Label layoutX="-3.0" prefHeight="17.0" prefWidth="137.0" text="Комманды CANOpen">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font></Label>
+                                    <Button fx:id="startNodeButton" layoutX="150.0" layoutY="23.0" mnemonicParsing="false" onAction="#startNode" prefHeight="28.0" prefWidth="95.0" text="Start node " />
+                                    <Button fx:id="resetNodeButton" layoutX="150.0" layoutY="56.0" mnemonicParsing="false" onAction="#resetNode" prefHeight="28.0" prefWidth="95.0" text="Reset node" />
+                                    <CheckBox fx:id="syncButton" layoutX="356.0" layoutY="32.0" mnemonicParsing="false" onAction="#syncSending" text="Send SYNC" />
+                                    <CheckBox fx:id="nodeGuarding" layoutX="357.0" layoutY="60.0" mnemonicParsing="false" onAction="#nodeGuardingSending" text="Activate node guarding" />
+                                    <Button fx:id="closeComButton" disable="true" layoutX="27.0" layoutY="56.0" mnemonicParsing="false" onAction="#closeCom" prefHeight="28.0" prefWidth="95.0" text="Close com" />
+                                    <Button fx:id="openComButton" layoutX="27.0" layoutY="23.0" mnemonicParsing="false" onAction="#openCom" prefHeight="28.0" prefWidth="95.0" text="Open com" />
+                                    <Button layoutX="646.0" layoutY="25.0" mnemonicParsing="false" onAction="#applyInterval" text="Apply" />
+                                    <Label layoutX="503.0" layoutY="27.0" prefHeight="20.0" prefWidth="60.0" text="interval">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="intervalTextField" layoutX="570.0" layoutY="25.0" prefHeight="25.0" prefWidth="65.0" text="100" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="11.0" layoutY="187.0" prefHeight="189.0" prefWidth="846.0">
+                                 <children>
+                                    <Label layoutX="-2.0" layoutY="8.0" text="State Informational">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font></Label>
+                                    <Label layoutX="14.0" layoutY="53.0" prefHeight="25.0" prefWidth="140.0" text="Active shortcut" />
+                                    <Label layoutX="14.0" layoutY="28.0" prefHeight="25.0" prefWidth="140.0" text="NMT state" />
+                                    <Label layoutX="14.0" layoutY="78.0" prefHeight="25.0" prefWidth="140.0" text="Active discharge" />
+                                    <Label layoutX="434.0" layoutY="78.0" prefHeight="25.0" prefWidth="140.0" text="Limitation mode" />
+                                    <Label layoutX="434.0" layoutY="53.0" prefHeight="25.0" prefWidth="140.0" text="Control strategy" />
+                                    <Label layoutX="434.0" layoutY="28.0" prefHeight="25.0" prefWidth="140.0" text="Motor control mode" />
+                                    <Label layoutX="434.0" layoutY="3.0" prefHeight="25.0" prefWidth="140.0" text="Inverter state" />
+                                    <Label layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="61.0" text="Warning" />
+                                    <Label layoutX="476.0" layoutY="149.0" prefHeight="25.0" prefWidth="78.0" text="Last Error" />
+                                    <Label layoutX="14.0" layoutY="149.0" prefHeight="25.0" prefWidth="102.0" text="Causing Error" />
+                                    <Separator layoutY="109.0" prefHeight="8.0" prefWidth="843.0" />
+                                    <Label fx:id="nmtStateLabel" layoutX="174.0" layoutY="28.0" prefHeight="25.0" prefWidth="165.0" text="...........">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="ascStateLabel" layoutX="174.0" layoutY="53.0" prefHeight="25.0" prefWidth="165.0" text="...........">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="activeDischargeLabel" layoutX="174.0" layoutY="78.0" prefHeight="25.0" prefWidth="165.0" text="...........">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="systemWarningLabel" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="118.0" prefHeight="27.0" prefWidth="58.0" textAlignment="RIGHT" textFill="#d11414">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lastErrorLabel" layoutX="557.0" layoutY="149.0" prefHeight="25.0" prefWidth="275.0" textFill="RED">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="causingErrorLabel" layoutX="119.0" layoutY="149.0" prefHeight="25.0" prefWidth="275.0" textFill="RED">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="inverterStateLabel" layoutX="599.0" layoutY="3.0" prefHeight="25.0" prefWidth="165.0" text="...........">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="motorControlModeLabel" layoutX="599.0" layoutY="28.0" prefHeight="25.0" prefWidth="165.0" text="...........">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="controlStrategyLabel" layoutX="599.0" layoutY="53.0" prefHeight="25.0" prefWidth="165.0" text="...........">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="limitationModeLabel" layoutX="599.0" layoutY="78.0" prefHeight="25.0" prefWidth="165.0" text="...........">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button layoutX="119.0" layoutY="120.0" mnemonicParsing="false" onAction="#clearError" prefHeight="26.0" prefWidth="95.0" text="Clear error" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="13.0" layoutY="371.0" prefHeight="321.0" prefWidth="846.0">
+                                 <children>
+                                    <Label layoutX="-4.0" layoutY="6.0" text="Actual values">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font></Label>
+                                    <Label layoutX="17.0" layoutY="55.0" prefHeight="25.0" prefWidth="130.0" text="DC link voltage" />
+                                    <Label layoutX="17.0" layoutY="30.0" prefHeight="25.0" prefWidth="130.0" text="Phase current" />
+                                    <Label layoutX="17.0" layoutY="80.0" prefHeight="25.0" prefWidth="130.0" text="Speed" />
+                                    <Label layoutX="17.0" layoutY="155.0" prefHeight="25.0" prefWidth="130.0" text="Max avalable torque" />
+                                    <Label layoutX="17.0" layoutY="105.0" prefHeight="25.0" prefWidth="130.0" text="Reference torque" />
+                                    <Label layoutX="17.0" layoutY="130.0" prefHeight="25.0" prefWidth="130.0" text="Actual torque" />
+                                    <Label layoutX="317.0" layoutY="49.0" prefHeight="25.0" prefWidth="130.0" text="Motor temperature" />
+                                    <Label layoutX="317.0" layoutY="24.0" prefHeight="25.0" prefWidth="130.0" text="Max junction temp" />
+                                    <Label layoutX="317.0" layoutY="74.0" prefHeight="25.0" prefWidth="130.0" text="Digital in 1" />
+                                    <Label layoutX="317.0" layoutY="149.0" prefHeight="25.0" prefWidth="130.0" text="Digital out 2" />
+                                    <Label layoutX="317.0" layoutY="99.0" prefHeight="25.0" prefWidth="130.0" text="Digital in 2" />
+                                    <Label layoutX="317.0" layoutY="124.0" prefHeight="25.0" prefWidth="130.0" text="Digital out 1" />
+                                    <Label layoutX="20.0" layoutY="205.0" prefHeight="25.0" prefWidth="130.0" text="Mechanical power" />
+                                    <Label layoutX="17.0" layoutY="180.0" prefHeight="25.0" prefWidth="130.0" text="DC link power" />
+                                    <Label layoutX="20.0" layoutY="230.0" prefHeight="25.0" prefWidth="130.0" text="SPO input" />
+                                    <Label layoutX="256.0" layoutY="109.0" text="\%" />
+                                    <Label layoutX="256.0" layoutY="134.0" text="\%" />
+                                    <Label layoutX="256.0" layoutY="159.0" text="\%" />
+                                    <Label layoutX="259.0" layoutY="184.0" text="W" />
+                                    <Label layoutX="259.0" layoutY="209.0" text="W" />
+                                    <Label layoutX="257.0" layoutY="34.0" text="Apeak" />
+                                    <Label layoutX="257.0" layoutY="59.0" text="V" />
+                                    <Label layoutX="254.0" layoutY="84.0" text="rpm" />
+                                    <Label layoutX="554.0" layoutY="31.0" text="С°" />
+                                    <Label layoutX="554.0" layoutY="56.0" text="С°" />
+                                    <Label layoutX="317.0" layoutY="174.0" prefHeight="25.0" prefWidth="130.0" text="Motor Losses" />
+                                    <Label layoutX="317.0" layoutY="199.0" prefHeight="25.0" prefWidth="130.0" text="Inverter Losses" />
+                                    <Label fx:id="phaseCurrentLabel" layoutX="169.0" layoutY="30.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="dcLinkVoltageLabel" layoutX="168.0" layoutY="55.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="speedLabel" layoutX="168.0" layoutY="80.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="refTorqueLabel" layoutX="169.0" layoutY="105.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="actTorqueLabel" layoutX="168.0" layoutY="130.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="maxAvalTorqueLabel" layoutX="168.0" layoutY="155.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="dcLinkPowerLabel" layoutX="168.0" layoutY="181.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="mechPowerLabel" layoutX="168.0" layoutY="205.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="spoInputLabel" layoutX="169.0" layoutY="230.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="motorLossesLabel" layoutX="461.0" layoutY="176.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="digOut2Label" layoutX="461.0" layoutY="151.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="digOut1Label" layoutX="461.0" layoutY="126.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="digIn2Label" layoutX="461.0" layoutY="101.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="digIn1Label" layoutX="460.0" layoutY="76.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="motorTempLabel" layoutX="460.0" layoutY="51.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="maxJuncTempLabel" layoutX="461.0" layoutY="26.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="inverterLossesLabel" layoutX="460.0" layoutY="201.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="analogIn1Label" layoutX="460.0" layoutY="226.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="analogIn2Label" layoutX="461.0" layoutY="251.0" prefHeight="26.0" prefWidth="85.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="317.0" layoutY="249.0" prefHeight="25.0" prefWidth="130.0" text="Analog in 2" />
+                                    <Label layoutX="317.0" layoutY="224.0" prefHeight="25.0" prefWidth="130.0" text="Analog in 1" />
+                                    <Label layoutX="614.0" layoutY="149.0" prefHeight="25.0" prefWidth="130.0" text="Uq actual" />
+                                    <Label layoutX="614.0" layoutY="124.0" prefHeight="25.0" prefWidth="130.0" text="Id reference" />
+                                    <Label layoutX="614.0" layoutY="99.0" prefHeight="25.0" prefWidth="130.0" text="Iq reference" />
+                                    <Label layoutX="614.0" layoutY="49.0" prefHeight="25.0" prefWidth="130.0" text="Iq actual" />
+                                    <Label layoutX="614.0" layoutY="74.0" prefHeight="25.0" prefWidth="130.0" text="Id actual" />
+                                    <Label layoutX="614.0" layoutY="175.0" prefHeight="25.0" prefWidth="130.0" text="Ud actual" />
+                                    <Label layoutX="614.0" layoutY="199.0" prefHeight="25.0" prefWidth="130.0" text="UdqAbs actual" />
+                                    <Label layoutX="614.0" layoutY="12.0" prefHeight="25.0" prefWidth="80.0" text="Details">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font></Label>
+                                    <Separator layoutX="586.0" layoutY="1.0" orientation="VERTICAL" prefHeight="323.0" prefWidth="7.0" />
+                                    <Label fx:id="udqActual" layoutX="758.0" layoutY="199.0" prefHeight="25.0" prefWidth="60.0" text="0" />
+                                    <Label fx:id="udActual" layoutX="758.0" layoutY="175.0" prefHeight="25.0" prefWidth="60.0" text="0" />
+                                    <Label fx:id="idActual" layoutX="758.0" layoutY="74.0" prefHeight="25.0" prefWidth="60.0" text="0" />
+                                    <Label fx:id="iqActual" layoutX="758.0" layoutY="49.0" prefHeight="25.0" prefWidth="60.0" text="0" />
+                                    <Label fx:id="iqReference" layoutX="758.0" layoutY="99.0" prefHeight="25.0" prefWidth="60.0" text="0" />
+                                    <Label fx:id="idReference" layoutX="758.0" layoutY="124.0" prefHeight="25.0" prefWidth="60.0" text="0" />
+                                    <Label fx:id="uqActual" layoutX="758.0" layoutY="149.0" prefHeight="25.0" prefWidth="60.0" text="0" />
+                                    <Label layoutX="818.0" layoutY="204.0" text="\%" />
+                                    <Label layoutX="818.0" layoutY="179.0" text="\%" />
+                                    <Label layoutX="818.0" layoutY="153.0" text="\%" />
+                                    <Label layoutX="818.0" layoutY="52.0" text="A" />
+                                    <Label layoutX="818.0" layoutY="78.0" text="A" />
+                                    <Label layoutX="818.0" layoutY="103.0" text="A" />
+                                    <Label layoutX="818.0" layoutY="128.0" text="A" />
+                                    <Separator layoutX="-330.0" layoutY="319.0" prefHeight="4.0" prefWidth="1182.0" />
+                                    <Separator layoutX="-309.0" layoutY="2.0" prefHeight="5.0" prefWidth="1160.0" />
+                                    <Separator layoutX="297.0" layoutY="-2.0" orientation="VERTICAL" prefHeight="324.0" prefWidth="7.0" />
+                                    <Label layoutX="556.0" layoutY="230.0" text="V" />
+                                    <Label layoutX="556.0" layoutY="253.0" text="V" />
+                                    <Label layoutX="552.0" layoutY="204.0" text="W" />
+                                    <Label layoutX="552.0" layoutY="182.0" text="W" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="11.0" layoutY="91.0" prefHeight="111.0" prefWidth="854.0">
+                                 <children>
+                                    <Button fx:id="enableDisablePWMButton" disable="true" layoutX="712.0" layoutY="24.0" mnemonicParsing="false" onAction="#enableDisablePWM" text="Enable PWM" />
+                                    <Label layoutX="-6.0" layoutY="6.0" prefHeight="17.0" prefWidth="137.0" text="Control">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font></Label>
+                                    <Label layoutX="174.0" layoutY="17.0" prefHeight="27.0" prefWidth="79.0" text="Mode:" />
+                                    <ComboBox fx:id="modeBox" layoutX="266.0" layoutY="19.0" onAction="#selectMode" prefWidth="150.0" />
+                                    <TextField fx:id="refTorqCntrlTextField" layoutX="514.0" layoutY="27.0" prefHeight="25.0" prefWidth="65.0" text="0" />
+                                    <Label layoutX="442.0" layoutY="31.0" text="Reference" textFill="#0d0d0d" />
+                                    <Label layoutX="442.0" layoutY="67.0" text="Maximum" textFill="#0d0d0d" />
+                                    <TextField fx:id="maxTorqCntrlTextField" layoutX="514.0" layoutY="63.0" prefHeight="25.0" prefWidth="65.0" text="0" />
+                                    <TextField fx:id="refSpeedCntrlTextField" layoutX="605.0" layoutY="25.0" prefHeight="25.0" prefWidth="65.0" text="0" />
+                                    <TextField fx:id="maxSpeedCntrlTextField" layoutX="605.0" layoutY="61.0" prefHeight="25.0" prefWidth="65.0" text="0" />
+                                    <Label layoutX="514.0" layoutY="6.0" prefHeight="17.0" prefWidth="80.0" text="Torque [%]" textFill="#0d0d0d" />
+                                    <Label layoutX="605.0" layoutY="6.0" prefHeight="17.0" prefWidth="94.0" text="Speed [rpm]" textFill="#0d0d0d" />
+                                    <Button fx:id="applyValuesButton" disable="true" layoutX="712.0" layoutY="60.0" mnemonicParsing="false" onAction="#applyValues" prefHeight="25.0" prefWidth="85.0" text="Apply values" />
+                                    <Separator layoutX="-318.0" layoutY="96.0" prefHeight="15.0" prefWidth="1170.0" />
+                                    <CheckBox fx:id="asymLimitsCheckBox" disable="true" layoutX="35.0" layoutY="80.0" mnemonicParsing="false" onAction="#setAsymmetricLimitation" text="Asymmetric limits" />
+                                    <CheckBox fx:id="digOut2CheckBox" disable="true" layoutX="35.0" layoutY="46.0" mnemonicParsing="false" onAction="#digOut2Click" text="Digital out 2" />
+                                    <CheckBox fx:id="digOut1CheckBox" disable="true" layoutX="35.0" layoutY="23.0" mnemonicParsing="false" onAction="#digOut1Click" text="Digital out 1" />
+                                    <Separator layoutX="-322.0" layoutY="-5.0" prefHeight="15.0" prefWidth="1176.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children></AnchorPane>
+                     </content></Tab>
+                <Tab closable="false" text="Батарея">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="358.0" prefWidth="507.0">
+                           <children>
+                              <AnchorPane layoutX="599.0" layoutY="14.0" prefHeight="95.0" prefWidth="233.0" AnchorPane.rightAnchor="14.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="26.0" prefHeight="30.0" prefWidth="65.0" text="Батарея" />
+                                    <RadioButton fx:id="batteryOff" layoutX="107.0" layoutY="43.0" mnemonicParsing="false" onAction="#batteryOff" selected="true" text="Выкл">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="battery" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="batteryOn" layoutX="107.0" layoutY="18.0" mnemonicParsing="false" onAction="#batteryOn" text="Вкл" toggleGroup="$battery" />
+                                    <Separator layoutX="3.0" layoutY="81.0" prefHeight="0.0" prefWidth="204.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="466.0" prefWidth="569.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="237.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="160.0" prefHeight="25.0" prefWidth="140.0" text="Состояние заряда" />
+                                    <Label layoutX="154.0" layoutY="337.0" prefHeight="25.0" prefWidth="300.0" text="Граничные значения температуры ячеек, С°" />
+                                    <Label layoutX="124.0" layoutY="371.0" prefHeight="25.0" prefWidth="44.0" text="Мин." />
+                                    <Label layoutX="14.0" layoutY="119.0" prefHeight="25.0" prefWidth="140.0" text="Общее напряжение" />
+                                    <Label layoutX="264.0" layoutY="125.0" text="В" />
+                                    <Label layoutX="263.0" layoutY="82.0" text="В" />
+                                    <Label layoutX="263.0" layoutY="49.0" text="В" />
+                                    <Label layoutX="14.0" layoutY="43.0" prefHeight="25.0" prefWidth="140.0" text="Мин. Напряжение" />
+                                    <Label layoutX="14.0" layoutY="76.0" prefHeight="25.0" prefWidth="140.0" text="Макс. Напряжение" />
+                                    <Label layoutX="14.0" layoutY="198.0" prefHeight="25.0" prefWidth="140.0" text="Значение тока" />
+                                    <Label layoutX="266.0" layoutY="166.0" text="\%" />
+                                    <Label layoutX="14.0" layoutY="243.0" prefHeight="25.0" prefWidth="140.0" text="Состояние контакторов" />
+                                    <Label layoutX="264.0" layoutY="204.0" text="А" />
+                                    <Label layoutX="279.0" layoutY="375.0" prefHeight="17.0" prefWidth="51.0" text="Макс." />
+                                    <Label fx:id="historyFaultLabel" layoutX="18.0" layoutY="421.0" prefHeight="38.0" prefWidth="550.0" text="...." textFill="RED">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="minPackTempLabel" layoutX="178.0" layoutY="370.0" prefHeight="27.0" prefWidth="86.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="maxPackTempLabel" layoutX="340.0" layoutY="370.0" prefHeight="27.0" prefWidth="93.0" text="0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="minCvLabel" layoutX="181.0" layoutY="44.0" prefHeight="27.0" prefWidth="80.0" text="0" />
+                                    <Label fx:id="maxCvLabel" layoutX="181.0" layoutY="77.0" prefHeight="27.0" prefWidth="80.0" text="0" />
+                                    <Label fx:id="string1VoltageLabel" layoutX="181.0" layoutY="120.0" prefHeight="27.0" prefWidth="80.0" text="0" />
+                                    <Label fx:id="sysSocLabel" layoutX="181.0" layoutY="161.0" prefHeight="27.0" prefWidth="80.0" text="0" />
+                                    <Label fx:id="systemCurrentLabel" layoutX="181.0" layoutY="199.0" prefHeight="27.0" prefWidth="80.0" text="0" />
+                                    <Label fx:id="bmsContactorConditionLabel" layoutX="178.0" layoutY="242.0" prefHeight="27.0" prefWidth="282.0" text="..........." />
+                                    <Separator layoutX="623.0" layoutY="3.0" orientation="VERTICAL" prefHeight="199.0" prefWidth="7.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </AnchorPane>
+                              <AnchorPane layoutX="629.0" layoutY="109.0" prefHeight="102.0" prefWidth="235.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="25.0" prefHeight="44.0" prefWidth="44.0" text="З/У" />
+                                    <RadioButton fx:id="chargerOff" layoutX="110.0" layoutY="51.0" mnemonicParsing="false" onAction="#chargerOff" selected="true" text="Выкл">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="charger" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="chargerOn" layoutX="110.0" layoutY="26.0" mnemonicParsing="false" onAction="#chargerOn" text="Вкл" toggleGroup="$charger" />
+                                    <Separator layoutY="90.0" prefHeight="0.0" prefWidth="204.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab closable="false" text="Модуль контроля параметров">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="792.0">
+                           <children>
+                              <LineChart fx:id="lineChartPCM" animated="false" layoutX="11.0" layoutY="14.0" prefHeight="520.0" prefWidth="853.0" AnchorPane.bottomAnchor="166.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+                                 <xAxis>
+                                    <NumberAxis autoRanging="false" forceZeroInRange="false" prefHeight="25.0" prefWidth="452.0" upperBound="50.0" fx:id="xAxis1" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis fx:id="yAxis1" side="LEFT" upperBound="60.0" />
+                                 </yAxis>
+                              </LineChart>
+                              <RadioButton fx:id="turnoverRadioButton" layoutX="33.0" layoutY="530.0" mnemonicParsing="false" onAction="#addTurnover" prefHeight="30.0" prefWidth="138.0" text="Частота вращения" />
+                              <RadioButton fx:id="torqueRadioButton" layoutX="33.0" layoutY="559.0" mnemonicParsing="false" onAction="#addTorque" prefHeight="30.0" prefWidth="189.0" text="Момент" />
+                              <Button layoutX="643.0" layoutY="537.0" mnemonicParsing="false" onAction="#saveParam" prefHeight="63.0" prefWidth="185.0" text="Сохранить значения" />
+                              <Label fx:id="currentVoltageSensorErrorLabel" layoutX="62.0" layoutY="561.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
+                              <Label fx:id="turnoverSensorErrorLabel" layoutX="48.0" layoutY="586.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
+                              <Label fx:id="turnOverValue" layoutX="171.0" layoutY="537.0" prefHeight="17.0" prefWidth="31.0" text="0" />
+                              <Label fx:id="torqueValue" layoutX="171.0" layoutY="565.0" text="0" />
+                              <Label layoutX="202.0" layoutY="537.0" text="об/m" />
+                              <Label layoutX="203.0" layoutY="565.0" text="Н.м" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Bosh">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane prefHeight="414.0" prefWidth="481.0">
+                                 <children>
+                                    <Label layoutX="232.0" layoutY="47.0" text="1/min" />
+                                    <TextField fx:id="desiredSpeedTextField" alignment="CENTER" layoutX="124.0" layoutY="43.0" prefHeight="25.0" prefWidth="95.0" text="0" />
+                                    <Label layoutX="36.0" layoutY="43.0" prefHeight="25.0" prefWidth="75.0" text="Скорость" />
+                                    <Button fx:id="applyBoshValuesButton" layoutX="282.0" layoutY="43.0" mnemonicParsing="false" onAction="#applyBoshValues" prefHeight="30.0" prefWidth="105.0" text="Apply values" />
+                                    <Button fx:id="startBoshButton" layoutX="282.0" layoutY="81.0" mnemonicParsing="false" onAction="#startBosh" prefHeight="30.0" prefWidth="105.0" text="Start" />
+                                    <Button fx:id="stopBoshButton" layoutX="282.0" layoutY="122.0" mnemonicParsing="false" onAction="#stopBosh" prefHeight="30.0" prefWidth="105.0" text="Stop" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
