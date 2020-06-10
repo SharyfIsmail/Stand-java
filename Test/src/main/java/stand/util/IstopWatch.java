@@ -1,8 +1,8 @@
 package stand.util;
 
-public interface IstopWatch
+public interface IstopWatch <T extends Number>
 {
-	 public double elapsedTime();
+	 public T elapsedTime();
 	 public void Stopwatch();
 	 public boolean isRunning();
 }

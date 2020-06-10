@@ -11,7 +11,7 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import stand.util.IstopWatch;
 
-public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch{
+public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double>{
 
 	private LineChart<Number, Number> lineChart;
 	private NumberAxis xAxis;
@@ -19,7 +19,6 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch{
 	private double xSeriesData = 0;
 	private ArrayList<Deque> pcmLineChartDataModels;
 	private ArrayList<Series<Number, Number>> allSeries;
-//	private StopWatch stopWatch;
 	private  long start = 0;;
 	private AnimationTimer animationTimer = new AnimationTimer() {
 
@@ -63,10 +62,7 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch{
 			}
 		}
 		// update
-		//if(xSeriesData < MAX_DATA_POINTS)
-			xAxis.setLowerBound(xSeriesData - 12);
-//		else
-//			xAxis.setLowerBound(xSeriesData - MAX_DATA_POINTS);
+		xAxis.setLowerBound(xSeriesData - 12);
 		xAxis.setUpperBound(xSeriesData );
 	}
 
@@ -101,22 +97,8 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch{
 	public void stopUpdateChart() {
 		animationTimer.stop();
 	}
-//	private class StopWatch
-//	{
-//		 private  long start;
-//		 public StopWatch()
-//		 {
-//		        start = System.currentTimeMillis();
-//		 } 
-//		 public double elapsedTime()
-//		 {
-//		        long now = System.currentTimeMillis();
-//		        return  ((now - start) / 1000.0);
-//		 }
-//		 
-//	}
 	@Override
-	public double elapsedTime() {
+	public Double elapsedTime() {
 		 long now = System.currentTimeMillis();
 	        return  ((now - start) / 1000.0);
 	}

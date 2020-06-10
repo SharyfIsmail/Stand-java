@@ -1,5 +1,7 @@
 package stand.app.module.pcm.model;
 
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -11,24 +13,33 @@ import javafx.beans.property.StringProperty;
 import stand.can.candata.DataFromCan;
 import stand.can.candata.DataFromCanModel;
 import stand.pcm.tx.TurnoverSensor;
+import stand.util.IstopWatch;
 
 @Component
-public class TurnoverSensorModel implements DataFromCanModel {
+public class TurnoverSensorModel implements DataFromCanModel, IstopWatch <Long>{
 	private TurnoverSensor turnoverSensor;
 	private StringProperty error;
 	private Deque<Integer> turnover;
 	private Deque<Integer> Torque;
+	private Deque<Long> turnOverTime;
+	private Deque<Long> torqueTime;
 	private StringProperty turnOverValue;
 	private StringProperty TorqueValue;
+	private long start;
+	private long time ;
 	private boolean showTurnOver = false;
 	private boolean showTorque = false;
 	
 	public TurnoverSensorModel() {
 		super();
+		Date date = new Date();
+		date.getTime();
 		turnoverSensor = new TurnoverSensor();
 		error = new SimpleStringProperty();
 		turnover = new ConcurrentLinkedDeque<>();
 		Torque = new ConcurrentLinkedDeque<>();
+		turnOverTime = new ConcurrentLinkedDeque<>();
+		torqueTime = new ConcurrentLinkedDeque<>();
 		turnOverValue = new SimpleStringProperty();
 		TorqueValue = new  SimpleStringProperty();
 	}
@@ -37,8 +48,12 @@ public class TurnoverSensorModel implements DataFromCanModel {
 	public void updateModel() {
 		if (turnoverSensor.getError() != null)
 			error.setValue(turnoverSensor.getError());
+		time = elapsedTime();
+		turnOverTime.add(time);
+		torqueTime.add(time);
 		turnover.add(turnoverSensor.getTurnover());
 		Torque.add(turnoverSensor.getTorque());
+		
 		
 		
 		Platform.runLater(new Runnable() {
@@ -46,15 +61,21 @@ public class TurnoverSensorModel implements DataFromCanModel {
 			@Override
 			public void run() {
 				if(showTurnOver)
+				{
 					turnOverValue.setValue(String.valueOf(turnoverSensor.getTurnover()));
+					
+				}
+				
 				else 
 					turnOverValue.setValue(" ");
 				if(showTorque)
+				{
 					TorqueValue.setValue(String.valueOf(turnoverSensor.getTorque()));
+				}
+				
 				else 
 					TorqueValue.setValue(" ");
 			}
-			
 		});
 	}
 
@@ -74,6 +95,14 @@ public class TurnoverSensorModel implements DataFromCanModel {
 	{
 		return Torque;
 	}
+	public Deque<Long> getTorqueTime()
+	{
+		return torqueTime;
+	}
+	public Deque<Long> getTurnoverTime()
+	{
+		return turnOverTime;
+	}
 	public StringProperty getturnOverValue() {
 		return turnOverValue;
 	}
@@ -87,5 +116,26 @@ public class TurnoverSensorModel implements DataFromCanModel {
 	public void setTorqueVisible(boolean showTorque)
 	{
 		this.showTorque = showTorque;
+	}
+
+	@Override
+	public Long elapsedTime() {
+		 long now = System.currentTimeMillis();
+	        return  ((now - start) / 1000);
+	}
+
+	@Override
+	public void Stopwatch() {
+		start = System.currentTimeMillis();			
+	}
+
+	@Override
+	public boolean isRunning() {
+		if(start > 0)
+			return true;
+		return false;
+	}
+	public void setStart(long start) {
+		this.start = start;
 	}
 }

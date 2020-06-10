@@ -763,11 +763,16 @@ public class MainController implements Initializable {
 			pcmLineChartUpdater.startUpdateChart();
 			if(!pcmLineChartUpdater.isRunning())
 				pcmLineChartUpdater.Stopwatch();
+			if(!pcmDataMonitor.getTurnoverSensorModel().isRunning())
+				pcmDataMonitor.getTurnoverSensorModel().Stopwatch();
 			
 		} else {
 			pcmLineChartUpdater.deleteSeries(seriesName);
-			if(pcmLineChartUpdater.isRunning())
-				pcmLineChartUpdater.setStart(0);
+		}
+		if(!turnoverRadioButton.isSelected() && !torqueRadioButton.isSelected())
+		{
+			pcmLineChartUpdater.setStart(0);
+			pcmDataMonitor.getTurnoverSensorModel().setStart(0);
 		}
 	}
 
@@ -778,21 +783,29 @@ public class MainController implements Initializable {
 	public void addTurnover(ActionEvent event) {
 		
 		pcmDataMonitor.getTurnoverSensorModel().getTurnover().clear();
+		pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime().clear();
 		addPCM(turnoverRadioButton, "Частота вращения(Об/мин)", pcmDataMonitor.getTurnoverSensorModel().getTurnover());
 		if(turnoverRadioButton.isSelected())
+		{
 			pcmDataMonitor.getTurnoverSensorModel().setTurnOverVisible(true);
+		}
+		
 		else
+		{
 			pcmDataMonitor.getTurnoverSensorModel().setTurnOverVisible(false);
+			
+		}
 	}
 
 	public void addTorque(ActionEvent event) {
 		pcmDataMonitor.getTurnoverSensorModel().getTorque().clear();
+		pcmDataMonitor.getTurnoverSensorModel().getTorqueTime().clear();
 		addPCM(torqueRadioButton, "Момент(Н.м)", pcmDataMonitor.getTurnoverSensorModel().getTorque());
 		if(torqueRadioButton.isSelected())
 			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(true);
 		else
 			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(false);
-	}
+		}
 
 	public void saveParam(ActionEvent event) {
 		boolean isSave = true;
@@ -814,15 +827,23 @@ public class MainController implements Initializable {
 			
 			if(isTurnoverChoosen || isTorqueChoosen)
 			{
+//				if(!isTurnoverChoosen)
+//				{
+//					pcmDataMonitor.getTurnoverSensorModel().getTurnover().clear();
+//				}
+//				
+//				if(!isTorqueChoosen)
+//				{
+//					pcmDataMonitor.getTurnoverSensorModel().getTorque().clear();
+//				}
 				try {
-				
-//					if(isTorqueChoosen)
-//						paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTorque(), "Крутящий момент");
-//					if(isTurnoverChoosen)
-//						paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTurnover(), "Частота вращения");
-
-					paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTurnover(),
-						pcmDataMonitor.getTurnoverSensorModel().getTorque());
+					if(!isTurnoverChoosen)
+						pcmDataMonitor.getTurnoverSensorModel().getTurnover().clear();
+					if(!isTorqueChoosen)
+						pcmDataMonitor.getTurnoverSensorModel().getTorque().clear();
+					
+					paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTurnover(),pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime(),
+						pcmDataMonitor.getTurnoverSensorModel().getTorque(), pcmDataMonitor.getTurnoverSensorModel().getTorqueTime());
 				
 				
 				} catch (IOException e) {

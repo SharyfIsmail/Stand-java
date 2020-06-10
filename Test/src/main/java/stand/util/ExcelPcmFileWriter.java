@@ -3,6 +3,7 @@ package stand.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.Deque;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -13,12 +14,15 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
+
 public class ExcelPcmFileWriter implements PcmFileWriter {
 
 	private Cell cell;
+	private Cell cellTime;
 	private Row row;
 	private HSSFWorkbook workbook;
 	private HSSFCellStyle style;
+	private long time ;
 
 	private HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
 		HSSFFont font = workbook.createFont();
@@ -28,14 +32,17 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 		return style;
 	}
 
-	private void addSheet(HSSFSheet sheet, Deque<?> data) {
+	private void addSheet(HSSFSheet sheet, Deque<?> data, Deque<?> Time) {
 
 		int rownum = 0;
 		row = sheet.createRow(rownum);
 
 		cell = row.createCell(0, CellType.STRING);
+		cellTime = row.createCell(1, CellType.STRING);
+		cellTime.setCellValue("Время испыт.");
 		cell.setCellValue(sheet.getSheetName());
 		cell.setCellStyle(style);
+		cellTime.setCellStyle(style);
 //		sheet.autoSizeColumn(0);
 
 		// Data save
@@ -44,6 +51,12 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 				rownum++;
 				row = sheet.createRow(rownum);
 				cell = row.createCell(0, CellType.NUMERIC);
+				cellTime = row.createCell(1, CellType.NUMERIC);
+				
+				
+				time = (long) Time.poll();
+				cellTime.setCellValue(LocalTime.ofSecondOfDay(time).toString());
+				
 				cell.setCellValue(data.poll().toString());
 			}
 			sheet.autoSizeColumn(rownum);
@@ -51,30 +64,18 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 	}
 
 	@Override
-	public void write(File file, Deque<? extends Number> turnovers,
-			Deque<? extends Number> torques) throws IOException {
+	public void write(File file, Deque<? extends Number> turnovers,Deque<? extends Number> timeTurnovers,
+			Deque<? extends Number> torques, Deque<? extends Number> timeTorque) throws IOException {
 		workbook = new HSSFWorkbook();
 		style = createStyleForTitle(workbook);
 		// Создаем новый лист
 		HSSFSheet turnover = workbook.createSheet("Частота вращения");
 		// Наполняем лист данными
-		addSheet(turnover, turnovers);
+		addSheet(turnover, turnovers, timeTurnovers);
 
 		HSSFSheet torque = workbook.createSheet("Крутящий момент");
-		addSheet(torque, torques);
+		addSheet(torque, torques, timeTorque);
 
-		try (FileOutputStream outFile = new FileOutputStream(file)) {
-			workbook.write(outFile);
-		}
-	}
-
-	@Override
-	public void write(File file, Deque<? extends Number> value, String name) throws IOException {
-		workbook = new HSSFWorkbook();
-		style = createStyleForTitle(workbook);
-		HSSFSheet sheet = workbook.createSheet(name);
-		System.out.println(name);
-		addSheet(sheet, value);
 		try (FileOutputStream outFile = new FileOutputStream(file)) {
 			workbook.write(outFile);
 		}

@@ -48,5 +48,4 @@ public class ReceiveThread extends Thread {
 	public void setUnitIdMapper(Map<Integer, DataFromCanModel> canId) {
 		this.canId = canId;
 	}
-
 }
