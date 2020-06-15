@@ -42,13 +42,13 @@ public class StandConfig {
 	}
 
 	@Value("${server.port}")
-	public int SEND_PORT = 31000;// = 32000;
+	public int SEND_PORT ;// = 32000;
 
 	@Value("${server.ip}")
 	public String INET_ADDRESS= "169.254.123.123";// = "169.254.123.123";
 
 	@Value("${receive.port}")
-	private int RECEIVE_PORT= 32000;// = 33000;
+	private int RECEIVE_PORT;// = 31000;
 
 	@Bean
 	public DataSender dataSender() {

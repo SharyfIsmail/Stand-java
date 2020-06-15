@@ -27,11 +27,13 @@ public class UdpDataReceiver implements DataReceiver {
 			receiveDatagramPacket = new DatagramPacket(new byte[bufferSize], bufferSize);
 		}
 		if (vergin) {
+		
 			new UdpDataSender(receivePort, "255.255.255.255").send(new byte[EthCanCdr.ETH_CAN_SIZE]);
 			vergin = false;
 		}
 		receiveDatagramPacket.setData(new byte[bufferSize]);
 		receiveDatagramSocket.receive(receiveDatagramPacket);
+		System.out.println(receiveDatagramSocket.getLocalPort());
 		return receiveDatagramPacket.getData();
 	}
 

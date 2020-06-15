@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.Deque;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -37,8 +38,8 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 		int rownum = 0;
 		row = sheet.createRow(rownum);
 
-		cell = row.createCell(0, CellType.STRING);
-		cellTime = row.createCell(1, CellType.STRING);
+		cell = row.createCell(1, CellType.STRING);
+		cellTime = row.createCell(0, CellType.STRING);
 		cellTime.setCellValue("Время испыт.");
 		cell.setCellValue(sheet.getSheetName());
 		cell.setCellStyle(style);
@@ -50,14 +51,19 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 			while (!data.isEmpty()) {
 				rownum++;
 				row = sheet.createRow(rownum);
-				cell = row.createCell(0, CellType.NUMERIC);
-				cellTime = row.createCell(1, CellType.NUMERIC);
+				cell = row.createCell(1, CellType.NUMERIC);
+				style.setDataFormat(workbook.createDataFormat().getFormat("hh:mm:ss"));
+				
+				cellTime.setCellStyle(style);
+				cellTime = row.createCell(0, CellType.NUMERIC);
 				
 				
-				time = (long) Time.poll();
+				Long timeTest =  (Long) Time.poll();
+				time = timeTest.longValue();
 				cellTime.setCellValue(LocalTime.ofSecondOfDay(time).toString());
-				
-				cell.setCellValue(data.poll().toString());
+				Integer dataTest = (Integer) data.poll();
+				int datavalue = dataTest.intValue();
+				cell.setCellValue(datavalue);
 			}
 			sheet.autoSizeColumn(rownum);
 		}
