@@ -62,6 +62,6 @@ public class TurnoverSensor extends CanCdr implements DataFromCan {
 	}
 	public int getTorque()
 	{
-		return Torque;
+		return (Torque - 10000) / 10;
 	}
 }
