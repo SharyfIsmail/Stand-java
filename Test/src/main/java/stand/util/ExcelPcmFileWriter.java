@@ -23,7 +23,6 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 	private Row row;
 	private HSSFWorkbook workbook;
 	private HSSFCellStyle style;
-	private long time ;
 
 	private HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
 		HSSFFont font = workbook.createFont();
@@ -59,11 +58,9 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 				
 				
 				Long timeTest =  (Long) Time.poll();
-				time = timeTest.longValue();
-				cellTime.setCellValue(LocalTime.ofSecondOfDay(time).toString());
+				cellTime.setCellValue(LocalTime.ofSecondOfDay(timeTest.longValue()).toString());
 				Integer dataTest = (Integer) data.poll();
-				int datavalue = dataTest.intValue();
-				cell.setCellValue(datavalue);
+				cell.setCellValue(dataTest.intValue());
 			}
 			sheet.autoSizeColumn(rownum);
 		}

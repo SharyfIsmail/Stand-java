@@ -802,15 +802,19 @@ public class MainController implements Initializable {
 		pcmDataMonitor.getTurnoverSensorModel().getTorqueTime().clear();
 		addPCM(torqueRadioButton, "Момент(Н.м)", pcmDataMonitor.getTurnoverSensorModel().getTorque());
 		if(torqueRadioButton.isSelected())
+		{
 			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(true);
+		}
 		else
+		{
 			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(false);
 		}
+	}
 
 	public void saveParam(ActionEvent event) {
 		boolean isSave = true;
-		boolean isTorqueChoosen = false;
-		boolean isTurnoverChoosen = false;
+		boolean isTorqueChoosen = true;
+		boolean isTurnoverChoosen = true;
 		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
@@ -827,15 +831,6 @@ public class MainController implements Initializable {
 			
 			if(isTurnoverChoosen || isTorqueChoosen)
 			{
-//				if(!isTurnoverChoosen)
-//				{
-//					pcmDataMonitor.getTurnoverSensorModel().getTurnover().clear();
-//				}
-//				
-//				if(!isTorqueChoosen)
-//				{
-//					pcmDataMonitor.getTurnoverSensorModel().getTorque().clear();
-//				}
 				try {
 					if(!isTurnoverChoosen)
 						pcmDataMonitor.getTurnoverSensorModel().getTurnover().clear();
