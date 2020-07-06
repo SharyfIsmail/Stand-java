@@ -408,10 +408,10 @@
                               <Button layoutX="643.0" layoutY="537.0" mnemonicParsing="false" onAction="#saveParam" prefHeight="63.0" prefWidth="185.0" text="Сохранить значения" />
                               <Label fx:id="currentVoltageSensorErrorLabel" layoutX="62.0" layoutY="561.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
                               <Label fx:id="turnoverSensorErrorLabel" layoutX="48.0" layoutY="586.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
-                              <Label fx:id="turnOverValue" layoutX="171.0" layoutY="537.0" prefHeight="17.0" prefWidth="31.0" text="0" />
-                              <Label fx:id="torqueValue" layoutX="171.0" layoutY="565.0" text="0" />
-                              <Label layoutX="202.0" layoutY="537.0" text="об/m" />
-                              <Label layoutX="203.0" layoutY="565.0" text="Н.м" />
+                              <Label fx:id="turnOverValue" layoutX="171.0" layoutY="537.0" prefHeight="17.0" prefWidth="58.0" text="0" />
+                              <Label fx:id="torqueValue" layoutX="171.0" layoutY="565.0" prefHeight="17.0" prefWidth="59.0" text="0" />
+                              <Label layoutX="231.0" layoutY="537.0" text="об/m" />
+                              <Label layoutX="236.0" layoutY="565.0" text="Н.м" />
                            </children>
                         </AnchorPane>
                      </content>

@@ -54,7 +54,7 @@ public class TurnoverSensor extends CanCdr implements DataFromCan {
 	 * TO/min
 	 */
 	public int getTurnover() {
-		return turnover;
+		return turnover * 60;
 	}
 
 	public String getError() {
