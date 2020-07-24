@@ -11,6 +11,7 @@ public class SensorComunicationThread extends  Thread
 			System.out.println("123");
 		}
 	}
+	//test commit
 //	public void setTurnOverSensorModel()
 	//{
 		
