@@ -18,6 +18,7 @@ import stand.app.module.pcm.model.CurrentVoltageSensorModel;
 import stand.app.module.pcm.model.TurnoverSensorModel;
 import stand.app.module.semikron.model.SemikronDataMonitor;
 import stand.app.thread.ReceiveThread;
+import stand.app.thread.SensorComunicationThread;
 import stand.battery.Battery;
 import stand.battery.BatteryService;
 import stand.can.candata.DataFromCanModel;
@@ -122,7 +123,7 @@ public class StandConfig {
 		canId.put(486486880, batteryDataMonitor.getData00Model());
 		canId.put(486487136, batteryDataMonitor.getData01Model());
 		canId.put(486487392, batteryDataMonitor.getData02Model());
-		canId.put(201981789, pcmDataMonitor.getTurnoverSensorModel());
+		//canId.put(201981789, pcmDataMonitor.getTurnoverSensorModel());
 
 		return canId;
 	}
@@ -133,5 +134,12 @@ public class StandConfig {
 		receiveThread.setUnitIdMapper(canId(batteryDataMonitor(), semikronDataMonitor(),pcmDataMonitor()));
 		receiveThread.setReceiveData(new UdpDataReceiver(RECEIVE_PORT, EthCanCdr.ETH_CAN_SIZE));
 		return receiveThread;
+	}
+	@Bean
+	public SensorComunicationThread getSensorComunicationThread()
+	{
+		SensorComunicationThread sensorComunicationThread = new SensorComunicationThread();
+		return sensorComunicationThread;
+		
 	}
 }

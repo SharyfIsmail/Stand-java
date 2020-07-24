@@ -39,6 +39,7 @@ import stand.app.module.semikron.mode.SpeedCntrlMode;
 import stand.app.module.semikron.mode.TorqueCntrlMode;
 import stand.app.module.semikron.model.SemikronDataMonitor;
 import stand.app.thread.ReceiveThread;
+import stand.app.thread.SensorComunicationThread;
 import stand.battery.BatteryService;
 import stand.charger.ChargerService;
 import stand.semikron.SemikronService;
@@ -278,10 +279,13 @@ public class MainController implements Initializable {
 	/*
 	 * PCM FIELDS END
 	 */
+	@Autowired
+	SensorComunicationThread sensorComunicationThread;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		receiveThread.start();
+		sensorComunicationThread.start();
 		//////////////// SEMIKRON/////////////////
 
 		// control mode
