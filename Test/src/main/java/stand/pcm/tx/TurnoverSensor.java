@@ -2,13 +2,17 @@ package stand.pcm.tx;
 
 import stand.can.CanCdr;
 import stand.can.candata.DataFromCan;
+import stand.t_45.data.DataFromT_45;
 import stand.util.BigEndByteParser;
+import stand.util.LilEndByteParser;
 
-public class TurnoverSensor extends CanCdr implements DataFromCan {
+public class TurnoverSensor extends CanCdr implements DataFromCan, DataFromT_45 {
 
 	private String car_State;
 	private int turnover;
 	private int Torque;
+	private float turnOverT_45;
+	private float TorqueT_45;
 	private String error;
 
 	@Override
@@ -63,5 +67,23 @@ public class TurnoverSensor extends CanCdr implements DataFromCan {
 	public int getTorque()
 	{
 		return (Torque - 10000) / 10;
+	}
+
+	public float getTurnoverT_45()
+	{
+		return turnOverT_45;
+	}
+	public float getTorqueT_45()
+	{
+		return	TorqueT_45;
+	}
+	@Override
+	public void parseDataFromT_45(byte[] data) 
+	{
+		byte[] b1 = new byte[4];
+		System.arraycopy(data, 8, b1, 0, b1.length);
+		TorqueT_45 = LilEndByteParser.byteArrayToFloat(b1);
+		System.arraycopy(data, 16, b1, 0, b1.length);
+		turnOverT_45 = LilEndByteParser.byteArrayToFloat(b1);
 	}
 }

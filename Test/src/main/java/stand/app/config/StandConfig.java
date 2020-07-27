@@ -31,6 +31,7 @@ import stand.semikron.SemikronService;
 import stand.util.DataSender;
 import stand.util.TcpDataSender;
 import stand.util.UdpDataReceiver;
+import stand.util.WinUsbDataReceiver;
 
 @Configuration
 @PropertySource(value = "classpath:application.properties")
@@ -139,6 +140,8 @@ public class StandConfig {
 	public SensorComunicationThread getSensorComunicationThread()
 	{
 		SensorComunicationThread sensorComunicationThread = new SensorComunicationThread();
+		sensorComunicationThread.setTurnOverSensorModel(pcmDataMonitor());
+		sensorComunicationThread.setWinUsbDataReceiver(new WinUsbDataReceiver());
 		return sensorComunicationThread;
 		
 	}

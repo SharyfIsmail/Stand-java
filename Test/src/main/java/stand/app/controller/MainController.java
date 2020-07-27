@@ -47,6 +47,7 @@ import stand.semikron.rx.DigitalState;
 import stand.semikron.rx.LimitationMode;
 import stand.util.ExcelPcmFileWriter;
 import stand.util.PcmFileWriter;
+import stand.util.T_45Exception;
 
 @Component
 public class MainController implements Initializable {
@@ -279,6 +280,10 @@ public class MainController implements Initializable {
 	/*
 	 * PCM FIELDS END
 	 */
+	@FXML
+	Button ConnectToT_45Button;
+	@FXML
+	Button CloseConnectionT_45Button;
 	@Autowired
 	SensorComunicationThread sensorComunicationThread;
 
@@ -286,6 +291,7 @@ public class MainController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		receiveThread.start();
 		sensorComunicationThread.start();
+		
 		//////////////// SEMIKRON/////////////////
 
 		// control mode
@@ -784,11 +790,36 @@ public class MainController implements Initializable {
 		addPCM(currentRadioButton, "Ток(А)", pcmDataMonitor.getCurrentVoltageSensorModel().getCurrent());
 	}*/
 
+	public void openConntectionT_45(ActionEvent event)
+	{
+		sensorComunicationThread.getWinUsbDataReceiver().createCommunication();
+		try {
+			sensorComunicationThread.getWinUsbDataReceiver().openCommunication();
+		} catch (T_45Exception e) {
+			callAlert("Connection error", e.getMessage());
+			e.printStackTrace();
+		}
+		CloseConnectionT_45Button.setDisable(false);
+		ConnectToT_45Button.setDisable(true);
+
+	}
+	public void closeConnectionT_45(ActionEvent event)
+	{
+		try {
+			sensorComunicationThread.getWinUsbDataReceiver().close();
+			CloseConnectionT_45Button.setDisable(true);
+			ConnectToT_45Button.setDisable(false);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			callAlert("Close Communication", e.getMessage());
+		}
+	}
 	public void addTurnover(ActionEvent event) {
 		
-		pcmDataMonitor.getTurnoverSensorModel().getTurnover().clear();
+		pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45().clear();
 		pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime().clear();
-		addPCM(turnoverRadioButton, "Частота вращения(Об/мин)", pcmDataMonitor.getTurnoverSensorModel().getTurnover());
+		addPCM(turnoverRadioButton, "Частота вращения(Об/мин)", pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45());
 		if(turnoverRadioButton.isSelected())
 		{
 			pcmDataMonitor.getTurnoverSensorModel().setTurnOverVisible(true);
@@ -802,9 +833,9 @@ public class MainController implements Initializable {
 	}
 
 	public void addTorque(ActionEvent event) {
-		pcmDataMonitor.getTurnoverSensorModel().getTorque().clear();
+		pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45().clear();
 		pcmDataMonitor.getTurnoverSensorModel().getTorqueTime().clear();
-		addPCM(torqueRadioButton, "Момент(Н.м)", pcmDataMonitor.getTurnoverSensorModel().getTorque());
+		addPCM(torqueRadioButton, "Момент(Н.м)", pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45());
 		if(torqueRadioButton.isSelected())
 		{
 			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(true);
@@ -837,12 +868,12 @@ public class MainController implements Initializable {
 			{
 				try {
 					if(!isTurnoverChoosen)
-						pcmDataMonitor.getTurnoverSensorModel().getTurnover().clear();
+						pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45().clear();
 					if(!isTorqueChoosen)
-						pcmDataMonitor.getTurnoverSensorModel().getTorque().clear();
+						pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45().clear();
 					
-					paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTurnover(),pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime(),
-						pcmDataMonitor.getTurnoverSensorModel().getTorque(), pcmDataMonitor.getTurnoverSensorModel().getTorqueTime());
+					paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45(),pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime(),
+						pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45(), pcmDataMonitor.getTurnoverSensorModel().getTorqueTime());
 				
 				
 				} catch (IOException e) {
