@@ -403,15 +403,17 @@
                                     <NumberAxis fx:id="yAxis1" side="LEFT" upperBound="60.0" />
                                  </yAxis>
                               </LineChart>
-                              <RadioButton fx:id="turnoverRadioButton" layoutX="33.0" layoutY="530.0" mnemonicParsing="false" onAction="#addTurnover" prefHeight="30.0" prefWidth="138.0" text="Частота вращения" />
-                              <RadioButton fx:id="torqueRadioButton" layoutX="33.0" layoutY="559.0" mnemonicParsing="false" onAction="#addTorque" prefHeight="30.0" prefWidth="189.0" text="Момент" />
+                              <RadioButton fx:id="turnoverRadioButton" layoutX="33.0" layoutY="567.0" mnemonicParsing="false" onAction="#addTurnover" prefHeight="30.0" prefWidth="138.0" text="Частота вращения" />
+                              <RadioButton fx:id="torqueRadioButton" layoutX="33.0" layoutY="596.0" mnemonicParsing="false" onAction="#addTorque" prefHeight="30.0" prefWidth="189.0" text="Момент" />
                               <Button layoutX="643.0" layoutY="537.0" mnemonicParsing="false" onAction="#saveParam" prefHeight="63.0" prefWidth="185.0" text="Сохранить значения" />
                               <Label fx:id="currentVoltageSensorErrorLabel" layoutX="62.0" layoutY="561.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
                               <Label fx:id="turnoverSensorErrorLabel" layoutX="48.0" layoutY="586.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
-                              <Label fx:id="turnOverValue" layoutX="171.0" layoutY="537.0" prefHeight="17.0" prefWidth="58.0" text="0" />
-                              <Label fx:id="torqueValue" layoutX="171.0" layoutY="565.0" prefHeight="17.0" prefWidth="59.0" text="0" />
-                              <Label layoutX="231.0" layoutY="537.0" text="об/m" />
-                              <Label layoutX="236.0" layoutY="565.0" text="Н.м" />
+                              <Label fx:id="turnOverValue" layoutX="172.0" layoutY="574.0" prefHeight="17.0" prefWidth="58.0" text="0" />
+                              <Label fx:id="torqueValue" layoutX="171.0" layoutY="605.0" prefHeight="17.0" prefWidth="59.0" text="0" />
+                              <Label layoutX="232.0" layoutY="574.0" text="об/m" />
+                              <Label layoutX="237.0" layoutY="603.0" text="Н.м" />
+                              <Button fx:id="ConnectToT_45Button" layoutX="39.0" layoutY="534.0" mnemonicParsing="false" onAction="#openConntectionT_45" text="Connect To T_45" />
+                              <Button fx:id="CloseConnectionT_45Button" layoutX="168.0" layoutY="534.0" mnemonicParsing="false" onAction="#closeConnectionT_45" text="Close Connection" />
                            </children>
                         </AnchorPane>
                      </content>
