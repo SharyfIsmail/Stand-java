@@ -21,9 +21,7 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double
 	private ArrayList<Series<Number, Number>> allSeries;
 	private  long start = 0;;
 	private AnimationTimer animationTimer = new AnimationTimer() {
-
 		private long lastUpdate = 0;
-
 		@Override
 		public void handle(long now) {
 			// every250ms
@@ -50,7 +48,6 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double
 			for (int j = 0; j < allSeries.size(); j++) {
 				if (pcmLineChartDataModels.get(j).isEmpty())
 					continue;
-				System.out.println(elapsedTime());
 				xSeriesData = elapsedTime();
 				Data data = new XYChart.Data<>(xSeriesData, pcmLineChartDataModels.get(j).peekLast());
 				allSeries.get(j).getData().add(data);

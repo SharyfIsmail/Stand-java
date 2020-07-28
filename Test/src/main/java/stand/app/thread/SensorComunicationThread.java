@@ -3,7 +3,6 @@ package stand.app.thread;
 import java.io.IOException;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
@@ -29,7 +28,6 @@ public class SensorComunicationThread extends  Thread
 		{
 			if(winUsbDataReceiver.getPointerTest().get() != null)
 			{
-				System.out.println(winUsbDataReceiver.getPointerTest().get());
 				try {
 					objectMapping(winUsbDataReceiver.receive());
 				} catch (IOException e) {

@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import stand.app.module.battery.model.BatteryDataMonitor;
 import stand.app.module.pcm.PcmDataMonitor;
 import stand.app.module.pcm.PcmLineChartUpdater;
+import stand.app.module.pcm.model.TurnoverSensorModel;
 import stand.app.module.semikron.mode.CntrlMode;
 import stand.app.module.semikron.mode.SpeedCntrlMode;
 import stand.app.module.semikron.mode.TorqueCntrlMode;
@@ -200,11 +201,6 @@ public class MainController implements Initializable {
 	Label udActual;
 	@FXML
 	Label udqActual;
-	@FXML
-	Label turnOverValue;
-	@FXML
-	Label torqueValue;
-
 	/*
 	 * SEMIKRON FIELDS END
 	 */
@@ -267,25 +263,30 @@ public class MainController implements Initializable {
 	@FXML
 	LineChart<Number, Number> lineChartPCM;
 	PcmLineChartUpdater<Number> pcmLineChartUpdater;
-
 	@FXML
-	RadioButton turnoverRadioButton;
+	Button ConnectToT_45Button;
 	@FXML
-	RadioButton torqueRadioButton;
-	
+	CheckBox turnOverCheckBox;
+	@FXML
+	CheckBox torqueCheckBox;
+	@FXML
+	CheckBox tempCheckBox;
 
 	@FXML
 	Label currentVoltageSensorErrorLabel;
 	@FXML
 	Label turnoverSensorErrorLabel;
-
+	@FXML
+	Label turnOverValue;
+	@FXML
+	Label torqueValue;
+	@FXML
+	Label tempValue;
+	private boolean ConnectionButtonIsPressed = false;
 	/*
 	 * PCM FIELDS END
 	 */
-	@FXML
-	Button ConnectToT_45Button;
-	@FXML
-	private boolean ConnectionButtonIsPressed = false;
+	
 	@Autowired
 	SensorComunicationThread sensorComunicationThread;
 
@@ -378,7 +379,7 @@ public class MainController implements Initializable {
 		bind(turnoverSensorErrorLabel, pcmDataMonitor.getTurnoverSensorModel().getError());
 		bind(turnOverValue, pcmDataMonitor.getTurnoverSensorModel().getturnOverValue());
 		bind(torqueValue, pcmDataMonitor.getTurnoverSensorModel().getTorqueValue());
-		
+		bind(tempValue, pcmDataMonitor.getTurnoverSensorModel().getTempValue());
 		//////////////// PCM END///////////////
 		systemWarningLabel.setTooltip(new Tooltip(warningMessage));
 
@@ -768,7 +769,7 @@ public class MainController implements Initializable {
 	/*
 	 * PCM INTERFACE
 	 */
-	private <T> void addPCM(RadioButton parametr, String seriesName, Deque dataModel) {
+	private <T> void addPCM(CheckBox parametr, String seriesName, Deque dataModel, StringProperty stringProperty) {
 		if (pcmLineChartUpdater == null) {
 			pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM);
 		}
@@ -781,9 +782,10 @@ public class MainController implements Initializable {
 				pcmDataMonitor.getTurnoverSensorModel().Stopwatch();
 			
 		} else {
+			stringProperty.set(" ");
 			pcmLineChartUpdater.deleteSeries(seriesName);
 		}
-		if(!turnoverRadioButton.isSelected() && !torqueRadioButton.isSelected())
+		if(!turnOverCheckBox.isSelected() && !torqueCheckBox.isSelected() && !tempCheckBox.isSelected())
 		{
 			pcmLineChartUpdater.setStart(0);
 			pcmDataMonitor.getTurnoverSensorModel().setStart(0);
@@ -823,33 +825,47 @@ public class MainController implements Initializable {
 		
 		pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45().clear();
 		pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime().clear();
-		addPCM(turnoverRadioButton, "Частота вращения(Об/мин)", pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45());
-		if(turnoverRadioButton.isSelected())
-		{
-			pcmDataMonitor.getTurnoverSensorModel().setTurnOverVisible(true);
-		}
-		
-		else
-		{
-			pcmDataMonitor.getTurnoverSensorModel().setTurnOverVisible(false);
-			
-		}
+		addPCM(turnOverCheckBox, "Частота вращения(Об/мин)", pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45(),
+			   pcmDataMonitor.getTurnoverSensorModel().getturnOverValue());
+//		if(turnOverCheckBox.isSelected())
+//		{
+//			pcmDataMonitor.getTurnoverSensorModel().setTurnOverVisible(true);
+//		}
+//		
+//		else
+//		{
+//			pcmDataMonitor.getTurnoverSensorModel().setTurnOverVisible(false);
+//			
+//		}
 	}
 
 	public void addTorque(ActionEvent event) {
 		pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45().clear();
 		pcmDataMonitor.getTurnoverSensorModel().getTorqueTime().clear();
-		addPCM(torqueRadioButton, "Момент(Н.м)", pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45());
-		if(torqueRadioButton.isSelected())
-		{
-			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(true);
-		}
-		else
-		{
-			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(false);
-		}
+		addPCM(torqueCheckBox, "Момент(Н.м)", pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45(),
+				 pcmDataMonitor.getTurnoverSensorModel().getTorqueValue());
+//		if(torqueCheckBox.isSelected())
+//		{
+//			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(true);
+//		}
+//		else
+//		{
+//			pcmDataMonitor.getTurnoverSensorModel().setTorqueVisible(false);
+//		}
 	}
-
+	public void addTemp(ActionEvent event)
+	{
+		addPCM(tempCheckBox, "Temп(с°)", pcmDataMonitor.getTurnoverSensorModel().getTempT_45(),
+				 pcmDataMonitor.getTurnoverSensorModel().getTempValue());
+//		if(tempCheckBox.isSelected())
+//		{
+//			pcmDataMonitor.getTurnoverSensorModel().setTempVisible(true);
+//		}
+//		else
+//		{
+//			pcmDataMonitor.getTurnoverSensorModel().setTempVisible(false);
+//		}
+	}
 	public void saveParam(ActionEvent event) {
 		boolean isSave = true;
 		boolean isTorqueChoosen = true;
@@ -865,8 +881,8 @@ public class MainController implements Initializable {
 
 		if (file != null) {
 			PcmFileWriter paramCMWriter = new ExcelPcmFileWriter();
-			isTorqueChoosen = torqueRadioButton.isSelected();
-			isTurnoverChoosen = turnoverRadioButton.isSelected();
+			isTorqueChoosen = torqueCheckBox.isSelected();
+			isTurnoverChoosen = turnOverCheckBox.isSelected();
 			
 			if(isTurnoverChoosen || isTorqueChoosen)
 			{
