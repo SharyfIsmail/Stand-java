@@ -31,7 +31,10 @@ D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\m
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\ethernet\EthernetCan.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\battery\Battery.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\charger\rx\ChargerCommand.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\util\T_45Exception.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\t_45\SK.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\rx\Sync.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\t_45\data\DataFromT_45.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\semikron\model\SemikronDataMonitor.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\battery\tx\EdlData00.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\semikron\model\NodeGuardingSlaveModel.java
@@ -45,16 +48,19 @@ D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\m
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\SpringFxmlLoader.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\battery\tx\EdlData03.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\can\Can.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\t_45\ParamComPort.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\thread\ReceiveThread.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\util\PcmFileWriter.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\battery\tx\BmsContactorConditionsCode.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\tx\TxPDO1.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\thread\SensorComunicationThread.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\SemikronService.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\tx\NodeGuardingSlave.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\tx\TxPDO3.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\pcm\model\CurrentVoltageSensorModel.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\sdo\ReferenceCurrentIq.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\util\BitSetter.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\t_45\SpecialParametrs.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\rx\Command.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\semikron\model\TxSdoModel.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\battery\model\Data01Model.java
@@ -66,6 +72,7 @@ D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\m
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\semikron\mode\SpeedCntrlMode.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\tx\TxPDO5.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\rx\LimitationMode.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\t_45\data\DataFromT_45Model.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\battery\BatteryService.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\ethernet\Ethernet.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\sdo\ActualCurrentIq.java
@@ -73,6 +80,7 @@ D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\m
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\battery\tx\BmsHighestErrorReason.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\sdo\ReferenceCurrentId.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\battery\model\Data00Model.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\util\WinUsbDataReceiver.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\Semikron.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\Launcher.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\semikron\model\TxPDO4Model.java
@@ -90,6 +98,7 @@ D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\m
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\util\DataReceiver.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\sdo\SDO.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\semikron\rx\RxPDO3.java
+D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\t_45\T_45.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\app\module\semikron\model\TxPDO3Model.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\charger\ChargerService.java
 D:\My projects\Java projects\шару\Projects\Stand\PROJECTS\lastVersion\Test\src\main\java\stand\can\candata\DataFromCanModel.java

@@ -142,6 +142,7 @@ public class StandConfig {
 		SensorComunicationThread sensorComunicationThread = new SensorComunicationThread();
 		sensorComunicationThread.setTurnOverSensorModel(pcmDataMonitor());
 		sensorComunicationThread.setWinUsbDataReceiver(new WinUsbDataReceiver());
+		sensorComunicationThread.setDaemon(true);
 		return sensorComunicationThread;
 		
 	}

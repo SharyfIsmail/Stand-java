@@ -48,6 +48,7 @@ import stand.semikron.rx.LimitationMode;
 import stand.util.ExcelPcmFileWriter;
 import stand.util.PcmFileWriter;
 import stand.util.T_45Exception;
+import stand.util.WinUsbDataReceiver;
 
 @Component
 public class MainController implements Initializable {
@@ -277,13 +278,14 @@ public class MainController implements Initializable {
 	Label currentVoltageSensorErrorLabel;
 	@FXML
 	Label turnoverSensorErrorLabel;
+
 	/*
 	 * PCM FIELDS END
 	 */
 	@FXML
 	Button ConnectToT_45Button;
 	@FXML
-	Button CloseConnectionT_45Button;
+	private boolean ConnectionButtonIsPressed = false;
 	@Autowired
 	SensorComunicationThread sensorComunicationThread;
 
@@ -368,6 +370,7 @@ public class MainController implements Initializable {
 		bind(systemCurrentLabel, batteryDataMonitor.getData02Model().getSystemCurrent());
 
 		bind(sysSocLabel, batteryDataMonitor.getData01Model().getSys_SOC());
+		sensorComunicationThread.setButton(ConnectToT_45Button);
 		//////////////// BATTERY END/////////////////
 
 		//////////////// PCM /////////////////
@@ -375,6 +378,7 @@ public class MainController implements Initializable {
 		bind(turnoverSensorErrorLabel, pcmDataMonitor.getTurnoverSensorModel().getError());
 		bind(turnOverValue, pcmDataMonitor.getTurnoverSensorModel().getturnOverValue());
 		bind(torqueValue, pcmDataMonitor.getTurnoverSensorModel().getTorqueValue());
+		
 		//////////////// PCM END///////////////
 		systemWarningLabel.setTooltip(new Tooltip(warningMessage));
 
@@ -792,27 +796,27 @@ public class MainController implements Initializable {
 
 	public void openConntectionT_45(ActionEvent event)
 	{
-		sensorComunicationThread.getWinUsbDataReceiver().createCommunication();
-		try {
-			sensorComunicationThread.getWinUsbDataReceiver().openCommunication();
-		} catch (T_45Exception e) {
-			callAlert("Connection error", e.getMessage());
-			e.printStackTrace();
+		if(ConnectionButtonIsPressed == false)
+		{
+			sensorComunicationThread.getWinUsbDataReceiver().createCommunication();
+			try {
+				sensorComunicationThread.getWinUsbDataReceiver().openCommunication();
+				
+				ConnectToT_45Button.setEffect(new Lighting(new Light.Distant(45.0, 45.0, Color.CHARTREUSE)));
+				ConnectToT_45Button.setText("Close Connection");
+				ConnectionButtonIsPressed = true;
+			} catch (T_45Exception e)
+			{
+				callAlert("Connection error", e.getMessage());
+				e.printStackTrace();
+			}
 		}
-		CloseConnectionT_45Button.setDisable(false);
-		ConnectToT_45Button.setDisable(true);
-
-	}
-	public void closeConnectionT_45(ActionEvent event)
-	{
-		try {
+		else
+		{
 			sensorComunicationThread.getWinUsbDataReceiver().close();
-			CloseConnectionT_45Button.setDisable(true);
-			ConnectToT_45Button.setDisable(false);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			callAlert("Close Communication", e.getMessage());
+			ConnectToT_45Button.setEffect(null);
+			ConnectionButtonIsPressed = false;
+			ConnectToT_45Button.setText("Open Connection");
 		}
 	}
 	public void addTurnover(ActionEvent event) {

@@ -1,46 +1,52 @@
 package stand.app.thread;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.paint.Color;
 import stand.app.module.pcm.PcmDataMonitor;
-import stand.app.module.pcm.model.TurnoverSensorModel;
 import stand.t_45.data.DataFromT_45Model;
 import stand.util.WinUsbDataReceiver;
 
 public class SensorComunicationThread extends  Thread
 {
+	
+	private Button ConnectToT_45Button;
 	private PcmDataMonitor pcmDataMonitor;
 	private WinUsbDataReceiver winUsbDataReceiver;
-	Alert alert = new Alert(AlertType.ERROR);
+	private Alert alert = new Alert(AlertType.ERROR);
 	
 	@Override
 	public void run()
 	{
 		while(true)
 		{
-			if(winUsbDataReceiver.getPointer() != null)
+			if(winUsbDataReceiver.getPointerTest().get() != null)
 			{
+				System.out.println(winUsbDataReceiver.getPointerTest().get());
 				try {
 					objectMapping(winUsbDataReceiver.receive());
 				} catch (IOException e) {
+					winUsbDataReceiver.close();
 					Platform.runLater(() -> {
-					alert.setTitle("Connection Error");
-					alert.setHeaderText(e.getMessage());
-					alert.showAndWait();				
-					e.printStackTrace();
+						ConnectToT_45Button.setEffect(new Lighting(new Light.Distant(45.0, 45.0, Color.ORANGERED)));
+						alert.setTitle("Connection Error");
+						alert.setHeaderText(e.getMessage());
+						alert.showAndWait();
 					});	
 				}
 			}
 			try {
-				TimeUnit.MICROSECONDS.sleep(100);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+				}
 		}
 	}
 	private void objectMapping(byte[] data)
@@ -61,6 +67,10 @@ public class SensorComunicationThread extends  Thread
 	public WinUsbDataReceiver getWinUsbDataReceiver()
 	{
 		return this.winUsbDataReceiver;
+	}
+	public void setButton(Button button)
+	{
+		ConnectToT_45Button = button;
 	}
 
 }

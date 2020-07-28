@@ -412,8 +412,7 @@
                               <Label fx:id="torqueValue" layoutX="171.0" layoutY="605.0" prefHeight="17.0" prefWidth="59.0" text="0" />
                               <Label layoutX="232.0" layoutY="574.0" text="об/m" />
                               <Label layoutX="237.0" layoutY="603.0" text="Н.м" />
-                              <Button fx:id="ConnectToT_45Button" layoutX="39.0" layoutY="534.0" mnemonicParsing="false" onAction="#openConntectionT_45" text="Connect To T_45" />
-                              <Button fx:id="CloseConnectionT_45Button" layoutX="168.0" layoutY="534.0" mnemonicParsing="false" onAction="#closeConnectionT_45" text="Close Connection" />
+                              <Button fx:id="ConnectToT_45Button" layoutX="39.0" layoutY="534.0" mnemonicParsing="false" onAction="#openConntectionT_45" text="Open Connection" />
                            </children>
                         </AnchorPane>
                      </content>

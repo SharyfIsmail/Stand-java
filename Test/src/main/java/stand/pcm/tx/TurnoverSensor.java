@@ -1,10 +1,12 @@
 package stand.pcm.tx;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 import stand.can.CanCdr;
 import stand.can.candata.DataFromCan;
 import stand.t_45.data.DataFromT_45;
 import stand.util.BigEndByteParser;
-import stand.util.LilEndByteParser;
 
 public class TurnoverSensor extends CanCdr implements DataFromCan, DataFromT_45 {
 
@@ -80,10 +82,9 @@ public class TurnoverSensor extends CanCdr implements DataFromCan, DataFromT_45 
 	@Override
 	public void parseDataFromT_45(byte[] data) 
 	{
-		byte[] b1 = new byte[4];
-		System.arraycopy(data, 8, b1, 0, b1.length);
-		TorqueT_45 = LilEndByteParser.byteArrayToFloat(b1);
-		System.arraycopy(data, 16, b1, 0, b1.length);
-		turnOverT_45 = LilEndByteParser.byteArrayToFloat(b1);
+		//System.out.println(ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getLong(0));
+		TorqueT_45 = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat(8);
+		turnOverT_45 = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat(8);
+		//System.out.println("Torque: "+ TorqueT_45 +" , "+"Turnover: " +turnOverT_45);
 	}
 }
