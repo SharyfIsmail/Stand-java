@@ -16,9 +16,11 @@ import stand.pcm.tx.TurnoverSensor;
 import stand.t_45.data.DataFromT_45;
 import stand.t_45.data.DataFromT_45Model;
 import stand.util.IstopWatch;
+import stand.util.StopWatch;
 
 @Component
 public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, IstopWatch <Long>{
+	private StopWatch stopWatch;
 	private TurnoverSensor turnoverSensor;
 	
 	private StringProperty error;
@@ -31,6 +33,7 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 	
 	private Deque<Long> turnOverTime;
 	private Deque<Long> torqueTime;
+	private Deque<Long> tempTime;
 	
 	private StringProperty turnOverValue;
 	private StringProperty TorqueValue;
@@ -39,10 +42,10 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 	private long start;
 	private long time ;
 	
-	private boolean showTurnOver = false;
+/*	private boolean showTurnOver = false;
 	private boolean showTorque = false;
 	private boolean showTemp = false;
-	
+	*/
 	public TurnoverSensorModel() {
 		super();
 		Date date = new Date();
@@ -58,10 +61,12 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 
 		turnOverTime = new ConcurrentLinkedDeque<>();
 		torqueTime = new ConcurrentLinkedDeque<>();
+		tempTime = new ConcurrentLinkedDeque<>();
 		
 		turnOverValue = new SimpleStringProperty();
 		TorqueValue = new  SimpleStringProperty();
 		tempValue = new SimpleStringProperty();
+		stopWatch = new StopWatch();
 	}
 
 	@Override
@@ -69,8 +74,9 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 		if (turnoverSensor.getError() != null)
 			error.setValue(turnoverSensor.getError());
 		time = elapsedTime();
-		turnOverTime.add(time);
-		torqueTime.add(time);
+		//turnOverTime.add(time);
+		//torqueTime.add(time);
+		tempTime.add(time);
 		turnover.add(turnoverSensor.getTurnover());
 		Torque.add(turnoverSensor.getTorque());
 		
@@ -78,19 +84,19 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 
 			@Override
 			public void run() {
-				if(showTurnOver)
-				{
+			//	if(showTurnOver)
+			//	{
 					turnOverValue.setValue(String.valueOf(turnoverSensor.getTurnover()));
 					
-				}
-				else 
-					turnOverValue.setValue(" ");
-				if(showTorque)
-				{
+			//	}
+			//	else 
+			//		turnOverValue.setValue(" ");
+		//		if(showTorque)
+		//		{
 					TorqueValue.setValue(String.valueOf(turnoverSensor.getTorque()));
-				}
-				else 
-					TorqueValue.setValue(" ");
+			//	}
+			//	else 
+			//		TorqueValue.setValue(" ");
 				
 			}
 		});
@@ -132,6 +138,10 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 	{
 		return turnOverTime;
 	}
+	public Deque<Long> getTempTime()
+	{
+		return tempTime;
+	}
 	public StringProperty getturnOverValue() {
 		return turnOverValue;
 	}
@@ -141,7 +151,7 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 	public StringProperty getTempValue() {
 		return tempValue;
 	}
-	public void setTurnOverVisible(boolean showTurnOver)
+	/*public void setTurnOverVisible(boolean showTurnOver)
 	{
 		this.showTurnOver = showTurnOver;
 	}
@@ -152,7 +162,7 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 	public void setTempVisible(boolean showTemp)
 	{
 		this.showTemp = showTemp;
-	}
+	}*/
 
 	@Override
 	public Long elapsedTime() {
@@ -178,9 +188,14 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 	@Override
 	public void updateModel_T45()
 	{
-		time = elapsedTime();
+		//time = elapsedTime();
+		if(!stopWatch.isRunning())
+			stopWatch.start();
+		time =	stopWatch.getElapsedTime()/ 1000;
+		
 		turnOverTime.add(time);
 		torqueTime.add(time);
+		tempTime.add(time);
 		turnoverT_45.add(turnoverSensor.getTurnoverT_45());
 		TorqueT_45.add(turnoverSensor.getTorqueT_45());
 		tempT_45.add(turnoverSensor.getTempT_45());
@@ -188,29 +203,33 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 
 			@Override
 			public void run() {
-				//if(showTurnOver)
-				//{
+				/*if(showTurnOver)
+				{
 					turnOverValue.setValue(String.valueOf(turnoverSensor.getTurnoverT_45()));
 					
-				//}
+				}
 				
-			//	else 
-				//	turnOverValue.setValue(" ");
-			//	if(showTorque)
-			//	{
-					TorqueValue.setValue(String.valueOf(turnoverSensor.getTorqueT_45()));
-			//	}
+				else 
+					turnOverValue.setValue(" ");
+				if(showTorque)
+				{
+			    	TorqueValue.setValue(String.valueOf(turnoverSensor.getTorqueT_45()));
+				}
 				
-			//	else 
-			//		TorqueValue.setValue(" ");
-			//	if(showTemp)
-			//	{
+				else 
+					TorqueValue.setValue(" ");
+				if(showTemp)
+				{
 					tempValue.setValue(String.valueOf(turnoverSensor.getTempT_45()));
-			//	}
-				//else
-				//{
-				//	tempValue.setValue(" ");
-				//}
+				}
+				else
+				{
+					tempValue.setValue(" ");
+				}*/
+				turnOverValue.setValue(String.valueOf(turnoverSensor.getTurnoverT_45()));
+		    	TorqueValue.setValue(String.valueOf(turnoverSensor.getTorqueT_45()));
+				tempValue.setValue(String.valueOf(turnoverSensor.getTempT_45()));
+
 			}
 		});
 	}
@@ -218,5 +237,22 @@ public class TurnoverSensorModel implements DataFromT_45Model,DataFromCanModel, 
 	@Override
 	public DataFromT_45 getDataFromT_45() {
 		return turnoverSensor;
+	}
+	public TurnoverSensor getTurnoverSensor()
+	{
+		return turnoverSensor;
+	}
+	public void ClearAllQueue()
+	{
+		turnoverT_45.clear();
+		TorqueT_45.clear();
+		tempT_45.clear();
+		turnOverTime.clear();
+		torqueTime.clear();
+		tempTime.clear();
+	}
+	public StopWatch getStopWatch()
+	{
+		return stopWatch;
 	}
 }

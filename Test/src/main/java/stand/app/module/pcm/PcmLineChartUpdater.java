@@ -10,8 +10,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import stand.util.IstopWatch;
+import stand.util.StopWatch;
 
-public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double>{
+public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 
 	private LineChart<Number, Number> lineChart;
 	private NumberAxis xAxis;
@@ -20,6 +21,7 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double
 	private ArrayList<Deque> pcmLineChartDataModels;
 	private ArrayList<Series<Number, Number>> allSeries;
 	private  long start = 0;;
+	private StopWatch stopWatch ;
 	private AnimationTimer animationTimer = new AnimationTimer() {
 		private long lastUpdate = 0;
 		@Override
@@ -38,7 +40,7 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double
 		xAxis = (NumberAxis) lineChart.getXAxis();
 		pcmLineChartDataModels = new ArrayList<>();
 		allSeries = new ArrayList<>();
-		//stopWatch = new StopWatch();
+		stopWatch = new StopWatch();
 
 		}
 
@@ -48,7 +50,8 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double
 			for (int j = 0; j < allSeries.size(); j++) {
 				if (pcmLineChartDataModels.get(j).isEmpty())
 					continue;
-				xSeriesData = elapsedTime();
+				//xSeriesData = elapsedTime();
+				xSeriesData = stopWatch.getElapsedTime()/1000.0;
 				Data data = new XYChart.Data<>(xSeriesData, pcmLineChartDataModels.get(j).peekLast());
 				allSeries.get(j).getData().add(data);
 
@@ -94,31 +97,17 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>,IstopWatch<Double
 	public void stopUpdateChart() {
 		animationTimer.stop();
 	}
-	@Override
-	public Double elapsedTime() {
-		 long now = System.currentTimeMillis();
-	        return  ((now - start) / 1000.0);
-	}
-
-	@Override
-	public void Stopwatch() {
-		start = System.currentTimeMillis();		
-	}
-
-	@Override
-	public boolean isRunning() {
-		
-		if(start > 0)
-			return true;
-		return false;
-	}
-
+	
 	public long getStart() {
 		return start;
 	}
 
 	public void setStart(long start) {
 		this.start = start;
+	}
+	public StopWatch getStopWatch()
+	{
+		return stopWatch;
 	}
 	
 }

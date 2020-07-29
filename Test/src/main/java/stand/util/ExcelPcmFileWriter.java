@@ -58,6 +58,7 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 				
 				
 				Long timeTest =  (Long) Time.poll();
+			//	System.out.println(timeTest);
 				cellTime.setCellValue(LocalTime.ofSecondOfDay(timeTest.longValue()).toString());
 				Float dataTest = (Float) data.poll();
 				cell.setCellValue(dataTest.floatValue());
@@ -67,17 +68,20 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 	}
 
 	@Override
-	public void write(File file, Deque<? extends Number> turnovers,Deque<? extends Number> timeTurnovers,
-			Deque<? extends Number> torques, Deque<? extends Number> timeTorque) throws IOException {
+	public void write(File file, Deque<? extends Number> turnoverValue,Deque<? extends Number> turnOverTime, Deque<? extends Number> torqueValue,
+			Deque<? extends Number> torqueTime,Deque<? extends Number> tempValue,Deque<? extends Number> tempTime) throws IOException {
 		workbook = new HSSFWorkbook();
 		style = createStyleForTitle(workbook);
 		// Создаем новый лист
 		HSSFSheet turnover = workbook.createSheet("Частота вращения");
 		// Наполняем лист данными
-		addSheet(turnover, turnovers, timeTurnovers);
+		addSheet(turnover, turnoverValue, turnOverTime);
 
 		HSSFSheet torque = workbook.createSheet("Крутящий момент");
-		addSheet(torque, torques, timeTorque);
+		addSheet(torque, torqueValue, torqueTime);
+
+		HSSFSheet temp = workbook.createSheet("Температура");
+		addSheet(temp, tempValue, tempTime);
 
 		try (FileOutputStream outFile = new FileOutputStream(file)) {
 			workbook.write(outFile);

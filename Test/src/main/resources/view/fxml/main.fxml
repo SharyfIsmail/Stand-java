@@ -80,7 +80,7 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="systemWarningLabel" alignment="CENTER_RIGHT" layoutX="15.0" layoutY="118.0" prefHeight="27.0" prefWidth="58.0" textAlignment="RIGHT" textFill="#d11414">
+                                    <Label fx:id="systemWarningLabel" alignment="CENTER_RIGHT" layoutX="62.0" layoutY="119.0" prefHeight="27.0" prefWidth="51.0" textAlignment="RIGHT" textFill="#d11414">
                                        <font>
                                           <Font size="13.0" />
                                        </font>
@@ -406,15 +406,15 @@
                               <Button layoutX="643.0" layoutY="537.0" mnemonicParsing="false" onAction="#saveParam" prefHeight="63.0" prefWidth="185.0" text="Сохранить значения" />
                               <Label fx:id="currentVoltageSensorErrorLabel" layoutX="315.0" layoutY="534.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
                               <Label fx:id="turnoverSensorErrorLabel" layoutX="363.0" layoutY="588.0" prefHeight="25.0" prefWidth="0.0" textFill="#e82323" />
-                              <Label fx:id="turnOverValue" layoutX="189.0" layoutY="574.0" prefHeight="17.0" prefWidth="58.0" text="0" />
-                              <Label fx:id="torqueValue" layoutX="137.0" layoutY="613.0" prefHeight="17.0" prefWidth="59.0" text="0" />
+                              <Label fx:id="turnOverValue" layoutX="189.0" layoutY="574.0" prefHeight="17.0" prefWidth="58.0" />
+                              <Label fx:id="torqueValue" layoutX="137.0" layoutY="613.0" prefHeight="17.0" prefWidth="59.0" />
                               <Label layoutX="233.0" layoutY="574.0" text="об/m" />
                               <Label layoutX="186.0" layoutY="613.0" text="Н.м" />
                               <Button fx:id="ConnectToT_45Button" layoutX="39.0" layoutY="534.0" mnemonicParsing="false" onAction="#openConntectionT_45" text="Open Connection" />
                               <CheckBox fx:id="turnOverCheckBox" layoutX="39.0" layoutY="574.0" mnemonicParsing="false" onAction="#addTurnover" text="Частота Вращения " />
                               <CheckBox fx:id="torqueCheckBox" layoutX="39.0" layoutY="613.0" mnemonicParsing="false" onAction="#addTorque" text="Момент" />
                               <CheckBox fx:id="tempCheckBox" layoutX="39.0" layoutY="647.0" mnemonicParsing="false" onAction="#addTemp" text="Температура" />
-                              <Label fx:id="tempValue" layoutX="149.0" layoutY="647.0" text="0" />
+                              <Label fx:id="tempValue" layoutX="149.0" layoutY="647.0" />
                               <Label layoutX="192.0" layoutY="647.0" text="Градус" />
                            </children>
                         </AnchorPane>
