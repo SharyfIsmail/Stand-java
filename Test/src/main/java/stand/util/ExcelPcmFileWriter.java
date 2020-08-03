@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Deque;
+import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -47,7 +48,8 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 
 		// Data save
 		if (data != null) {
-			while (!data.isEmpty()) {
+			Iterator<?> itertator = Time.iterator();
+			while (itertator.hasNext() && !data.isEmpty()) {
 				rownum++;
 				row = sheet.createRow(rownum);
 				cell = row.createCell(1, CellType.NUMERIC);
@@ -57,8 +59,7 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 				cellTime = row.createCell(0, CellType.NUMERIC);
 				
 				
-				Long timeTest =  (Long) Time.poll();
-			//	System.out.println(timeTest);
+				Long timeTest =  (Long) itertator.next();
 				cellTime.setCellValue(LocalTime.ofSecondOfDay(timeTest.longValue()).toString());
 				Float dataTest = (Float) data.poll();
 				cell.setCellValue(dataTest.floatValue());
@@ -68,20 +69,20 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 	}
 
 	@Override
-	public void write(File file, Deque<? extends Number> turnoverValue,Deque<? extends Number> turnOverTime, Deque<? extends Number> torqueValue,
-			Deque<? extends Number> torqueTime,Deque<? extends Number> tempValue,Deque<? extends Number> tempTime) throws IOException {
+	public void write(File file, Deque<? extends Number> turnoverValue, Deque<? extends Number> torqueValue,
+			Deque<? extends Number> tempValue,Deque<? extends Number> experimentDuration) throws IOException {
 		workbook = new HSSFWorkbook();
 		style = createStyleForTitle(workbook);
 		// Создаем новый лист
 		HSSFSheet turnover = workbook.createSheet("Частота вращения");
 		// Наполняем лист данными
-		addSheet(turnover, turnoverValue, turnOverTime);
+		addSheet(turnover, turnoverValue, experimentDuration);
 
 		HSSFSheet torque = workbook.createSheet("Крутящий момент");
-		addSheet(torque, torqueValue, torqueTime);
+		addSheet(torque, torqueValue, experimentDuration);
 
 		HSSFSheet temp = workbook.createSheet("Температура");
-		addSheet(temp, tempValue, tempTime);
+		addSheet(temp, tempValue, experimentDuration);
 
 		try (FileOutputStream outFile = new FileOutputStream(file)) {
 			workbook.write(outFile);

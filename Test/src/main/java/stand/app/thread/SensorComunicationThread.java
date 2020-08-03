@@ -32,11 +32,13 @@ public class SensorComunicationThread extends  Thread
 					objectMapping(winUsbDataReceiver.receive());
 				} catch (IOException e) {
 					winUsbDataReceiver.close();
+					pcmDataMonitor.getTurnoverSensorModel().getStopWatch().pause();
 					Platform.runLater(() -> {
 						ConnectToT_45Button.setEffect(new Lighting(new Light.Distant(45.0, 45.0, Color.ORANGERED)));
 						alert.setTitle("Connection Error");
 						alert.setHeaderText(e.getMessage());
 						alert.showAndWait();
+						
 					});	
 				}
 			}

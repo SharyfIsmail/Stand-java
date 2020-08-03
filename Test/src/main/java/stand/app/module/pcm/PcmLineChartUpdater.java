@@ -9,7 +9,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import stand.util.IstopWatch;
 import stand.util.StopWatch;
 
 public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
@@ -34,13 +33,13 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 		}
 	};
 
-	public PcmLineChartUpdater(LineChart<Number, Number> lineChart) {
+	public PcmLineChartUpdater(LineChart<Number, Number> lineChart, StopWatch stopWatch) {
 		super();
 		this.lineChart = lineChart;
 		xAxis = (NumberAxis) lineChart.getXAxis();
 		pcmLineChartDataModels = new ArrayList<>();
 		allSeries = new ArrayList<>();
-		stopWatch = new StopWatch();
+		this.stopWatch =	stopWatch;
 
 		}
 
@@ -50,7 +49,6 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 			for (int j = 0; j < allSeries.size(); j++) {
 				if (pcmLineChartDataModels.get(j).isEmpty())
 					continue;
-				//xSeriesData = elapsedTime();
 				xSeriesData = stopWatch.getElapsedTime()/1000.0;
 				Data data = new XYChart.Data<>(xSeriesData, pcmLineChartDataModels.get(j).peekLast());
 				allSeries.get(j).getData().add(data);
@@ -104,10 +102,6 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 
 	public void setStart(long start) {
 		this.start = start;
-	}
-	public StopWatch getStopWatch()
-	{
-		return stopWatch;
 	}
 	
 }

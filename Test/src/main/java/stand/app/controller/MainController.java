@@ -35,7 +35,6 @@ import javafx.stage.Stage;
 import stand.app.module.battery.model.BatteryDataMonitor;
 import stand.app.module.pcm.PcmDataMonitor;
 import stand.app.module.pcm.PcmLineChartUpdater;
-import stand.app.module.pcm.model.TurnoverSensorModel;
 import stand.app.module.semikron.mode.CntrlMode;
 import stand.app.module.semikron.mode.SpeedCntrlMode;
 import stand.app.module.semikron.mode.TorqueCntrlMode;
@@ -44,14 +43,12 @@ import stand.app.thread.ReceiveThread;
 import stand.app.thread.SensorComunicationThread;
 import stand.battery.BatteryService;
 import stand.charger.ChargerService;
-import stand.pcm.tx.TurnoverSensor;
 import stand.semikron.SemikronService;
 import stand.semikron.rx.DigitalState;
 import stand.semikron.rx.LimitationMode;
 import stand.util.ExcelPcmFileWriter;
 import stand.util.PcmFileWriter;
 import stand.util.T_45Exception;
-import stand.util.WinUsbDataReceiver;
 
 @Component
 public class MainController implements Initializable {
@@ -300,7 +297,7 @@ public class MainController implements Initializable {
 		//////////////// SEMIKRON/////////////////
 
 		// control mode
-		pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM);
+		pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM, pcmDataMonitor.getTurnoverSensorModel().getStopWatch());
 		mode = FXCollections.observableArrayList(torqueCntrlMode, speedCntrlMode);
 		for (CntrlMode m : mode) {
 			m.setSpeedTorqueTextField(refTorqCntrlTextField, refSpeedCntrlTextField, maxTorqCntrlTextField,
@@ -775,7 +772,7 @@ public class MainController implements Initializable {
 	private <T> void addPCM(CheckBox parametr, String seriesName, Deque dataModel,Label label, StringProperty stringProperty) {
 	
 		if (pcmLineChartUpdater == null) {
-			pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM);
+			pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM,pcmDataMonitor.getTurnoverSensorModel().getStopWatch() );
 		}
 		
 		if (parametr.isSelected()) {
@@ -783,23 +780,12 @@ public class MainController implements Initializable {
 			bind(label,stringProperty);
 			
 			pcmLineChartUpdater.addSeries(seriesName, dataModel);
-			pcmLineChartUpdater.startUpdateChart();
-//			if(!pcmLineChartUpdater.isRunning())
-//				pcmLineChartUpdater.Stopwatch();
-//			if(!pcmDataMonitor.getTurnoverSensorModel().isRunning())
-//				pcmDataMonitor.getTurnoverSensorModel().Stopwatch();
-			//if(!pcmLineChartUpdater.getStopWatch().isRunning())
-			//	pcmLineChartUpdater.getStopWatch().start();
-			
-			
+			pcmLineChartUpdater.startUpdateChart();			
 		} else {
 			bind(label,new SimpleStringProperty(" "));
 			pcmLineChartUpdater.deleteSeries(seriesName);
 		}
-		//if(!turnOverCheckBox.isSelected() && !torqueCheckBox.isSelected() && !tempCheckBox.isSelected())
-		//{
-		//	pcmLineChartUpdater.getStopWatch().pause();
-		//}
+
 	}
 
 	/*public void addAmperage(ActionEvent event) {
@@ -813,15 +799,9 @@ public class MainController implements Initializable {
 			sensorComunicationThread.getWinUsbDataReceiver().createCommunication();
 			try {
 				sensorComunicationThread.getWinUsbDataReceiver().openCommunication();
-				//if(!pcmDataMonitor.getTurnoverSensorModel().isRunning())
-			//		pcmDataMonitor.getTurnoverSensorModel().Stopwatch();
-				System.out.println(pcmDataMonitor.getTurnoverSensorModel().getStopWatch().isRunning());
-				System.out.println(pcmLineChartUpdater.getStopWatch().isRunning());
 				if(!pcmDataMonitor.getTurnoverSensorModel().getStopWatch().isRunning())
 					pcmDataMonitor.getTurnoverSensorModel().getStopWatch().start();
-				if(!pcmLineChartUpdater.getStopWatch().isRunning())
-					pcmLineChartUpdater.getStopWatch().start();
-					
+				
 				ConnectToT_45Button.setEffect(new Lighting(new Light.Distant(45.0, 45.0, Color.CHARTREUSE)));
 				ConnectToT_45Button.setText("Close Connection");
 				ConnectionButtonIsPressed = true;
@@ -834,8 +814,8 @@ public class MainController implements Initializable {
 		else
 		{
 			sensorComunicationThread.getWinUsbDataReceiver().close();
-			pcmDataMonitor.getTurnoverSensorModel().getStopWatch().pause();;
-			pcmLineChartUpdater.getStopWatch().pause();
+			if(pcmDataMonitor.getTurnoverSensorModel().getStopWatch().isRunning())
+				pcmDataMonitor.getTurnoverSensorModel().getStopWatch().pause();;
 			ConnectToT_45Button.setEffect(null);
 			ConnectionButtonIsPressed = false;
 			ConnectToT_45Button.setText("Open Connection");
@@ -884,24 +864,21 @@ public class MainController implements Initializable {
 					if(!isTurnoverChoosen)
 					{
 						pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45().clear();
-						pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime().clear();
 					}
 					if(!isTorqueChoosen)
 					{
 						pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45().clear();
-						pcmDataMonitor.getTurnoverSensorModel().getTorqueTime().clear();
 					}
 					
 					if(!isTempChoosen)
 					{
 						pcmDataMonitor.getTurnoverSensorModel().getTempT_45().clear();
-						pcmDataMonitor.getTurnoverSensorModel().getTempTime().clear();
 
 					}
 					
-					paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45(),pcmDataMonitor.getTurnoverSensorModel().getTurnoverTime(),
-							pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45(), pcmDataMonitor.getTurnoverSensorModel().getTorqueTime(),
-							pcmDataMonitor.getTurnoverSensorModel().getTempT_45(),pcmDataMonitor.getTurnoverSensorModel().getTempTime());
+					paramCMWriter.write(file, pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45(),
+							pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45(),
+							pcmDataMonitor.getTurnoverSensorModel().getTempT_45(),pcmDataMonitor.getTurnoverSensorModel().getExperimentDuration());
 				
 				
 				} catch (IOException e) {
@@ -913,8 +890,8 @@ public class MainController implements Initializable {
 				{
 					callAlert(AlertType.INFORMATION, "Сохранение файла",
 							"Файл " + file.getName() + " успешно сохранен :" + "\n" + file.getAbsolutePath());
+					pcmDataMonitor.getTurnoverSensorModel().ClearAllQueue();
 					pcmDataMonitor.getTurnoverSensorModel().getStopWatch().reset();
-					pcmLineChartUpdater.getStopWatch().reset();
 				}
 			}
 			else
