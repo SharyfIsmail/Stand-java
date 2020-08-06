@@ -3,6 +3,7 @@ package stand.app.module.pcm;
 import java.util.ArrayList;
 import java.util.Deque;
 
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -21,6 +22,7 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 	private ArrayList<Series<Number, Number>> allSeries;
 	private  long start = 0;;
 	private StopWatch stopWatch ;
+	
 	private AnimationTimer animationTimer = new AnimationTimer() {
 		private long lastUpdate = 0;
 		@Override
@@ -36,11 +38,12 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 	public PcmLineChartUpdater(LineChart<Number, Number> lineChart, StopWatch stopWatch) {
 		super();
 		this.lineChart = lineChart;
+		this.lineChart.setCreateSymbols(false);
+		
 		xAxis = (NumberAxis) lineChart.getXAxis();
 		pcmLineChartDataModels = new ArrayList<>();
 		allSeries = new ArrayList<>();
 		this.stopWatch =	stopWatch;
-
 		}
 
 	@SuppressWarnings("unchecked")
@@ -50,9 +53,8 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 				if (pcmLineChartDataModels.get(j).isEmpty())
 					continue;
 				xSeriesData = stopWatch.getElapsedTime()/1000.0;
-				Data data = new XYChart.Data<>(xSeriesData, pcmLineChartDataModels.get(j).peekLast());
+				Data data = new XYChart.Data<>(xSeriesData, pcmLineChartDataModels.get(j).peekLast());				
 				allSeries.get(j).getData().add(data);
-
 				// remove points to keep us at no more than MAX_DATA_POINTS
 				if (allSeries.get(j).getData().size() > MAX_DATA_POINTS) {
 					allSeries.get(j).getData().remove(0, allSeries.get(j).getData().size() - MAX_DATA_POINTS);
@@ -103,5 +105,4 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 	public void setStart(long start) {
 		this.start = start;
 	}
-	
 }

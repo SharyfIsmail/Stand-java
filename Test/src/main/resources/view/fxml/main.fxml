@@ -409,13 +409,20 @@
                               <Label fx:id="turnOverValue" layoutX="189.0" layoutY="574.0" prefHeight="17.0" prefWidth="58.0" />
                               <Label fx:id="torqueValue" layoutX="137.0" layoutY="613.0" prefHeight="17.0" prefWidth="59.0" />
                               <Label layoutX="233.0" layoutY="574.0" text="об/m" />
-                              <Label layoutX="186.0" layoutY="613.0" text="Н.м" />
+                              <Label layoutX="237.0" layoutY="613.0" text="Н.м" />
                               <Button fx:id="ConnectToT_45Button" layoutX="39.0" layoutY="534.0" mnemonicParsing="false" onAction="#openConntectionT_45" text="Open Connection" />
                               <CheckBox fx:id="turnOverCheckBox" layoutX="39.0" layoutY="574.0" mnemonicParsing="false" onAction="#addTurnover" text="Частота Вращения " />
                               <CheckBox fx:id="torqueCheckBox" layoutX="39.0" layoutY="613.0" mnemonicParsing="false" onAction="#addTorque" text="Момент" />
                               <CheckBox fx:id="tempCheckBox" layoutX="39.0" layoutY="647.0" mnemonicParsing="false" onAction="#addTemp" text="Температура" />
                               <Label fx:id="tempValue" layoutX="149.0" layoutY="647.0" />
-                              <Label layoutX="192.0" layoutY="647.0" text="Градус" />
+                              <Label layoutX="229.0" layoutY="647.0" text="Градус" />
+                              <Label layoutX="411.0" layoutY="536.0" prefHeight="22.0" prefWidth="77.0" text="Батарея :" />
+                              <Label layoutX="411.0" layoutY="574.0" text="Общее напряжение" />
+                              <Label layoutX="411.0" layoutY="613.0" text="Состояние заряда" />
+                              <Label fx:id="string2VoltageLabel" layoutX="545.0" layoutY="574.0" text="0" />
+                              <Label fx:id="sysSocLabel2" layoutX="545.0" layoutY="613.0" text="0" />
+                              <Label layoutX="593.0" layoutY="574.0" text="В" />
+                              <Label layoutX="592.0" layoutY="613.0" text="\%" />
                            </children>
                         </AnchorPane>
                      </content>

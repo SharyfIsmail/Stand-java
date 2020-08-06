@@ -234,6 +234,8 @@ public class MainController implements Initializable {
 
 	@FXML
 	Label string1VoltageLabel;
+	@FXML
+	Label string2VoltageLabel;
 
 	@FXML
 	Label minPackTempLabel;
@@ -243,7 +245,8 @@ public class MainController implements Initializable {
 
 	@FXML
 	Label sysSocLabel;
-
+	@FXML
+	Label sysSocLabel2;
 	@FXML
 	Label systemCurrentLabel;
 
@@ -368,16 +371,19 @@ public class MainController implements Initializable {
 		bind(bmsContactorConditionLabel, batteryDataMonitor.getData00Model().getBms_Contactor_Condition());
 
 		bind(string1VoltageLabel, batteryDataMonitor.getData02Model().getString1Voltage());
+		bind(string2VoltageLabel, batteryDataMonitor.getData02Model().getString1Voltage());
 		bind(systemCurrentLabel, batteryDataMonitor.getData02Model().getSystemCurrent());
 
 		bind(sysSocLabel, batteryDataMonitor.getData01Model().getSys_SOC());
+		bind(sysSocLabel2, batteryDataMonitor.getData01Model().getSys_SOC());
+
 		sensorComunicationThread.setButton(ConnectToT_45Button);
 		//////////////// BATTERY END/////////////////
 
 		//////////////// PCM /////////////////
 		bind(currentVoltageSensorErrorLabel, pcmDataMonitor.getCurrentVoltageSensorModel().getError());
 		bind(turnoverSensorErrorLabel, pcmDataMonitor.getTurnoverSensorModel().getError());
-	//	bind(turnOverValue, pcmDataMonitor.getTurnoverSensorModel().getturnOverValue());
+		//bind(turnOverValue, pcmDataMonitor.getTurnoverSensorModel().getturnOverValue());
 		//bind(torqueValue, pcmDataMonitor.getTurnoverSensorModel().getTorqueValue());
 		//bind(tempValue, pcmDataMonitor.getTurnoverSensorModel().getTempValue());
 		//////////////// PCM END///////////////
