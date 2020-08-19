@@ -28,7 +28,7 @@ public class Launcher extends Application {
 		loader.setApplicationContext(applicationContext);
 		Parent root = loader.load(getClass().getResource("/view/fxml/main.fxml"));
 		primaryStage.setScene(new Scene(root));
-		primaryStage.setTitle("STAND");
+		primaryStage.setTitle("Semicron Control");
 		primaryStage.setMinHeight(755);
 		primaryStage.setMinWidth(883);
 		primaryStage.setMaxHeight(755);
