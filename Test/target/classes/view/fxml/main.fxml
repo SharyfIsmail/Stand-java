@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
@@ -445,6 +446,22 @@
                                  </padding>
                               </AnchorPane>
                            </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Гонка (Разработчиков)">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="719.0" prefWidth="874.0">
+                           <children>
+                              <LineChart fx:id="lineChartSemicron" prefHeight="400.0" prefWidth="883.0">
+                                <xAxis>
+                                  <CategoryAxis prefHeight="32.0" prefWidth="817.0" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                           </children>
+                        </AnchorPane>
                     </content>
                   </Tab>
               </tabs>

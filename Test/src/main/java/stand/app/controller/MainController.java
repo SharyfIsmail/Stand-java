@@ -265,6 +265,7 @@ public class MainController implements Initializable {
 	@FXML
 	LineChart<Number, Number> lineChartPCM;
 	PcmLineChartUpdater<Number> pcmLineChartUpdater;
+	
 	@FXML
 	Button ConnectToT_45Button;
 	@FXML
@@ -289,6 +290,13 @@ public class MainController implements Initializable {
 	 * PCM FIELDS END
 	 */
 	
+	/* 
+	 * RACR CAR FIELDS 
+	 */
+	
+	/*
+	 * RACR CAR FIELDS END
+	 */
 	@Autowired
 	SensorComunicationThread sensorComunicationThread;
 
