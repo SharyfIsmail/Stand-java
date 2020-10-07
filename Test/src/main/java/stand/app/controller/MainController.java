@@ -293,7 +293,124 @@ public class MainController implements Initializable {
 	/* 
 	 * RACR CAR FIELDS 
 	 */
+	@FXML
+	Label phaseCurrentDevLabel;
+	@FXML
+	CheckBox PhaseCurrentDevChart;
+	@FXML
+	CheckBox phaseCurrentDevSave;
 	
+	@FXML
+	Label dcLinkVoltageDevLabel;
+	@FXML
+	CheckBox dcLinkVoltageDevChart;
+	@FXML
+	CheckBox dcLinkVoltageDevSave;
+	
+	@FXML
+	Label speedDevLabel;
+	@FXML
+	CheckBox speedDevChart;
+	@FXML
+	CheckBox speedDevSave;
+	
+	@FXML
+	Label actualTorqueDevLabel;
+	@FXML
+	CheckBox actualTorqueDevChart;
+	@FXML
+	CheckBox actualTorqueDevSave;
+	
+	@FXML
+	Label referenceTorqueDevLabel;
+	@FXML
+	CheckBox referenceTorqueDevChart;
+	@FXML
+	CheckBox referenceTorqueDevSave;
+	
+	@FXML
+	Label maxAvailableTorqueDevLabel;
+	@FXML
+	CheckBox maxAvailableTorqueDevChart;
+	@FXML
+	CheckBox maxAvailableTorqueDevSave;
+	
+	@FXML
+	Label dcLinkPowerDevLabel;
+	@FXML
+	CheckBox dcLnkPowerChart;
+	@FXML
+	CheckBox dcLnkPowerSave;
+	
+	@FXML
+	Label mechanicalPoweDevLabel;
+	@FXML
+	CheckBox mechanicalPowerChart;
+	@FXML
+	CheckBox mechanicalPowerSave;
+	
+	@FXML
+	Label maxJunctionTempDevLabel;
+	@FXML
+	CheckBox maxJunctionTempChart;
+	@FXML
+	CheckBox maxJunctionTempSave;
+	
+	@FXML
+	Label motorTemperatureDevLabel;
+	@FXML
+	CheckBox motorTemperatureChart;
+	@FXML
+	CheckBox motorTemperatureSave;
+	
+	@FXML
+	Label iqReferenceDevLabel;
+	@FXML
+	CheckBox iqReferenceDevChart;
+	@FXML
+	CheckBox iqReferenceDevSave;
+	
+	@FXML
+	Label IdReferenceDevLabel;
+	@FXML
+	CheckBox idReferenceDevChart;
+	@FXML
+	CheckBox idReferenceDevSave;
+	
+	@FXML
+	Label iqActualDevLabel;
+	@FXML
+	CheckBox iqActualDevChart;
+	@FXML
+	CheckBox iqActualDevSave;
+	
+	@FXML
+	Label idActualDevLabel;
+	@FXML
+	CheckBox idActualDevChart;
+	@FXML
+	CheckBox idActualDevSave;
+	
+	@FXML
+	Label uqActualDevLabel;
+	@FXML
+	CheckBox uqActualDevChart;
+	@FXML
+	CheckBox uqActualDevSave;
+	
+	@FXML
+	Label udActualDevLabel;
+	@FXML
+	CheckBox udActualDevChart;
+	@FXML
+	CheckBox udActualDevSave;
+	
+	@FXML
+	Label udqAbsActualDevLabel;
+	@FXML
+	CheckBox udqAbsActualDevChart;
+	@FXML
+	CheckBox udqAbsActualDevSave;
 	/*
 	 * RACR CAR FIELDS END
 	 */
