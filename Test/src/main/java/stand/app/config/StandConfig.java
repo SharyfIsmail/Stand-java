@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
+
+import stand.app.controller.MainController;
 import stand.app.module.battery.model.BatteryDataMonitor;
 import stand.app.module.pcm.PcmDataMonitor;
 import stand.app.module.pcm.model.CurrentVoltageSensorModel;
@@ -128,6 +130,7 @@ public class StandConfig {
 
 		return canId;
 	}
+	
 
 	@Bean
 	public ReceiveThread receiveThread() {

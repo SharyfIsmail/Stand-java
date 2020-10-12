@@ -3,10 +3,15 @@ package stand.app.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -14,6 +19,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
@@ -372,7 +378,7 @@ public class MainController implements Initializable {
 	
 	@FXML
 	Label IdReferenceDevLabel;
-	@FXML
+    @FXML
 	CheckBox idReferenceDevChart;
 	@FXML
 	CheckBox idReferenceDevSave;
@@ -411,6 +417,10 @@ public class MainController implements Initializable {
 	CheckBox udqAbsActualDevChart;
 	@FXML
 	CheckBox udqAbsActualDevSave;
+	@FXML
+	Label systemWarningDev;
+	
+
 	/*
 	 * RACR CAR FIELDS END
 	 */
@@ -527,6 +537,26 @@ public class MainController implements Initializable {
 
 		bind(maxJunctionTempDevLabel, semikronDataMonitor.getTxPDO5().getJunctionTempOrHighestDCBtemp());
 		bind(motorTemperatureDevLabel, semikronDataMonitor.getTxPDO5().getMotorTemp());
+		bind(iqReferenceDevLabel, semikronDataMonitor.getTxSDO().getReferenceIq());
+		bind(IdReferenceDevLabel, semikronDataMonitor.getTxSDO().getReferenceId());
+		bind(iqActualDevLabel, semikronDataMonitor.getTxSDO().getActualIq());
+		bind(idActualDevLabel, semikronDataMonitor.getTxSDO().getActualId());
+		bind(uqActualDevLabel,  semikronDataMonitor.getTxSDO().getActualUq());
+		bind(udActualDevLabel, semikronDataMonitor.getTxSDO().getActualUd());
+		bind(udqAbsActualDevLabel, semikronDataMonitor.getTxSDO().getActualUdq());
+		bind(systemWarningDev, semikronDataMonitor.getTxPDO4().getSystemWarning());
+		systemWarningDev.setTooltip(new Tooltip(warningMessage));
+		systemWarningDev.textProperty().addListener((observable, oldValue, newValue) -> {
+		if(newValue != null)
+		{
+			if(newValue.equals("0x0"))
+			{
+				systemWarningDev.setTextFill(Paint.valueOf("#008229"));
+			} else {
+				systemWarningDev.setTextFill(Paint.valueOf("#d11414"));
+			}	
+		}
+		});
 		
 		///////////////RACE CAR DEV END//////
 		systemWarningLabel.setTooltip(new Tooltip(warningMessage));
@@ -914,6 +944,7 @@ public class MainController implements Initializable {
 	 * SEMIKRON INTERFACE END
 	 */
 
+
 	/*
 	 * PCM INTERFACE
 	 */
@@ -1102,5 +1133,99 @@ public class MainController implements Initializable {
 	}
 	/*
 	 * BATTERY INTERFACE END
+	 */
+	
+	/*
+	 * RACE CAR INTERFACE START
+	 */
+	private <T> void addChartToSuperCarDev(CheckBox parametr, String seriesName, Deque dataModel,Label label, StringProperty stringProperty) {
+		
+		if (pcmLineChartUpdater == null) {
+			pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM,pcmDataMonitor.getTurnoverSensorModel().getStopWatch() );
+		}
+		
+		if (parametr.isSelected()) {
+			
+			bind(label,stringProperty);
+			
+			pcmLineChartUpdater.addSeries(seriesName, dataModel);
+			pcmLineChartUpdater.startUpdateChart();			
+		} else {
+			bind(label,new SimpleStringProperty(" "));
+			pcmLineChartUpdater.deleteSeries(seriesName);
+		}
+
+	}
+	public void addPhaseCurrentDevChart(ActionEvent event)
+	{
+		
+	}
+	
+	public void addDcLinkVoltageDevChart(ActionEvent event)
+	{
+		
+	}
+	
+	public void addActualTorqueDevChart(ActionEvent event)
+	{
+		
+	}
+	public void addReferenceTorqueDevChart(ActionEvent event)
+	{
+		
+	}
+	public void addMaxAvailableTorqueDevChart(ActionEvent event)
+	{
+		
+	}
+	public void addDcLnkPowerChart(ActionEvent event)
+	{
+		
+	}
+	public void addMechanicalPowerChart(ActionEvent event)
+	{
+		
+	}
+	public void addMaxJunctionTempChart(ActionEvent event)
+	{
+		
+	}
+	public void addMotorTemperatureChart(ActionEvent event)
+	{
+		
+	}
+	public void addIqReferenceDevChart(ActionEvent event)
+	{
+		
+	}
+	public void addIdReferenceDevChart(ActionEvent event)
+	{
+		
+	}
+	public void addIqActualDevChart(ActionEvent event)
+	{
+		
+	}
+	public void addIdActualDevChart(ActionEvent event)
+	{
+		
+	}
+	public void addUqActualDevChart(ActionEvent event)
+	{
+		
+	}
+	
+	public void addUdActualDevChart(ActionEvent event)
+	{
+		
+	}
+	
+	public void addUdqAbsActualDevChart(ActionEvent event)
+	{
+		
+	}
+	
+	/*
+	 * RACE CAR INTERFACE E
 	 */
 }

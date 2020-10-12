@@ -462,59 +462,53 @@
                               </LineChart>
                               <AnchorPane layoutX="-9.0" layoutY="350.0" prefHeight="370.0" prefWidth="883.0">
                                  <children>
-                                    <Label fx:id="phaseCurrentDev" layoutX="72.0" layoutY="14.0" text="Phase current" />
-                                    <CheckBox fx:id="PhaseCurrentDevChart" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" />
+                                    <Label layoutX="72.0" layoutY="14.0" text="Phase current" />
+                                    <CheckBox fx:id="PhaseCurrentDevChart" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#addPhaseCurrentDevChart" />
                                     <CheckBox fx:id="phaseCurrentDevSave" layoutX="39.0" layoutY="14.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="dcLinkVoltageDevChart" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="dcLinkVoltageDevChart" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onAction="#addDcLinkVoltageDevChart" />
                                     <CheckBox fx:id="dcLinkVoltageDevSave" layoutX="39.0" layoutY="43.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="speedDevChart" layoutX="14.0" layoutY="72.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="speedDevChart" layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#addSpeedDevChart" />
                                     <CheckBox fx:id="speedDevSave" layoutX="39.0" layoutY="72.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="actualTorqueDevChart" layoutX="14.0" layoutY="102.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="actualTorqueDevChart" layoutX="14.0" layoutY="102.0" mnemonicParsing="false" onAction="#addActualTorqueDevChart" />
                                     <CheckBox fx:id="actualTorqueDevSave" layoutX="39.0" layoutY="102.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="referenceTorqueDevChart" layoutX="14.0" layoutY="137.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="referenceTorqueDevChart" layoutX="14.0" layoutY="137.0" mnemonicParsing="false" onAction="#addReferenceTorqueDevChart" />
                                    
                                     <CheckBox fx:id="referenceTorqueDevSave" layoutX="39.0" layoutY="137.0" mnemonicParsing="false" />
                                  
-                                    <CheckBox fx:id="maxAvailableTorqueDevChart" layoutX="14.0" layoutY="171.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="maxAvailableTorqueDevChart" layoutX="14.0" layoutY="171.0" mnemonicParsing="false" onAction="#addMaxAvailableTorqueDevChart" />
                                     <CheckBox fx:id="maxAvailableTorqueDevSave" layoutX="39.0" layoutY="171.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="dcLnkPowerChart" layoutX="14.0" layoutY="206.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="dcLnkPowerChart" layoutX="14.0" layoutY="206.0" mnemonicParsing="false" onAction="#addDcLnkPowerChart" />
                                     <CheckBox fx:id="dcLnkPowerSave" layoutX="39.0" layoutY="206.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="mechanicalPowerChart" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="mechanicalPowerChart" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" onAction="#addMechanicalPowerChart" />
                                     <CheckBox fx:id="mechanicalPowerSave" layoutX="39.0" layoutY="243.0" mnemonicParsing="false" />
-                                    <Label fx:id="dcLinkVoltageDev" layoutX="73.0" layoutY="43.0" text="DC link voltage" />
-                                    <Label fx:id="speedDev" layoutX="73.0" layoutY="72.0" text="Speed" />
-                                    <Label fx:id="actualTorqueDev" layoutX="76.0" layoutY="102.0" text="Actual Torque" />
-                                    <Label fx:id="referenceTorqueDev" layoutX="76.0" layoutY="137.0" text="Reference torque" />
-                                    <Label fx:id="maxAvailableTorqueDev" layoutX="76.0" layoutY="171.0" text="Max available torque" />
-                                    <Label fx:id="dcLinkPowerDev" layoutX="76.0" layoutY="206.0" text="Dc Link power" />
-                                    <Label fx:id="mechanicalPoweDev" layoutX="76.0" layoutY="243.0" text="Mechanical Powe" />
-                                    <CheckBox fx:id="maxJunctionTempChart" layoutX="14.0" layoutY="273.0" mnemonicParsing="false" />
+                                    <Label layoutX="73.0" layoutY="43.0" text="DC link voltage" />
+                                    <Label layoutX="73.0" layoutY="72.0" text="Speed" />
+                                    <Label layoutX="76.0" layoutY="102.0" text="Actual Torque" />
+                                    <Label layoutX="76.0" layoutY="137.0" text="Reference torque" />
+                                    <Label layoutX="76.0" layoutY="171.0" text="Max available torque" />
+                                    <Label layoutX="76.0" layoutY="206.0" text="Dc Link power" />
+                                    <Label layoutX="76.0" layoutY="243.0" text="Mechanical Powe" />
+                                    <CheckBox fx:id="maxJunctionTempChart" layoutX="14.0" layoutY="273.0" mnemonicParsing="false" onAction="#addMaxJunctionTempChart" />
                                     <CheckBox fx:id="maxJunctionTempSave" layoutX="39.0" layoutY="273.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="motorTemperatureChart" layoutX="14.0" layoutY="303.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="motorTemperatureChart" layoutX="14.0" layoutY="303.0" mnemonicParsing="false" onAction="#addMotorTemperatureChart" />
                                     <CheckBox fx:id="motorTemperatureSave" layoutX="39.0" layoutY="303.0" mnemonicParsing="false" />
-                                    <Label fx:id="maxJunctionTempDev" layoutX="76.0" layoutY="273.0" text="Max junction temp" />
-                                    <Label fx:id="motorTemperatureDev" layoutX="76.0" layoutY="303.0" text="Motor temperature " />
-                                    <Label fx:id="warningsDev" layoutX="76.0" layoutY="330.0" prefHeight="17.0" prefWidth="77.0" text="Warnings" />
-                                    <CheckBox fx:id="iqReferenceDevChart" layoutX="296.0" layoutY="14.0" mnemonicParsing="false" />
+                                    <Label layoutX="76.0" layoutY="273.0" text="Max junction temp" />
+                                    <Label layoutX="76.0" layoutY="303.0" text="Motor temperature " />
+                                    <Label layoutX="373.0" layoutY="275.0" prefHeight="17.0" prefWidth="77.0" text="Warnings" />
+                                    <CheckBox fx:id="iqReferenceDevChart" layoutX="296.0" layoutY="14.0" mnemonicParsing="false" onAction="#addIqReferenceDevChart" />
                                     <CheckBox fx:id="iqReferenceDevSave" layoutX="326.0" layoutY="14.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="idReferenceDevChart" layoutX="296.0" layoutY="43.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="idReferenceDevChart" layoutX="296.0" layoutY="43.0" mnemonicParsing="false" onAction="#addIdReferenceDevChart" />
                                     <CheckBox fx:id="idReferenceDevSave" layoutX="326.0" layoutY="43.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="iqActualDevChart" layoutX="296.0" layoutY="72.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="iqActualDevChart" layoutX="296.0" layoutY="72.0" mnemonicParsing="false" onAction="#addIqActualDevChart" />
                                     <CheckBox fx:id="iqActualDevSave" layoutX="326.0" layoutY="72.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="idActualDevChart" layoutX="296.0" layoutY="102.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="idActualDevChart" layoutX="296.0" layoutY="102.0" mnemonicParsing="false" onAction="#addIdActualDevChart" />
                                     <CheckBox fx:id="idActualDevSave" layoutX="326.0" layoutY="102.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="uqActualDevChart" layoutX="296.0" layoutY="137.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="uqActualDevChart" layoutX="296.0" layoutY="137.0" mnemonicParsing="false" onAction="#addUqActualDevChart" />
                                     <CheckBox fx:id="uqActualDevSave" layoutX="326.0" layoutY="137.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="udActualDevChart" layoutX="296.0" layoutY="172.0" mnemonicParsing="false" />
+                                    <CheckBox fx:id="udActualDevChart" layoutX="296.0" layoutY="172.0" mnemonicParsing="false" onAction="#addUdActualDevChart" />
                                     <CheckBox fx:id="udActualDevSave" layoutX="326.0" layoutY="172.0" mnemonicParsing="false" />
                                     <CheckBox fx:id="udqAbsActualDevSave" layoutX="326.0" layoutY="208.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="activeLimitationDevSave" layoutX="326.0" layoutY="243.0" mnemonicParsing="false" />
                                     <CheckBox fx:id="udqAbsActualDevChart" layoutX="296.0" layoutY="208.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="actualLimitationFactorDevSave" layoutX="326.0" layoutY="273.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="activeLimitationDevChart" layoutX="296.0" layoutY="243.0" mnemonicParsing="false" />
-                                    <CheckBox fx:id="actualLimitationFactorDevChart" layoutX="296.0" layoutY="274.0" mnemonicParsing="false" />
-                                    <CheckBox layoutX="296.0" layoutY="303.0" mnemonicParsing="false" />
-                                    <CheckBox layoutX="326.0" layoutY="303.0" mnemonicParsing="false" />
                                     <Label layoutX="372.0" layoutY="14.0" text="Iq reference " />
                                     <Label layoutX="372.0" layoutY="43.0" text="Id reference " />
                                     <Label layoutX="372.0" layoutY="72.0" text="Iq actual" />
@@ -522,9 +516,6 @@
                                     <Label layoutX="372.0" layoutY="137.0" text="Uq actual" />
                                     <Label layoutX="372.0" layoutY="172.0" text="Ud actual" />
                                     <Label layoutX="372.0" layoutY="208.0" text="UdqAbs actual" />
-                                    <Label layoutX="372.0" layoutY="243.0" text="Active limitation" />
-                                    <Label layoutX="372.0" layoutY="274.0" text="Actual limitation factor" />
-                                    <Label layoutX="372.0" layoutY="303.0" text="Hall sector" />
                                     <Label fx:id="phaseCurrentDevLabel" layoutX="194.0" layoutY="14.0" />
                                     <Label fx:id="dcLinkVoltageDevLabel" layoutX="194.0" layoutY="43.0" />
                                     <Label fx:id="speedDevLabel" layoutX="194.0" layoutY="72.0" />
@@ -559,6 +550,7 @@
                                     <Label layoutX="555.0" layoutY="134.0" text="\%" />
                                     <Label layoutX="556.0" layoutY="170.0" text="\%" />
                                     <Label layoutX="556.0" layoutY="208.0" text="\%" />
+                                    <Label fx:id="systemWarningDev" layoutX="450.0" layoutY="275.0" />
                                  </children>
                               </AnchorPane>
                            </children>
