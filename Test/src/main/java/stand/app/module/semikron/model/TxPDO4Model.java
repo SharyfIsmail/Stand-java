@@ -30,6 +30,7 @@ public class TxPDO4Model implements DataFromCanModel {
 		linkVoltageDC = new SimpleStringProperty();
 		controlMode = new SimpleStringProperty();
 		systemWarning = new SimpleStringProperty();
+		
 		phaseCurrentQueue = new ConcurrentLinkedDeque<>();
 		dcLinkVoltageQueue = new ConcurrentLinkedDeque<>();
 		experimentDuration = new ConcurrentLinkedDeque<>();
@@ -90,6 +91,10 @@ public class TxPDO4Model implements DataFromCanModel {
 	public Deque<Float> getdcLinkVoltageQueue()
 	{
 		return dcLinkVoltageQueue;
+	}
+	public Deque<Long> getExperimentDuration()
+	{
+		return experimentDuration;
 	}
 	public void clearAllQueue()
 	{

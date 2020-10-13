@@ -34,18 +34,22 @@ public class TxPDO3Model implements DataFromCanModel {
 		motorSpeed = new SimpleStringProperty();
 		motorSpeedQueue = new ConcurrentLinkedDeque<>();
 		experimentDuration = new ConcurrentLinkedDeque<>();
+		dcLinkPowerQueue = new ConcurrentLinkedDeque<>();
+		MechanicPowerQueue = new ConcurrentLinkedDeque<>();
 		stopWatch = new StopWatch();
 	}
 
 	@Override
 	public void updateModel() {
-		if(!stopWatch.isRunning())
+		if(stopWatch.isRunning())
 		{
-			stopWatch.start();
+		
+			time = stopWatch.getElapsedTime()/1000;
+			experimentDuration.add(time);
+			motorSpeedQueue.add(txPDO3.getMotorSpeed());
+			dcLinkPowerQueue.add(txPDO3.getLinkPowerDC());
+			MechanicPowerQueue.add(txPDO3.getMechanicPower());
 		}
-		time = stopWatch.getElapsedTime()/1000;
-		experimentDuration.add(time);
-		motorSpeedQueue.add(txPDO3.getMotorSpeed());
 		Platform.runLater(new Runnable() {
 
 			@Override
@@ -74,5 +78,32 @@ public class TxPDO3Model implements DataFromCanModel {
 
 	public StringProperty getMotorSpeed() {
 		return motorSpeed;
+	}
+	public Deque<Short> getMotorSpeedQueue()
+	{
+		return motorSpeedQueue;
+	}
+	public Deque<Integer> getLinkPowerDCQueue()
+	{
+		return dcLinkPowerQueue;
+	}
+	public Deque<Integer> getMechanicPowerQueue()
+	{
+		return MechanicPowerQueue;
+	}
+	public Deque<Long> getExperimentDuration()
+	{
+		return experimentDuration;
+	}
+	public void clearAllQueue()
+	{
+		motorSpeedQueue.clear();
+		dcLinkPowerQueue.clear();
+		MechanicPowerQueue.clear();
+		experimentDuration.clear();
+	}
+	public StopWatch getStopWatch()
+	{
+		return stopWatch;
 	}
 }

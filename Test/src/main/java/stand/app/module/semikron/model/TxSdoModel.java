@@ -1,7 +1,11 @@
 package stand.app.module.semikron.model;
 
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,10 +23,12 @@ import stand.semikron.sdo.ReferenceCurrentId;
 import stand.semikron.sdo.ReferenceCurrentIq;
 import stand.semikron.sdo.SDO;
 import stand.semikron.tx.TxSDO;
+import stand.util.StopWatch;
 
 public class TxSdoModel implements DataFromCanModel {
 
 	private TxSDO txSDO;
+	private StopWatch stopWatch;
 
 	private AnalogIn1 in1;
 	private AnalogIn2 in2;
@@ -43,9 +49,43 @@ public class TxSdoModel implements DataFromCanModel {
 	private StringProperty actualUdq;
 	private StringProperty analogIn1;
 	private StringProperty analogIn2;
+	private Map<Integer ,Deque<Long>> experimentDurationMap ;
+	private Deque<Long> experimentTimeReferenceIq;
+	private Deque<Long> experimentTimereferenceId;
+	private Deque<Long> experimentTimeActualIq;
+	private Deque<Long> experimentTimeActualId;
+	private Deque<Long> experimentTimeActualUq;
+	private Deque<Long> experimentTimeActualUd;
+	private Deque<Long> experimentTimeActualUdq;
 
+	private Map<Integer, Deque<? extends Number>> sdoTxValues; 
+	private Deque<Float> referenceIqQueue;
+	private Deque<Float> referenceIdQueue;
+	private Deque<Float> ActualIqQueue;
+	private Deque<Float> ActualIdQueue;
+	private Deque<Float> ActualUqQueue;
+	private Deque<Float> ActualUdQueue;
+	private Deque<Float> ActualUdqQueue;
+
+ 
 	public TxSdoModel() {
 		super();
+		stopWatch = new StopWatch();
+		experimentTimeReferenceIq = new ConcurrentLinkedDeque<>();
+		experimentTimereferenceId = new ConcurrentLinkedDeque<>();
+		experimentTimeActualIq = new ConcurrentLinkedDeque<>();
+		experimentTimeActualId = new ConcurrentLinkedDeque<>();
+		experimentTimeActualUq = new ConcurrentLinkedDeque<>();
+		experimentTimeActualUd = new ConcurrentLinkedDeque<>();
+		experimentTimeActualUdq = new ConcurrentLinkedDeque<>();
+		
+		referenceIqQueue = new ConcurrentLinkedDeque<>();
+		referenceIdQueue = new ConcurrentLinkedDeque<>();
+		ActualIqQueue = new ConcurrentLinkedDeque<>();
+		ActualIdQueue = new ConcurrentLinkedDeque<>();
+		ActualUqQueue = new ConcurrentLinkedDeque<>();
+		ActualUdQueue = new ConcurrentLinkedDeque<>();
+		ActualUdqQueue = new ConcurrentLinkedDeque<>();
 
 		in1 = new AnalogIn1();
 		in2 = new AnalogIn2();
@@ -56,6 +96,7 @@ public class TxSdoModel implements DataFromCanModel {
 		uq = new ActualUq();
 		ud = new ActualUd();
 		actualUdqVoltageLenght = new ActualUdqVoltageLenght();
+		
 
 		Map<Integer, SDO> map = new HashMap<Integer, SDO>();
 		map.put(in1.getIndex(), in1);
@@ -63,11 +104,30 @@ public class TxSdoModel implements DataFromCanModel {
 		map.put(actualCurrentIq.getIndex(), actualCurrentIq);
 		map.put(actualCurrentId.getIndex(), actualCurrentId);
 		map.put(referenceCurrentIq.getIndex(), referenceCurrentIq);
+		map.put(referenceCurrentId.getIndex(), referenceCurrentId);
 		map.put(uq.getIndex(), uq);
 		map.put(ud.getIndex(), ud);
 		map.put(actualUdqVoltageLenght.getIndex(), actualUdqVoltageLenght);
+		
+		experimentDurationMap = new HashMap<>();
+		experimentDurationMap.put(referenceCurrentIq.getIndex(), experimentTimeReferenceIq);
+		experimentDurationMap.put(referenceCurrentId.getIndex(), experimentTimereferenceId);
+		experimentDurationMap.put(actualCurrentIq.getIndex(), experimentTimeActualIq);
+		experimentDurationMap.put(actualCurrentId.getIndex(), experimentTimeActualId);
+		experimentDurationMap.put(uq.getIndex(), experimentTimeActualUq);
+		experimentDurationMap.put(ud.getIndex(), experimentTimeActualUd);
+		experimentDurationMap.put(actualUdqVoltageLenght.getIndex(), experimentTimeActualUdq);
 
-		txSDO = new TxSDO(map);
+		sdoTxValues = new HashMap<>();
+		sdoTxValues.put(referenceCurrentIq.getIndex(), referenceIqQueue);
+		sdoTxValues.put(referenceCurrentId.getIndex(), referenceIdQueue);
+		sdoTxValues.put(actualCurrentIq.getIndex(), ActualIqQueue);
+		sdoTxValues.put(actualCurrentId.getIndex(), ActualIdQueue);
+		sdoTxValues.put(uq.getIndex(), ActualUqQueue);
+		sdoTxValues.put(ud.getIndex(), ActualUdQueue);
+		sdoTxValues.put(actualUdqVoltageLenght.getIndex(), ActualUdqQueue);
+
+		txSDO = new TxSDO(map, experimentDurationMap,sdoTxValues, stopWatch);
 		actualIq = new SimpleStringProperty();
 		actualId = new SimpleStringProperty();
 		referenceIq = new SimpleStringProperty();

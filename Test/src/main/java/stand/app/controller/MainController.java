@@ -524,19 +524,22 @@ public class MainController implements Initializable {
 		//////////////// PCM END///////////////
 		
 		///////////////RACE CAR DEV///////////
-		bind(phaseCurrentDevLabel, semikronDataMonitor.getTxPDO4().getPhaseCurrent());
+		bind(phaseCurrentDevLabel, semikronDataMonitor.getTxPDO4().getPhaseCurrent());		
 		bind(dcLinkVoltageDevLabel, semikronDataMonitor.getTxPDO4().getLinkVoltageDC());
-		bind(speedDevLabel, semikronDataMonitor.getTxPDO3().getMotorSpeed());
+		bind(systemWarningDev, semikronDataMonitor.getTxPDO4().getSystemWarning());
+
 
 		bind(referenceTorqueDevLabel, semikronDataMonitor.getTxPDO2().getTorqueAfterLimitation());
 		bind(actualTorqueDevLabel, semikronDataMonitor.getTxPDO2().getTorque());
 		bind(maxAvailableTorqueDevLabel, semikronDataMonitor.getTxPDO2().getMaxAvailableTorque());
 
+		bind(speedDevLabel, semikronDataMonitor.getTxPDO3().getMotorSpeed());
 		bind(dcLinkPowerDevLabel, semikronDataMonitor.getTxPDO3().getLinkPowerDC());
 		bind(mechanicalPoweDevLabel, semikronDataMonitor.getTxPDO3().getMechanicPower());
 
 		bind(maxJunctionTempDevLabel, semikronDataMonitor.getTxPDO5().getJunctionTempOrHighestDCBtemp());
 		bind(motorTemperatureDevLabel, semikronDataMonitor.getTxPDO5().getMotorTemp());
+		
 		bind(iqReferenceDevLabel, semikronDataMonitor.getTxSDO().getReferenceIq());
 		bind(IdReferenceDevLabel, semikronDataMonitor.getTxSDO().getReferenceId());
 		bind(iqActualDevLabel, semikronDataMonitor.getTxSDO().getActualIq());
@@ -544,7 +547,6 @@ public class MainController implements Initializable {
 		bind(uqActualDevLabel,  semikronDataMonitor.getTxSDO().getActualUq());
 		bind(udActualDevLabel, semikronDataMonitor.getTxSDO().getActualUd());
 		bind(udqAbsActualDevLabel, semikronDataMonitor.getTxSDO().getActualUdq());
-		bind(systemWarningDev, semikronDataMonitor.getTxPDO4().getSystemWarning());
 		systemWarningDev.setTooltip(new Tooltip(warningMessage));
 		systemWarningDev.textProperty().addListener((observable, oldValue, newValue) -> {
 		if(newValue != null)
