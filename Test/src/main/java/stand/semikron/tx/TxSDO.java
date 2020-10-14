@@ -1,7 +1,11 @@
 package stand.semikron.tx;
 
+import java.util.Collections;
 import java.util.Deque;
+import java.util.List;
 import java.util.Map;
+
+import org.hibernate.mapping.Collection;
 
 import stand.can.candata.DataFromCan;
 import stand.semikron.sdo.SDO;
@@ -33,6 +37,7 @@ public class TxSDO implements DataFromCan {
 		return objectDictionary;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void parseDataFromCan(byte[] data) {
 		byte[] b2 = { data[1], data[2] };
@@ -44,8 +49,17 @@ public class TxSDO implements DataFromCan {
 			if(stopWatch.isRunning())
 			{
 				time = stopWatch.getElapsedTime()/1000;
+				timeQueue.get(index).add(time);
+			
+				//values.get(index).add(sdo.getValue());
+				addValue(values.get(index));
+				
 			}
 		}
+	}
+	private void addValue(Deque<? extends Number> deque)
+	{
+		
 	}
 
 }

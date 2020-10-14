@@ -12,13 +12,13 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import stand.util.StopWatch;
 
-public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
+public class PcmLineChartUpdater<T> implements ChartUpdater<Number>{
 
 	private LineChart<Number, Number> lineChart;
 	private NumberAxis xAxis;
 	private static final int MAX_DATA_POINTS = 200;
 	private double xSeriesData = 0;
-	private ArrayList<Deque> pcmLineChartDataModels;
+	private ArrayList<Deque<? extends Number>> pcmLineChartDataModels;
 	private ArrayList<Series<Number, Number>> allSeries;
 	private  long start = 0;;
 	private StopWatch stopWatch ;
@@ -46,14 +46,13 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 		this.stopWatch =	stopWatch;
 		}
 
-	@SuppressWarnings("unchecked")
 	private void addDataToSeries() {
 		for (int i = 0; i < 1; i++) { // -- add 1 numbers to the plot+
 			for (int j = 0; j < allSeries.size(); j++) {
 				if (pcmLineChartDataModels.get(j).isEmpty())
 					continue;
 				xSeriesData = stopWatch.getElapsedTime()/1000.0;
-				Data data = new XYChart.Data<>(xSeriesData, pcmLineChartDataModels.get(j).peekLast());				
+				Data<Number, Number> data = new XYChart.Data<>(xSeriesData, pcmLineChartDataModels.get(j).peekLast());				
 				allSeries.get(j).getData().add(data);
 				// remove points to keep us at no more than MAX_DATA_POINTS
 				if (allSeries.get(j).getData().size() > MAX_DATA_POINTS) {
@@ -78,8 +77,8 @@ public class PcmLineChartUpdater<T> implements ChartUpdater<T>{
 	}
 
 	@Override
-	public void addSeries(String seriesName, Deque<T> lineChartDataModel) {
-		XYChart.Series series = new XYChart.Series<>();
+	public void addSeries(String seriesName, Deque<? extends Number> lineChartDataModel) {
+		Series<Number, Number> series = new XYChart.Series<>();
 		series.setName(seriesName);
 		allSeries.add(series);
 		pcmLineChartDataModels.add(lineChartDataModel);

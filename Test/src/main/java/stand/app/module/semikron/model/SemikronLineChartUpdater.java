@@ -16,7 +16,7 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 	private List<Series<Number, Number>>allSeries;
 	private LineChart<Number, Number> lineChart;
 	//private Map<String, Series<Number, Number>> allSeriesMap;
-	private List<Deque<Number>> semikronChartDataModel;
+	private List<Deque<? extends Number>> semikronChartDataModel;
 	private StopWatch stopWatch;
 	private long lastUpdate = 0;
 	
@@ -54,7 +54,7 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 		
 	}
 	@Override
-	public void addSeries(String seriesName, Deque<Number> chartDataModel) {
+	public void addSeries(String seriesName, Deque<? extends Number> chartDataModel) {
 		XYChart.Series<Number, Number> series = new XYChart.Series<>();
 		series.setName(seriesName);
 		allSeries.add(series);

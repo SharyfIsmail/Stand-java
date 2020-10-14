@@ -49,7 +49,7 @@ public class StandConfig {
 	public int SEND_PORT ;// = 32000;
 
 	@Value("${server.ip}")
-	public String INET_ADDRESS= "169.254.123.123";// = "169.254.123.123";
+	public String INET_ADDRESS;// = "169.254.123.123";
 
 	@Value("${receive.port}")
 	private int RECEIVE_PORT;// = 31000;

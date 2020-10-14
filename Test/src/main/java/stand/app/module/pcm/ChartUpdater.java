@@ -8,7 +8,7 @@ public interface ChartUpdater<T> {
 
 	void stopUpdateChart();
 
-	void addSeries(String seriesName, Deque<T> chartDataModel);
+	void addSeries(String seriesName, Deque<? extends T> chartDataModel);
 
 	void deleteSeries(String seriesName);
 }

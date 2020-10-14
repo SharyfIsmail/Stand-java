@@ -548,6 +548,7 @@ public class MainController implements Initializable {
 		bind(udActualDevLabel, semikronDataMonitor.getTxSDO().getActualUd());
 		bind(udqAbsActualDevLabel, semikronDataMonitor.getTxSDO().getActualUdq());
 		systemWarningDev.setTooltip(new Tooltip(warningMessage));
+		
 		systemWarningDev.textProperty().addListener((observable, oldValue, newValue) -> {
 		if(newValue != null)
 		{
@@ -950,7 +951,7 @@ public class MainController implements Initializable {
 	/*
 	 * PCM INTERFACE
 	 */
-	private <T> void addPCM(CheckBox parametr, String seriesName, Deque dataModel,Label label, StringProperty stringProperty) {
+	private <T> void addPCM(CheckBox parametr, String seriesName, Deque<? extends Number> dataModel,Label label, StringProperty stringProperty) {
 	
 		if (pcmLineChartUpdater == null) {
 			pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM,pcmDataMonitor.getTurnoverSensorModel().getStopWatch() );
@@ -1226,7 +1227,10 @@ public class MainController implements Initializable {
 	{
 		
 	}
-	
+	public void addSpeedDevChart(ActionEvent event)
+	{
+		
+	}
 	/*
 	 * RACE CAR INTERFACE E
 	 */
