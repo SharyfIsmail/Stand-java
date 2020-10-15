@@ -50,16 +50,11 @@ public class TxSDO implements DataFromCan {
 			{
 				time = stopWatch.getElapsedTime()/1000;
 				timeQueue.get(index).add(time);
-			
-				//values.get(index).add(sdo.getValue());
-				addValue(values.get(index));
-				
+				Deque<Number> deque = (Deque<Number>) values.get(index);
+				deque.add((Number) sdo.getValue());
 			}
 		}
 	}
-	private void addValue(Deque<? extends Number> deque)
-	{
-		
-	}
+
 
 }

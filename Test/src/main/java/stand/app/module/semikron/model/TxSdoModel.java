@@ -47,6 +47,7 @@ public class TxSdoModel implements DataFromCanModel {
 	private StringProperty actualUdq;
 	private StringProperty analogIn1;
 	private StringProperty analogIn2;
+	
 	private Map<Integer ,Deque<Long>> experimentDurationMap ;
 	private Deque<Long> experimentTimeReferenceIq;
 	private Deque<Long> experimentTimereferenceId;
@@ -69,6 +70,7 @@ public class TxSdoModel implements DataFromCanModel {
 	public TxSdoModel() {
 		super();
 		stopWatch = new StopWatch();
+		
 		experimentTimeReferenceIq = new ConcurrentLinkedDeque<>();
 		experimentTimereferenceId = new ConcurrentLinkedDeque<>();
 		experimentTimeActualIq = new ConcurrentLinkedDeque<>();
@@ -198,6 +200,127 @@ public class TxSdoModel implements DataFromCanModel {
 
 	public StringProperty getAnalogIn2() {
 		return analogIn2;
+	}
+
+	public StopWatch getStopWatch() {
+		return stopWatch;
+	}
+
+	public void setStopWatch(StopWatch stopWatch) {
+		this.stopWatch = stopWatch;
+	}
+
+
+	public Deque<Long> getExperimentTimeReferenceIq() {
+		return experimentTimeReferenceIq;
+	}
+
+	public void setExperimentTimeReferenceIq(Deque<Long> experimentTimeReferenceIq) {
+		this.experimentTimeReferenceIq = experimentTimeReferenceIq;
+	}
+
+	public Deque<Long> getExperimentTimereferenceId() {
+		return experimentTimereferenceId;
+	}
+
+	public void setExperimentTimereferenceId(Deque<Long> experimentTimereferenceId) {
+		this.experimentTimereferenceId = experimentTimereferenceId;
+	}
+
+	public Deque<Long> getExperimentTimeActualIq() {
+		return experimentTimeActualIq;
+	}
+
+	public void setExperimentTimeActualIq(Deque<Long> experimentTimeActualIq) {
+		this.experimentTimeActualIq = experimentTimeActualIq;
+	}
+
+	public Deque<Long> getExperimentTimeActualId() {
+		return experimentTimeActualId;
+	}
+
+	public void setExperimentTimeActualId(Deque<Long> experimentTimeActualId) {
+		this.experimentTimeActualId = experimentTimeActualId;
+	}
+
+	public Deque<Long> getExperimentTimeActualUq() {
+		return experimentTimeActualUq;
+	}
+
+	public void setExperimentTimeActualUq(Deque<Long> experimentTimeActualUq) {
+		this.experimentTimeActualUq = experimentTimeActualUq;
+	}
+
+	public Deque<Long> getExperimentTimeActualUd() {
+		return experimentTimeActualUd;
+	}
+
+	public void setExperimentTimeActualUd(Deque<Long> experimentTimeActualUd) {
+		this.experimentTimeActualUd = experimentTimeActualUd;
+	}
+
+	public Deque<Long> getExperimentTimeActualUdq() {
+		return experimentTimeActualUdq;
+	}
+
+	public void setExperimentTimeActualUdq(Deque<Long> experimentTimeActualUdq) {
+		this.experimentTimeActualUdq = experimentTimeActualUdq;
+	}
+
+	public Deque<Float> getReferenceIqQueue() {
+		return referenceIqQueue;
+	}
+
+	public void setReferenceIqQueue(Deque<Float> referenceIqQueue) {
+		this.referenceIqQueue = referenceIqQueue;
+	}
+
+	public Deque<Float> getReferenceIdQueue() {
+		return referenceIdQueue;
+	}
+
+	public void setReferenceIdQueue(Deque<Float> referenceIdQueue) {
+		this.referenceIdQueue = referenceIdQueue;
+	}
+
+	public Deque<Float> getActualIqQueue() {
+		return ActualIqQueue;
+	}
+
+	public void setActualIqQueue(Deque<Float> actualIqQueue) {
+		ActualIqQueue = actualIqQueue;
+	}
+
+	public Deque<Float> getActualIdQueue() {
+		return ActualIdQueue;
+	}
+
+	public void setActualIdQueue(Deque<Float> actualIdQueue) {
+		ActualIdQueue = actualIdQueue;
+	}
+
+	public Deque<Float> getActualUqQueue() {
+		return ActualUqQueue;
+	}
+
+	public void setActualUqQueue(Deque<Float> actualUqQueue) {
+		ActualUqQueue = actualUqQueue;
+	}
+
+	public Deque<Float> getActualUdQueue() {
+		return ActualUdQueue;
+	}
+
+	public void setActualUdQueue(Deque<Float> actualUdQueue) {
+		ActualUdQueue = actualUdQueue;
+	}
+
+	public Deque<Float> getActualUdqQueue() {
+		return ActualUdqQueue;
+	}
+
+	public void setActualUdqQueue(Deque<Float> actualUdqQueue) {
+		ActualUdqQueue = actualUdqQueue;
 	}
 
 }

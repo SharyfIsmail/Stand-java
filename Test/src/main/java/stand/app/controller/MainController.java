@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -419,6 +420,7 @@ public class MainController implements Initializable {
 	CheckBox udqAbsActualDevSave;
 	@FXML
 	Label systemWarningDev;
+	private List <CheckBox> checkBoxChartList;
 	
 
 	/*
@@ -427,6 +429,7 @@ public class MainController implements Initializable {
 	@Autowired
 	SensorComunicationThread sensorComunicationThread;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		receiveThread.start();
@@ -528,7 +531,6 @@ public class MainController implements Initializable {
 		bind(dcLinkVoltageDevLabel, semikronDataMonitor.getTxPDO4().getLinkVoltageDC());
 		bind(systemWarningDev, semikronDataMonitor.getTxPDO4().getSystemWarning());
 
-
 		bind(referenceTorqueDevLabel, semikronDataMonitor.getTxPDO2().getTorqueAfterLimitation());
 		bind(actualTorqueDevLabel, semikronDataMonitor.getTxPDO2().getTorque());
 		bind(maxAvailableTorqueDevLabel, semikronDataMonitor.getTxPDO2().getMaxAvailableTorque());
@@ -548,6 +550,48 @@ public class MainController implements Initializable {
 		bind(udActualDevLabel, semikronDataMonitor.getTxSDO().getActualUd());
 		bind(udqAbsActualDevLabel, semikronDataMonitor.getTxSDO().getActualUdq());
 		systemWarningDev.setTooltip(new Tooltip(warningMessage));
+		
+		checkBoxChartList = new ArrayList<CheckBox>() {
+		
+			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			{
+				add(PhaseCurrentDevChart);add(dcLinkVoltageDevChart);
+				add(speedDevChart); add(actualTorqueDevChart);
+				add(referenceTorqueDevChart);add(maxAvailableTorqueDevChart);
+				add(dcLnkPowerChart);add(mechanicalPowerChart);
+				add(maxJunctionTempChart);add(motorTemperatureChart);
+				add(iqReferenceDevChart);add(idReferenceDevChart);
+				add(iqActualDevChart);add(idActualDevChart);
+				add(uqActualDevChart);add(udActualDevChart);
+				add(udqAbsActualDevChart);
+			}
+		};
+
+		List<String> names= Arrays.asList("Phase Current","Dc Link Voltage","Speed","Actual Torque",
+							   "Reference Torque","Max Available Torque","DcLink Power" ,
+							   "Mechanical Power","Max Junction Temp","Motor Temperature",
+							   "Iq Reference","Id Reference","Iq Actual","Id Actual","Uq Actual",
+							   "Ud Actual","Udq Abs Actual");
+		
+		for(int i = 0; i < checkBoxChartList.size();i++)
+		{
+			 CheckBox checkBox = checkBoxChartList.get(i);
+			 String name = names.get(i);
+			 Deque<? extends Number> list = semikronDataMonitor.getSemicronValueDeques().get(i);
+			 checkBox.setOnAction(new EventHandler<ActionEvent>() 
+			{				
+				@Override
+				public void handle(ActionEvent event) {
+					addChartToSuperCarDev(checkBox, name, list);
+				}
+			});
+		}
+		
 		
 		systemWarningDev.textProperty().addListener((observable, oldValue, newValue) -> {
 		if(newValue != null)
@@ -1141,7 +1185,7 @@ public class MainController implements Initializable {
 	/*
 	 * RACE CAR INTERFACE START
 	 */
-	private <T> void addChartToSuperCarDev(CheckBox parametr, String seriesName, Deque dataModel,Label label, StringProperty stringProperty) {
+	private  void addChartToSuperCarDev(CheckBox parametr, String seriesName, Deque<? extends Number> dataModel) {
 		
 		if (pcmLineChartUpdater == null) {
 			pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM,pcmDataMonitor.getTurnoverSensorModel().getStopWatch() );
@@ -1149,12 +1193,9 @@ public class MainController implements Initializable {
 		
 		if (parametr.isSelected()) {
 			
-			bind(label,stringProperty);
-			
 			pcmLineChartUpdater.addSeries(seriesName, dataModel);
 			pcmLineChartUpdater.startUpdateChart();			
 		} else {
-			bind(label,new SimpleStringProperty(" "));
 			pcmLineChartUpdater.deleteSeries(seriesName);
 		}
 
