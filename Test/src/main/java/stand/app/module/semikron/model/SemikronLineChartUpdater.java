@@ -39,15 +39,15 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 	public  SemikronLineChartUpdater(LineChart<Number, Number> lineChart) 
 	{
 		this.lineChart = lineChart;
-		lineChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				double xStart = lineChart.getXAxis().getLocalToParentTransform().getTx();
-				double axisXRelativeMousePosition = event.getX() - xStart;	
-				
-			}
-		});
+//		lineChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
+//
+//			@Override
+//			public void handle(MouseEvent event) {
+//				double xStart = lineChart.getXAxis().getLocalToParentTransform().getTx();
+//				double axisXRelativeMousePosition = event.getX() - xStart;	
+//				
+//			}
+//		});
 		ChartPanManager panner = new ChartPanManager( lineChart );
 		panner.setMouseFilter( new EventHandler<MouseEvent>() {
 			@Override
@@ -100,7 +100,7 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 			xSeriesData = stopWatch.getElapsedTime()/1000.0;
 			System.out.println(xSeriesData);
 			//XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, semikronChartDataModel.get(i).peekLast());
-			XYChart.Data<Number, Number> data = new XYChart.Data<>(x++, 50);
+			XYChart.Data<Number, Number> data = new XYChart.Data<>(x++, y++);
 
 			allSeries.get(i).getData().add(data);
 			//if (allSeries.get(i).getData().size() > MAX_DATA_POINTS) {

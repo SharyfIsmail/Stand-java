@@ -439,7 +439,8 @@ public class MainController implements Initializable {
 
 	@FXML
 	Button autoZoomButton;
-	MultipleController multipleController = new MultipleController();
+	
+	MultipleController multipleController;
 	/*
 	 * RACR CAR FIELDS END
 	 */
@@ -1214,14 +1215,18 @@ public class MainController implements Initializable {
 			
 		
 			 try {
-				Parent root = FXMLLoader.load(getClass().getResource("/view/fxml/MultipleStages.fxml"));
+				 FXMLLoader fxmlLoader= new  FXMLLoader(getClass().getResource("/view/fxml/MultipleStages.fxml"));
+				Parent root = fxmlLoader.load();
 				Stage primaryStage = new Stage();
 				primaryStage.setTitle(seriesName);
 				primaryStage.setScene(new Scene(root));
-		
+				
 				 primaryStage.setResizable(false);
-
-				multipleController.fuck();
+				 multipleController = fxmlLoader.getController();
+				 SemikronLineChartUpdater s = new SemikronLineChartUpdater(multipleController.lineChartMultiple);
+				 s.addSeries(seriesName, dataModel);
+				 s.startUpdateChart();
+			    	
 				primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent event) {
 					primaryStage.close();

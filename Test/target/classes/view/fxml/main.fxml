@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+
 <Pane maxHeight="755.0" maxWidth="883.0" minHeight="755.0" minWidth="883.0" prefHeight="755.0" prefWidth="883.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stand.app.controller.MainController">
    <children>
       <AnchorPane layoutX="15.0" layoutY="16.0" prefHeight="720.0" prefWidth="866.0">
