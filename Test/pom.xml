@@ -108,8 +108,12 @@
     	  <groupId>com.nativelibs4java</groupId>
     	  <artifactId>ochafik-util</artifactId>
    	      <version>0.12</version>
+		 </dependency>
+		  <dependency>
+  <groupId>org.gillius</groupId>
+  <artifactId>jfxutils</artifactId>
+  <version>1.0</version>
 </dependency>
-		  
 	</dependencies>	
 	
 	

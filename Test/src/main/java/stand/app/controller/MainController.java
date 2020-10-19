@@ -22,8 +22,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -35,10 +39,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import stand.app.module.battery.model.BatteryDataMonitor;
 import stand.app.module.pcm.PcmDataMonitor;
 import stand.app.module.pcm.PcmLineChartUpdater;
@@ -46,6 +52,7 @@ import stand.app.module.semikron.mode.CntrlMode;
 import stand.app.module.semikron.mode.SpeedCntrlMode;
 import stand.app.module.semikron.mode.TorqueCntrlMode;
 import stand.app.module.semikron.model.SemikronDataMonitor;
+import stand.app.module.semikron.model.SemikronLineChartUpdater;
 import stand.app.thread.ReceiveThread;
 import stand.app.thread.SensorComunicationThread;
 import stand.battery.BatteryService;
@@ -420,16 +427,25 @@ public class MainController implements Initializable {
 	CheckBox udqAbsActualDevSave;
 	@FXML
 	Label systemWarningDev;
-	private List <CheckBox> checkBoxChartList;
-	
 
+	@FXML
+	LineChart<Number, Number> lineChartSemicron;
+	SemikronLineChartUpdater semikronLineChartUpdater;
+	
+	private List <CheckBox> checkBoxChartList;
+	@FXML
+	Button strartExperimentButton;
+	private boolean isExperimentStarted = false;
+
+	@FXML
+	Button autoZoomButton;
+	MultipleController multipleController = new MultipleController();
 	/*
 	 * RACR CAR FIELDS END
 	 */
 	@Autowired
 	SensorComunicationThread sensorComunicationThread;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		receiveThread.start();
@@ -588,11 +604,12 @@ public class MainController implements Initializable {
 				@Override
 				public void handle(ActionEvent event) {
 					addChartToSuperCarDev(checkBox, name, list);
+					
 				}
 			});
 		}
 		
-		
+		systemWarningDev.setTooltip(new Tooltip(warningMessage));
 		systemWarningDev.textProperty().addListener((observable, oldValue, newValue) -> {
 		if(newValue != null)
 		{
@@ -1187,90 +1204,90 @@ public class MainController implements Initializable {
 	 */
 	private  void addChartToSuperCarDev(CheckBox parametr, String seriesName, Deque<? extends Number> dataModel) {
 		
-		if (pcmLineChartUpdater == null) {
-			pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM,pcmDataMonitor.getTurnoverSensorModel().getStopWatch() );
+		if (semikronLineChartUpdater == null) {
+			semikronLineChartUpdater = new SemikronLineChartUpdater(lineChartSemicron);
 		}
 		
 		if (parametr.isSelected()) {
 			
-			pcmLineChartUpdater.addSeries(seriesName, dataModel);
-			pcmLineChartUpdater.startUpdateChart();			
+			semikronLineChartUpdater.addSeries(seriesName, dataModel);
+			
+		
+			 try {
+				Parent root = FXMLLoader.load(getClass().getResource("/view/fxml/MultipleStages.fxml"));
+				Stage primaryStage = new Stage();
+				primaryStage.setTitle(seriesName);
+				primaryStage.setScene(new Scene(root));
+		
+				 primaryStage.setResizable(false);
+
+				multipleController.fuck();
+				primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent event) {
+					primaryStage.close();
+				}
+				});
+				primaryStage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		        //	semikronLineChartUpdater.startUpdateChart();
+		
 		} else {
-			pcmLineChartUpdater.deleteSeries(seriesName);
+			semikronLineChartUpdater.deleteSeries(seriesName);
 		}
 
 	}
-	public void addPhaseCurrentDevChart(ActionEvent event)
+	public void strartExperimentAction(ActionEvent action)
 	{
-		
+		if(isExperimentStarted == false)
+		{
+		//	try {
+			//	semikron.openCommunication();
+				semikronDataMonitor.getTxPDO2().getStopWatch().start();
+				semikronDataMonitor.getTxPDO3().getStopWatch().start();
+				semikronDataMonitor.getTxPDO4().getStopWatch().start();
+				semikronDataMonitor.getTxPDO5().getStopWatch().start();
+				semikronDataMonitor.getTxSDO().getStopWatch().start();
+
+				strartExperimentButton.setEffect(new Lighting(new Light.Distant(45.0, 45.0, Color.CHARTREUSE)));
+				strartExperimentButton.setText("Stop");
+				isExperimentStarted = true;
+				semikronLineChartUpdater.startUpdateChart();
+				
+		//	} catch (IOException e1) {
+			//	callAlert("Open Communication", e1.getMessage());
+			//	e1.printStackTrace();
+		//	}		
+		}
+		else
+		{
+		//	try {
+			///	semikron.closeCommunication();
+				semikronDataMonitor.getTxPDO2().getStopWatch().reset();
+				semikronDataMonitor.getTxPDO3().getStopWatch().reset();
+				semikronDataMonitor.getTxPDO4().getStopWatch().reset();
+				semikronDataMonitor.getTxPDO5().getStopWatch().reset();
+				semikronDataMonitor.getTxSDO().getStopWatch().reset();
+				strartExperimentButton.setEffect(null);
+				isExperimentStarted = false;
+				strartExperimentButton.setText("Start");
+				semikronLineChartUpdater.stopUpdateChart();
+
+		//	} catch (IOException e) {
+			//	callAlert("Close Communication", e.getMessage());
+			//	e.printStackTrace();
+			//}
+			
+		}
 	}
-	
-	public void addDcLinkVoltageDevChart(ActionEvent event)
+	public void autoZoomAction(ActionEvent actionEvent)
 	{
-		
-	}
-	
-	public void addActualTorqueDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addReferenceTorqueDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addMaxAvailableTorqueDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addDcLnkPowerChart(ActionEvent event)
-	{
-		
-	}
-	public void addMechanicalPowerChart(ActionEvent event)
-	{
-		
-	}
-	public void addMaxJunctionTempChart(ActionEvent event)
-	{
-		
-	}
-	public void addMotorTemperatureChart(ActionEvent event)
-	{
-		
-	}
-	public void addIqReferenceDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addIdReferenceDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addIqActualDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addIdActualDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addUqActualDevChart(ActionEvent event)
-	{
-		
-	}
-	
-	public void addUdActualDevChart(ActionEvent event)
-	{
-		
-	}
-	
-	public void addUdqAbsActualDevChart(ActionEvent event)
-	{
-		
-	}
-	public void addSpeedDevChart(ActionEvent event)
-	{
-		
+		lineChartSemicron.getXAxis().setAutoRanging(true);
+		lineChartSemicron.getYAxis().setAutoRanging(true);
+
 	}
 	/*
 	 * RACE CAR INTERFACE E
