@@ -456,6 +456,8 @@ public class MainController implements Initializable {
 
 		// control mode
 		pcmLineChartUpdater = new PcmLineChartUpdater<>(lineChartPCM, pcmDataMonitor.getTurnoverSensorModel().getStopWatch());
+		semikronLineChartUpdater = new SemikronLineChartUpdater(lineChartSemicron);
+
 		mode = FXCollections.observableArrayList(torqueCntrlMode, speedCntrlMode);
 		for (CntrlMode m : mode) {
 			m.setSpeedTorqueTextField(refTorqCntrlTextField, refSpeedCntrlTextField, maxTorqCntrlTextField,
@@ -1059,7 +1061,7 @@ public class MainController implements Initializable {
 		{
 			sensorComunicationThread.getWinUsbDataReceiver().close();
 			if(pcmDataMonitor.getTurnoverSensorModel().getStopWatch().isRunning())
-				pcmDataMonitor.getTurnoverSensorModel().getStopWatch().pause();;
+				pcmDataMonitor.getTurnoverSensorModel().getStopWatch().pause();
 			ConnectToT_45Button.setEffect(null);
 			ConnectionButtonIsPressed = false;
 			ConnectToT_45Button.setText("Open Connection");
@@ -1212,8 +1214,6 @@ public class MainController implements Initializable {
 		if (parametr.isSelected()) {
 			
 			semikronLineChartUpdater.addSeries(seriesName, dataModel);
-			
-		
 			 try {
 				 FXMLLoader fxmlLoader= new  FXMLLoader(getClass().getResource("/view/fxml/MultipleStages.fxml"));
 				Parent root = fxmlLoader.load();
@@ -1223,19 +1223,20 @@ public class MainController implements Initializable {
 				
 				 primaryStage.setResizable(false);
 				 multipleController = fxmlLoader.getController();
-				 SemikronLineChartUpdater s = new SemikronLineChartUpdater(multipleController.lineChartMultiple);
-				 s.addSeries(seriesName, dataModel);
-				 s.startUpdateChart();
+				 multipleController.setSemikronLineChartUpdater( new SemikronLineChartUpdater(multipleController.lineChartMultiple));
+				 multipleController.getSemikronLineChartUpdater().addSeries(seriesName, dataModel);
+				 multipleController.getSemikronLineChartUpdater().startUpdateChart();
 			    	
 				primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent event) {
+					parametr.setSelected(false);
 					primaryStage.close();
 				}
 				});
 				primaryStage.show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				callAlert("Chart ", e.getMessage());
 			}
 			
 		        //	semikronLineChartUpdater.startUpdateChart();
@@ -1249,8 +1250,9 @@ public class MainController implements Initializable {
 	{
 		if(isExperimentStarted == false)
 		{
-		//	try {
-			//	semikron.openCommunication();
+			try {
+				if(!openComButton.isDisabled())
+					semikron.openSdoCommunication();
 				semikronDataMonitor.getTxPDO2().getStopWatch().start();
 				semikronDataMonitor.getTxPDO3().getStopWatch().start();
 				semikronDataMonitor.getTxPDO4().getStopWatch().start();
@@ -1262,15 +1264,16 @@ public class MainController implements Initializable {
 				isExperimentStarted = true;
 				semikronLineChartUpdater.startUpdateChart();
 				
-		//	} catch (IOException e1) {
-			//	callAlert("Open Communication", e1.getMessage());
-			//	e1.printStackTrace();
-		//	}		
+			} catch (IOException e1) {
+				callAlert("Open Communication", e1.getMessage());
+				e1.printStackTrace();
+			}		
 		}
 		else
 		{
-		//	try {
-			///	semikron.closeCommunication();
+			try {
+				if(!openComButton.isDisabled())
+					semikron.closeSdoCommunication();
 				semikronDataMonitor.getTxPDO2().getStopWatch().reset();
 				semikronDataMonitor.getTxPDO3().getStopWatch().reset();
 				semikronDataMonitor.getTxPDO4().getStopWatch().reset();
@@ -1281,11 +1284,10 @@ public class MainController implements Initializable {
 				strartExperimentButton.setText("Start");
 				semikronLineChartUpdater.stopUpdateChart();
 
-		//	} catch (IOException e) {
-			//	callAlert("Close Communication", e.getMessage());
-			//	e.printStackTrace();
-			//}
-			
+			} catch (IOException e) {
+				callAlert("Close Communication", e.getMessage());
+				e.printStackTrace();
+			}
 		}
 	}
 	public void autoZoomAction(ActionEvent actionEvent)

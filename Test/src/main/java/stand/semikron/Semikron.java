@@ -127,7 +127,57 @@ public class Semikron implements SemikronService {
 			throw new IOException(e.getMessage());
 		}
 	}
+	@Override
+	public void openSdoCommunication() throws IOException
+	{
+		addCan(actualIq);
+		addCan(actualId);
 
+		addCan(referenceIq);
+		addCan(referenceId);
+
+		addCan(actualUq);
+		addCan(actualUd);
+		addCan(actualUdq);
+		try
+		{
+			dataSender.send(ethernetCan.collectEthernetPacket());
+		}catch (Exception e) {
+			ethernetCan.removeCan(actualIq);
+			ethernetCan.removeCan(actualId);
+
+			ethernetCan.removeCan(referenceIq);
+			ethernetCan.removeCan(referenceId);
+
+			ethernetCan.removeCan(actualUq);
+			ethernetCan.removeCan(actualUd);
+			ethernetCan.removeCan(actualUdq);
+		}
+	}
+	@Override
+	public void closeSdoCommunication() throws IOException
+	{
+		ethernetCan.removeCan(actualIq);
+		ethernetCan.removeCan(actualId);
+		ethernetCan.removeCan(referenceIq);
+		ethernetCan.removeCan(referenceId);
+		ethernetCan.removeCan(actualUq);
+		ethernetCan.removeCan(actualUd);
+		ethernetCan.removeCan(actualUdq);
+		try {
+			dataSender.send(ethernetCan.collectEthernetPacket());
+		} catch (IOException e) {
+			ethernetCan.addCan(actualIq);
+			ethernetCan.addCan(actualId);
+			ethernetCan.addCan(referenceIq);
+			ethernetCan.addCan(referenceId);
+			ethernetCan.addCan(actualUq);
+			ethernetCan.addCan(actualUd);
+			ethernetCan.addCan(actualUdq);
+			throw new IOException(e.getMessage());
+		}
+		ethernetCan.removeCan(nmtMaster);
+	}
 	@Override
 	public void closeCommunication() throws IOException {
 		nmtMaster.setCommand(NmtCommand.RESET_COMMUNICATION);

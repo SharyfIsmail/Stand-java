@@ -11,6 +11,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import stand.app.module.semikron.model.SemikronLineChartUpdater;
 
 public class MultipleController implements Initializable
 {
@@ -21,6 +22,7 @@ public class MultipleController implements Initializable
 	@FXML
 	Label XYLabel;
 	
+	private SemikronLineChartUpdater semikronLineChartUpdater;
 	public void  autoZoomAction(ActionEvent action)
 	{
 		lineChartMultiple.getXAxis().setAutoRanging(true);
@@ -32,14 +34,22 @@ public class MultipleController implements Initializable
 		lineChartMultiple.setOnMouseMoved(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) {
-				double xStart = lineChartMultiple.getXAxis().getLocalToParentTransform().getTx();
-				double axisXRelativeMousePosition = event.getX() - xStart;	
-			XYLabel.setText(String.format( "(%.2f, %.2f)", xStart,axisXRelativeMousePosition));
-				System.out.println("fuck yes");
+			public void handle(MouseEvent mouseEvent) {
+				double axisXRelativeMousePosition = lineChartMultiple.getXAxis().getValueForDisplay(mouseEvent.getX()).intValue();
+				double axisYRelativeMousePosition = lineChartMultiple.getYAxis().getValueForDisplay(mouseEvent.getY()).intValue();
+			XYLabel.setText(String.format( "(%d, %d)",(int) axisXRelativeMousePosition, (int)axisYRelativeMousePosition));
 
 			}
 		});
 		
 	}
+
+	public SemikronLineChartUpdater getSemikronLineChartUpdater() {
+		return semikronLineChartUpdater;
+	}
+
+	public void setSemikronLineChartUpdater(SemikronLineChartUpdater semikronLineChartUpdater) {
+		this.semikronLineChartUpdater = semikronLineChartUpdater;
+	}
+	
 }

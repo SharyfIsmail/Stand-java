@@ -44,6 +44,8 @@ public interface SemikronService {
 
 	void applyPwmValues(MotorControlModeRx motorControlMode, int torque, int speed)
 			throws NumberFormatException, IOException;
+	public void openSdoCommunication() throws IOException;
+	public void closeSdoCommunication() throws IOException;
 
 	void disablePWM() throws IOException;
 }

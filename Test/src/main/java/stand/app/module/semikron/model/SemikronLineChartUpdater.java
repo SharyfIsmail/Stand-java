@@ -73,7 +73,7 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 		} );
 		JFXChartUtil.addDoublePrimaryClickAutoRangeHandler( lineChart );
 	
-		this.lineChart.setCreateSymbols(true);
+		this.lineChart.setCreateSymbols(false);
 		xAxis =  (NumberAxis) lineChart.getXAxis();
 		stopWatch = new StopWatch();
 		allSeries = new ArrayList<>();
@@ -94,13 +94,12 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 	
 		for(int i = 0; i<allSeries.size(); i++)
 		{
-			System.out.println(semikronChartDataModel.get(i).isEmpty());
-			//if(semikronChartDataModel.get(i).isEmpty())
-			//	continue;
+			if(semikronChartDataModel.get(i).isEmpty())
+				continue;
 			xSeriesData = stopWatch.getElapsedTime()/1000.0;
 			System.out.println(xSeriesData);
-			//XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, semikronChartDataModel.get(i).peekLast());
-			XYChart.Data<Number, Number> data = new XYChart.Data<>(x++, y++);
+			XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, semikronChartDataModel.get(i).peekLast());
+		//	XYChart.Data<Number, Number> data = new XYChart.Data<>(x++, y++);
 
 			allSeries.get(i).getData().add(data);
 			//if (allSeries.get(i).getData().size() > MAX_DATA_POINTS) {
