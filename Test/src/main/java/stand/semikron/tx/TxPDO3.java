@@ -26,12 +26,9 @@ public class TxPDO3 implements DataFromCan {
 	@Override
 	public void parseDataFromCan(byte[] data) {
 		motorSpeed = ByteBuffer.wrap(data, 0, 2).order(ByteOrder.LITTLE_ENDIAN).getShort();
-		System.out.println(motorSpeed);
 
 		mechanicPower = ByteBuffer.wrap(data, 2, 2).order(ByteOrder.LITTLE_ENDIAN).getShort();
-		System.out.println(mechanicPower);
 		linkPowerDC = ByteBuffer.wrap(data, 4, 2).order(ByteOrder.LITTLE_ENDIAN).getShort();
-		System.out.println(linkPowerDC);
 
 		messageCount = (byte) (Integer.reverseBytes(data[6] << 28) >>> 4);
 		mechanicPowerVAL = VAL.getLossesVALByCode(Integer.reverseBytes(data[6] << 26) >>> 6);

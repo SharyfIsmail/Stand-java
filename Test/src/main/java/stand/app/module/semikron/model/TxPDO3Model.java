@@ -21,7 +21,7 @@ public class TxPDO3Model implements DataFromCanModel {
 	private Deque<Short> motorSpeedQueue;
 	private Deque<Integer> dcLinkPowerQueue;
 	private Deque<Integer> MechanicPowerQueue;
-
+int i = 0;
 	private Deque<Long> experimentDuration;
 
 	private long time = 0;
@@ -43,7 +43,6 @@ public class TxPDO3Model implements DataFromCanModel {
 	public void updateModel() {
 		if(stopWatch.isRunning())
 		{
-		
 			time = stopWatch.getElapsedTime()/1000;
 			experimentDuration.add(time);
 			motorSpeedQueue.add(txPDO3.getMotorSpeed());

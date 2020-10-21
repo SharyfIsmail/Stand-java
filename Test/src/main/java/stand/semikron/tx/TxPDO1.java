@@ -52,9 +52,6 @@ public class TxPDO1 implements DataFromCan {
 			inverterLossesVAL = VAL.getLossesVALByCode(Integer.reverseBytes(data[5] << 28) >>> 6);
 			motorLossesVAL = VAL.getLossesVALByCode(Integer.reverseBytes(data[5] << 26) >>> 6);
 			valueFromDigitalOutput(data[5]);
-			System.out.println(
-					"0100 0000 / 1000 0000 Digital Output 1/2 State ?: " + Integer.toBinaryString(data[5]) + " ");
-			System.out.println("2/3bit ?: " + Integer.toBinaryString(data[3]) + " ");
 		} else {
 			throw new IndexOutOfBoundsException("длинна data не равна 8 байтам. data.length=" + data.length);
 		}

@@ -33,7 +33,6 @@ public class UdpDataReceiver implements DataReceiver {
 		}
 		receiveDatagramPacket.setData(new byte[bufferSize]);
 		receiveDatagramSocket.receive(receiveDatagramPacket);
-		System.out.println(receiveDatagramSocket.getLocalPort());
 		return receiveDatagramPacket.getData();
 	}
 

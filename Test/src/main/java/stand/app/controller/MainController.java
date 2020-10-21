@@ -1287,7 +1287,6 @@ public class MainController implements Initializable {
 				semikronLineChartUpdater.startUpdateChart();
 				
 			} catch (IOException e) {
-				System.out.println("fuiclldsld,a;lmdaslkmdkn");
 				callAlert("Open Communication", e.getMessage());
 				e.printStackTrace();
 			}		
@@ -1306,6 +1305,13 @@ public class MainController implements Initializable {
 				isExperimentStarted = false;
 				strartExperimentButton.setText("Start");
 				semikronLineChartUpdater.stopUpdateChart();
+				semikronLineChartUpdater.deleteAllSeries();
+				for(int i = 0 ; i < checkBoxChartList.size(); i++)
+				{
+					checkBoxChartList.get(i).setSelected(false);
+					checkBoxSaveList.get(i).setSelected(false);
+
+				}
 
 			} catch (IOException e) {
 				callAlert("Close Communication", e.getMessage());
@@ -1345,7 +1351,6 @@ public class MainController implements Initializable {
 			{
 				callAlert(AlertType.INFORMATION, "Сохранение файла",
 							"Файл " + file.getName() + " успешно сохранен :" + "\n" + file.getAbsolutePath());				
-				semikronLineChartUpdater.stopUpdateChart();
 				semikronDataMonitor.getTxPDO2().clearAllQueue();
 				semikronDataMonitor.getTxPDO3().clearAllQueue();
 				semikronDataMonitor.getTxPDO4().clearAllQueue();

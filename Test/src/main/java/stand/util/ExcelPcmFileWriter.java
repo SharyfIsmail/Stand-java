@@ -63,8 +63,8 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 				
 				Long timeTest =  (Long) itertator.next();
 				cellTime.setCellValue(LocalTime.ofSecondOfDay(timeTest.longValue()).toString());
-				Float dataTest = (Float) data.poll();
-				cell.setCellValue(dataTest.floatValue());
+				Number dataTest =  data.poll();
+				cell.setCellValue(dataTest.doubleValue());
 			}
 			sheet.autoSizeColumn(rownum);
 		}

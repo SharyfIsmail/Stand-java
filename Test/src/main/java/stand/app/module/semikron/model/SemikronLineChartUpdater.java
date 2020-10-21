@@ -97,7 +97,6 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 			if(semikronChartDataModel.get(i).isEmpty())
 				continue;
 			xSeriesData = stopWatch.getElapsedTime()/1000.0;
-			System.out.println(xSeriesData);
 			XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, semikronChartDataModel.get(i).peekLast());
 		//	XYChart.Data<Number, Number> data = new XYChart.Data<>(x++, y++);
 
@@ -124,6 +123,7 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 
 	@Override
 	public void deleteSeries(String seriesName) {
+		System.out.println(allSeries.size());
 		for(int i = 0 ; i < allSeries.size() ; i++)
 		{
 			if(allSeries.get(i).getName().equals(seriesName))
@@ -133,6 +133,17 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 				allSeries.remove(i);
 				
 			}
+		}
+	}
+	public void deleteAllSeries() {
+		System.out.println("All :"+allSeries.size());
+
+		for(int i = 0 ; i < allSeries.size() ; i++)
+		{
+				lineChart.getData().remove(allSeries.get(i));
+				semikronChartDataModel.remove(i);
+				allSeries.remove(i);
+				System.out.println(i+" removed");
 		}
 	}
 	@Override

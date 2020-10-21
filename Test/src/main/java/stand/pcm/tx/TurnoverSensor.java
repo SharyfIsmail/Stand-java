@@ -91,6 +91,5 @@ public class TurnoverSensor extends CanCdr implements DataFromCan, DataFromT_45 
 		TorqueT_45 = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat(8);
 		tempT_45 = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat(12);
 		turnOverT_45 = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat(16);
-		//System.out.println("Torque: "+ TorqueT_45 +" , "+"Turnover: " +turnOverT_45);
 	}
 }

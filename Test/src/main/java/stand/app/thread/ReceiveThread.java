@@ -30,8 +30,6 @@ public class ReceiveThread extends Thread {
 		EthernetCan receivedEthCan = new EthCanCdr();
 		receivedEthCan.parseEthernetPacket(ethernetPacket);
 
-		System.out.println("Nz = " + receivedEthCan.getNz());
-
 		for (Can can : receivedEthCan.getAllCan()) {
 			if (canId.get(can.getId()) != null) {
 				DataFromCanModel dataFromCanModel = canId.get(can.getId());
