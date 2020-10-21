@@ -152,6 +152,7 @@ public class Semikron implements SemikronService {
 			ethernetCan.removeCan(actualUq);
 			ethernetCan.removeCan(actualUd);
 			ethernetCan.removeCan(actualUdq);
+			throw new IOException(e.getMessage());
 		}
 	}
 	@Override

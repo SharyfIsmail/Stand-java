@@ -16,6 +16,7 @@ public class SemikronDataMonitor {
 	private TxPDO5Model txPDO5;
 	private TxSdoModel txSDO;
 	private List<Deque <? extends Number>> semicronValueDeque;
+	private List<Deque <? extends Number>> semicronTimeDeque;
 
 	public SemikronDataMonitor() {
 		super();
@@ -47,7 +48,25 @@ public class SemikronDataMonitor {
 		semicronValueDeque.add(txSDO.getActualUdQueue());
 		semicronValueDeque.add(txSDO.getActualUdqQueue());
 
-
+		semicronTimeDeque = new  ArrayList<Deque<? extends Number>>();
+		semicronTimeDeque.add(txPDO4.getExperimentDuration());
+		semicronTimeDeque.add(txPDO4.getExperimentDuration());
+		semicronTimeDeque.add(txPDO3.getExperimentDuration());
+		semicronTimeDeque.add(txPDO2.getExperimentDuration());
+		semicronTimeDeque.add(txPDO2.getExperimentDuration());
+		semicronTimeDeque.add(txPDO2.getExperimentDuration());
+		semicronTimeDeque.add(txPDO3.getExperimentDuration());
+		semicronTimeDeque.add(txPDO3.getExperimentDuration());
+		semicronTimeDeque.add(txPDO5.getExperimentDuration());
+		semicronTimeDeque.add(txPDO5.getExperimentDuration());
+		semicronTimeDeque.add(txSDO.getExperimentTimeReferenceIq());
+		semicronTimeDeque.add(txSDO.getExperimentTimereferenceId());
+		semicronTimeDeque.add(txSDO.getExperimentTimeActualIq());
+		semicronTimeDeque.add(txSDO.getExperimentTimeActualId());
+		semicronTimeDeque.add(txSDO.getExperimentTimeActualUq());
+		semicronTimeDeque.add(txSDO.getExperimentTimeActualUd());
+		semicronTimeDeque.add(txSDO.getExperimentTimeActualUdq());
+		
 		dataFromCanModelList = new ArrayList<>();
 		dataFromCanModelList.add(nodeGuardingSlave);
 		dataFromCanModelList.add(txPDO1);
@@ -61,10 +80,14 @@ public List<Deque<? extends Number>> getSemicronValueDeques()
 {
 	return semicronValueDeque;
 }
+public List<Deque<? extends Number>> getSemicronTimeDeques()
+{
+	return semicronTimeDeque;
+}
 	public List<DataFromCanModel> getDataFromCanModelList() {
 		return dataFromCanModelList;
 	}
-
+	
 	public NodeGuardingSlaveModel getNodeGuardingSlaveModel() {
 		return nodeGuardingSlave;
 	}

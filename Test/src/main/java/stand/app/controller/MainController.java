@@ -1,6 +1,7 @@
 package stand.app.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -433,6 +435,8 @@ public class MainController implements Initializable {
 	SemikronLineChartUpdater semikronLineChartUpdater;
 	
 	private List <CheckBox> checkBoxChartList;
+	private List <CheckBox> checkBoxSaveList;
+	private List<String> names;
 	@FXML
 	Button strartExperimentButton;
 	private boolean isExperimentStarted = false;
@@ -570,8 +574,27 @@ public class MainController implements Initializable {
 		bind(udqAbsActualDevLabel, semikronDataMonitor.getTxSDO().getActualUdq());
 		systemWarningDev.setTooltip(new Tooltip(warningMessage));
 		
+		checkBoxSaveList = new ArrayList<CheckBox>()
+		{
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			{
+				add(phaseCurrentDevSave);add(dcLinkVoltageDevSave);
+				add(speedDevSave); add(actualTorqueDevSave);
+				add(referenceTorqueDevSave);add(maxAvailableTorqueDevSave);
+				add(dcLnkPowerSave);add(mechanicalPowerSave);
+				add(maxJunctionTempSave);add(motorTemperatureSave);
+				add(iqReferenceDevSave);add(idReferenceDevSave);
+				add(iqActualDevSave);add(idActualDevSave);
+				add(uqActualDevSave);add(udActualDevSave);
+				add(udqAbsActualDevSave);
+			}
+		};
 		checkBoxChartList = new ArrayList<CheckBox>() {
-		
+		 
 			
 			/**
 			 * 
@@ -591,7 +614,7 @@ public class MainController implements Initializable {
 			}
 		};
 
-		List<String> names= Arrays.asList("Phase Current","Dc Link Voltage","Speed","Actual Torque",
+		names= Arrays.asList("Phase Current","Dc Link Voltage","Speed","Actual Torque",
 							   "Reference Torque","Max Available Torque","DcLink Power" ,
 							   "Mechanical Power","Max Junction Temp","Motor Temperature",
 							   "Iq Reference","Id Reference","Iq Actual","Id Actual","Uq Actual",
@@ -661,7 +684,6 @@ public class MainController implements Initializable {
 	public void bind(Label label, StringProperty s) {
 		label.textProperty().bind(s);
 	}
-	//public void bind(Label label, )
 
 	private void callAlert(AlertType alertType, String title, String headerText) {
 		Alert alert = new Alert(alertType);
@@ -1264,9 +1286,10 @@ public class MainController implements Initializable {
 				isExperimentStarted = true;
 				semikronLineChartUpdater.startUpdateChart();
 				
-			} catch (IOException e1) {
-				callAlert("Open Communication", e1.getMessage());
-				e1.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("fuiclldsld,a;lmdaslkmdkn");
+				callAlert("Open Communication", e.getMessage());
+				e.printStackTrace();
 			}		
 		}
 		else
@@ -1295,6 +1318,42 @@ public class MainController implements Initializable {
 		lineChartSemicron.getXAxis().setAutoRanging(true);
 		lineChartSemicron.getYAxis().setAutoRanging(true);
 
+	}
+	public void saveSemicronData(ActionEvent actionEvent)
+	{
+		boolean isSave = true;
+		FileChooser fileChooser = new FileChooser();
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Microsoft Excel (*.xls)", "*.xls");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show save file dialog
+		File file = fileChooser.showSaveDialog((Stage) lineChartSemicron.getScene().getWindow());
+		if (file != null) {
+			ExcelPcmFileWriter writer = new ExcelPcmFileWriter();
+	
+			try(FileOutputStream outFile = new FileOutputStream(file))  {
+				HSSFWorkbook workbook = writer.writeSemicronData(file, checkBoxSaveList ,names, semikronDataMonitor.getSemicronValueDeques(), semikronDataMonitor.getSemicronTimeDeques());
+				workbook.write(outFile);
+			}
+			catch (IOException e) {
+				callAlert(AlertType.ERROR, "Сохранение файла", e.getMessage());
+				isSave = false;
+			}
+				
+			if(isSave)
+			{
+				callAlert(AlertType.INFORMATION, "Сохранение файла",
+							"Файл " + file.getName() + " успешно сохранен :" + "\n" + file.getAbsolutePath());				
+				semikronLineChartUpdater.stopUpdateChart();
+				semikronDataMonitor.getTxPDO2().clearAllQueue();
+				semikronDataMonitor.getTxPDO3().clearAllQueue();
+				semikronDataMonitor.getTxPDO4().clearAllQueue();
+				semikronDataMonitor.getTxPDO5().clearAllQueue();
+				semikronDataMonitor.getTxSDO().clearAllQueue();
+				
+			}
+		}
 	}
 	/*
 	 * RACE CAR INTERFACE E

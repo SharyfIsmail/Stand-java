@@ -322,5 +322,24 @@ public class TxSdoModel implements DataFromCanModel {
 	public void setActualUdqQueue(Deque<Float> actualUdqQueue) {
 		ActualUdqQueue = actualUdqQueue;
 	}
+	public void clearAllQueue()
+	{
+		experimentTimeReferenceIq.clear();
+		experimentTimereferenceId.clear();
+		experimentTimeActualIq.clear();
+		experimentTimeActualId.clear();
+		experimentTimeActualUq.clear();
+		experimentTimeActualUd.clear();
+		experimentTimeActualUdq.clear();
+		
+		referenceIqQueue.clear();
+		referenceIdQueue.clear();
+		ActualIqQueue.clear();
+		ActualIdQueue.clear();
+		ActualUqQueue.clear();
+		ActualUdQueue.clear();
+		ActualUdqQueue.clear();
+
+	}
 
 }

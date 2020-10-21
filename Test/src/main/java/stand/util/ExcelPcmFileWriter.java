@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -15,6 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+
+import javafx.scene.control.CheckBox;
 
 
 public class ExcelPcmFileWriter implements PcmFileWriter {
@@ -33,7 +35,7 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 		return style;
 	}
 
-	private void addSheet(HSSFSheet sheet, Deque<?> data, Deque<?> Time) {
+	private void addSheet(HSSFSheet sheet, Deque<? extends Number> data, Deque<? extends Number> Time) {
 
 		int rownum = 0;
 		row = sheet.createRow(rownum);
@@ -48,7 +50,7 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 
 		// Data save
 		if (data != null) {
-			Iterator<?> itertator = Time.iterator();
+			Iterator< ? extends Number> itertator = Time.iterator();
 			while (itertator.hasNext() && !data.isEmpty()) {
 				rownum++;
 				row = sheet.createRow(rownum);
@@ -88,4 +90,19 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 			workbook.write(outFile);
 		}
 	}
+	public HSSFWorkbook writeSemicronData(File file,List<CheckBox> checkBoxSaveList, List<String> name, List<Deque<? extends Number>> list, List<Deque<? extends Number>> list2)throws IOException
+	{
+		workbook = new HSSFWorkbook();
+		style = createStyleForTitle(workbook);
+		for(int i = 0; i < checkBoxSaveList.size();i++)
+		{				
+			if(checkBoxSaveList.get(i).isSelected())
+			{
+				HSSFSheet sheet = workbook.createSheet(name.get(i));
+				addSheet(sheet, list.get(i), list2.get(i));
+			}
+		}
+		return workbook;
+	}
+	
 }
