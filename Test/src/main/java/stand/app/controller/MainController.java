@@ -1273,7 +1273,7 @@ public class MainController implements Initializable {
 		if(isExperimentStarted == false)
 		{
 			try {
-				if(!openComButton.isDisabled())
+				if(openComButton.isDisabled())
 					semikron.openSdoCommunication();
 				semikronDataMonitor.getTxPDO2().getStopWatch().start();
 				semikronDataMonitor.getTxPDO3().getStopWatch().start();
@@ -1294,7 +1294,7 @@ public class MainController implements Initializable {
 		else
 		{
 			try {
-				if(!openComButton.isDisabled())
+				if(openComButton.isDisabled())
 					semikron.closeSdoCommunication();
 				semikronDataMonitor.getTxPDO2().getStopWatch().reset();
 				semikronDataMonitor.getTxPDO3().getStopWatch().reset();
@@ -1310,7 +1310,7 @@ public class MainController implements Initializable {
 				{
 					checkBoxChartList.get(i).setSelected(false);
 					checkBoxSaveList.get(i).setSelected(false);
-
+ 
 				}
 
 			} catch (IOException e) {

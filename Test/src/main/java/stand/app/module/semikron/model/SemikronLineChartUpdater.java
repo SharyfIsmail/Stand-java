@@ -123,7 +123,7 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 
 	@Override
 	public void deleteSeries(String seriesName) {
-		System.out.println(allSeries.size());
+		System.out.println(seriesName);
 		for(int i = 0 ; i < allSeries.size() ; i++)
 		{
 			if(allSeries.get(i).getName().equals(seriesName))
@@ -131,20 +131,16 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 				lineChart.getData().remove(allSeries.get(i));
 				semikronChartDataModel.remove(i);
 				allSeries.remove(i);
+				System.out.println("is deleted");
+
 				
 			}
 		}
-	}
+	} 
 	public void deleteAllSeries() {
-		System.out.println("All :"+allSeries.size());
-
-		for(int i = 0 ; i < allSeries.size() ; i++)
-		{
-				lineChart.getData().remove(allSeries.get(i));
-				semikronChartDataModel.remove(i);
-				allSeries.remove(i);
-				System.out.println(i+" removed");
-		}
+		lineChart.getData().clear();;
+		semikronChartDataModel.clear();;
+		allSeries.clear();	
 	}
 	@Override
 	public void startUpdateChart() {
