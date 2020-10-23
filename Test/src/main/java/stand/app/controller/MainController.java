@@ -1272,6 +1272,7 @@ public class MainController implements Initializable {
 	{
 		if(isExperimentStarted == false)
 		{
+			System.out.println();
 			try {
 				if(openComButton.isDisabled())
 					semikron.openSdoCommunication();

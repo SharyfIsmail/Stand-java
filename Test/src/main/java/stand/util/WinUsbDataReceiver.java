@@ -20,7 +20,7 @@ public class WinUsbDataReceiver implements DataReceiver
 	 public WinUsbDataReceiver() 
 	 {
 		 super();
-		 specialParametrs.AveragingFactor = 1;
+		 specialParametrs.AveragingFactor = 1; // 500
 		 specialParametrs.SpeedMeasurementPeriod = 100;
 	 }
 
