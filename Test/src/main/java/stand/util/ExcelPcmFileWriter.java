@@ -100,8 +100,11 @@ public class ExcelPcmFileWriter implements PcmFileWriter {
 			{
 				HSSFSheet sheet = workbook.createSheet(name.get(i));
 				addSheet(sheet, list.get(i), list2.get(i));
+			
 			}
 		}
+		if(workbook.getNumberOfSheets() == 0)
+			return null;
 		return workbook;
 	}
 	

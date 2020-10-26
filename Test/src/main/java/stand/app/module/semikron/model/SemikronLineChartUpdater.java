@@ -1,43 +1,38 @@
 package stand.app.module.semikron.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Deque;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 
 import javafx.animation.AnimationTimer;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ZoomEvent;
-import javafx.scene.layout.Pane;
+import javafx.util.StringConverter;
 import stand.app.module.pcm.ChartUpdater;
 import stand.util.StopWatch;
-import stand.util.ZoomManager;
 
 public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpdater<Number> 
 {
 	private List<Series<Number, Number>>allSeries;
 	private NumberAxis xAxis;
-	private NumberAxis yAxis;
 
 	private LineChart<Number, Number> lineChart;
-	//private Map<String, Series<Number, Number>> allSeriesMap;
 	private List<Deque<? extends Number>> semikronChartDataModel;
 	private StopWatch stopWatch;
 	private long lastUpdate = 0;
-	private static final int MAX_DATA_POINTS = 200;
+	//private static final int MAX_DATA_POINTS = 200;
+	private SimpleDateFormat format ;
 	private double xSeriesData = 0;
 	int x = 0;
 	int y = 0;
@@ -46,7 +41,7 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 	public  SemikronLineChartUpdater(LineChart<Number, Number> lineChart) 
 	{
 		this.lineChart = lineChart;
-
+		
 		ChartPanManager panner = new ChartPanManager( lineChart );
 		panner.setMouseFilter( new EventHandler<MouseEvent>() {
 			@Override
@@ -54,12 +49,8 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 				if ( mouseEvent.getButton() == MouseButton.SECONDARY ||
 						 ( mouseEvent.getButton() == MouseButton.PRIMARY &&
 						   mouseEvent.isShortcutDown() ) ) {
-					System.out.println("here1");
 				} else {
 					mouseEvent.consume();
-					System.out.println("here2");
-
-
 				}
 			}
 		} );
@@ -72,19 +63,31 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 				if ( mouseEvent.getButton() != MouseButton.PRIMARY ||
 				     mouseEvent.isShortcutDown() )
 				mouseEvent.consume();
-				System.out.println("did");
-
 			}
 		} );
 		JFXChartUtil.addDoublePrimaryClickAutoRangeHandler( lineChart );
 		
-		this.lineChart.setCreateSymbols(true);
+		this.lineChart.setCreateSymbols(false);
+		this.lineChart.setAnimated(false);
+		
+		format = new SimpleDateFormat("HH:mm:ss");
+		format.setTimeZone(TimeZone.getTimeZone( "GMT" ));  
+		
 		xAxis =  (NumberAxis) lineChart.getXAxis();
-		yAxis = (NumberAxis) lineChart.getYAxis();
+		xAxis.setTickLabelFormatter(new StringConverter<Number>(){
+		    @Override
+		    public String toString(Number object) {
+		      return format.format(new Date(object.longValue()));
+		    }
+			@Override
+			public Number fromString(String string) {
+				return null;
+			}
+			});
+
 		stopWatch = new StopWatch();
 		allSeries = new ArrayList<>();
 		semikronChartDataModel = new ArrayList<>();
-		//allSeriesMap = new HashMap<>();
 	}
 	@Override
 	public void handle(long now) {
@@ -101,22 +104,18 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 
 		for(int i = 0; i<allSeries.size(); i++)
 		{
-			//if(semikronChartDataModel.get(i).isEmpty())
-			//	continue;
-			xSeriesData = stopWatch.getElapsedTime()/1000.0;
-			//XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, semikronChartDataModel.get(i).peekLast());
-		
-	
-			XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, 50);
-			
+			if(semikronChartDataModel.get(i).isEmpty())
+				continue;
+			xSeriesData = stopWatch.getElapsedTime();
+			XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, semikronChartDataModel.get(i).peekLast());
+			//XYChart.Data<Number, Number> data = new XYChart.Data<>(xSeriesData, 50);
 			allSeries.get(i).getData().add(data);
-		
 			//if (allSeries.get(i).getData().size() > MAX_DATA_POINTS) {
 				//allSeries.get(i).getData().remove(0, allSeries.get(i).getData().size() - MAX_DATA_POINTS);
+				
 			//}
 		}
 		// update
-		
 	//	yAxis.setLowerBound(0 );
 	
 //		yAxis.setUpperBound(y + 1 );
@@ -128,7 +127,6 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 		series.setName(seriesName);
 		allSeries.add(series);
 		semikronChartDataModel.add(chartDataModel);
-		//allSeriesMap.put(seriesName, series);
 		lineChart.getData().add(series);
 		
 		}
@@ -143,9 +141,6 @@ public class SemikronLineChartUpdater extends AnimationTimer implements ChartUpd
 				lineChart.getData().remove(allSeries.get(i));
 				semikronChartDataModel.remove(i);
 				allSeries.remove(i);
-				System.out.println("is deleted");
-
-				
 			}
 		}
 	} 

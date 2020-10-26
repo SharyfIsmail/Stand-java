@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import stand.can.Can;
 import stand.ethernet.EthernetCan;
+import stand.semikron.rx.ActiveDischargeState;
 import stand.semikron.rx.DigitalState;
 import stand.semikron.rx.LimitationMode;
 import stand.semikron.rx.MotorControlModeRx;
@@ -47,6 +48,7 @@ public class Semikron implements SemikronService {
 	private LimitationMode limitationMode;
 	private DigitalState out1;
 	private DigitalState out2;
+	private ActiveDischargeState activeDischarge;
 
 	private EthernetCan ethernetCan;
 	private DataSender dataSender;
@@ -77,6 +79,7 @@ public class Semikron implements SemikronService {
 		limitationMode = LimitationMode.SYMMETRIC;
 		out1 = DigitalState.LOW;
 		out2 = DigitalState.LOW;
+		activeDischarge = ActiveDischargeState.UnActive;
 	}
 
 	private void addCan(Can addingCan) {
@@ -311,7 +314,20 @@ public class Semikron implements SemikronService {
 			}
 		}
 	}
-
+	@Override
+	public void setActiveDischarge(ActiveDischargeState active) throws IOException
+	{
+		rxPDO3.setActiveDischarge(active);
+		try
+		{
+			dataSender.send(ethernetCan.collectEthernetPacket());
+			this.activeDischarge = active;
+		}catch(IOException e)
+		{
+			rxPDO3.setActiveDischarge(this.activeDischarge);
+			throw new IOException(e.getMessage());
+		}
+	}
 	@Override
 	public void setLimitationMode(LimitationMode limitationMode) throws IOException {
 		rxPDO3.setLimitationMode(limitationMode);

@@ -72,8 +72,8 @@ public class RxPDO3 extends CanCdr {
 		setData(data);
 	}
 
-	public void setActiveDischarge(boolean active) {
-		if (active)
+	public void setActiveDischarge(ActiveDischargeState active) {
+		if (active.equals(ActiveDischargeState.Active))
 			setCommand(Command.ACTIVE_DISCHARGE_ENABLE);
 		else
 			setCommand(Command.ACTIVE_DISCHARGE_DISABLE);

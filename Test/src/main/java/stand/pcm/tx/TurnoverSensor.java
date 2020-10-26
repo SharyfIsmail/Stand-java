@@ -17,6 +17,7 @@ public class TurnoverSensor extends CanCdr implements DataFromCan, DataFromT_45 
 	private float TorqueT_45;
 	private float tempT_45;
 	private String error;
+	private float editTorque = 0;
 
 	@Override
 	public void parseDataFromCan(byte[] data) {
@@ -78,11 +79,15 @@ public class TurnoverSensor extends CanCdr implements DataFromCan, DataFromT_45 
 	}
 	public float getTorqueT_45()
 	{
-		return	TorqueT_45;
+		return	TorqueT_45 - editTorque;
 	}
 	public float getTempT_45()
 	{
 		return tempT_45;
+	}
+	public void setEditTorque(float editTorque)
+	{
+		this.editTorque = editTorque;
 	}
 	
 	@Override

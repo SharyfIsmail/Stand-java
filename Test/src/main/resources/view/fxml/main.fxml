@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import org.gillius.jfxutils.chart.StableTicksAxis?>
 
 <Pane maxHeight="755.0" maxWidth="883.0" minHeight="755.0" minWidth="883.0" prefHeight="755.0" prefWidth="883.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stand.app.controller.MainController">
    <children>
@@ -302,10 +303,11 @@
                                     <Label layoutX="605.0" layoutY="6.0" prefHeight="17.0" prefWidth="94.0" text="Speed [rpm]" textFill="#0d0d0d" />
                                     <Button fx:id="applyValuesButton" disable="true" layoutX="712.0" layoutY="60.0" mnemonicParsing="false" onAction="#applyValues" prefHeight="25.0" prefWidth="85.0" text="Apply values" />
                                     <Separator layoutX="-318.0" layoutY="96.0" prefHeight="15.0" prefWidth="1170.0" />
-                                    <CheckBox fx:id="asymLimitsCheckBox" disable="true" layoutX="35.0" layoutY="80.0" mnemonicParsing="false" onAction="#setAsymmetricLimitation" text="Asymmetric limits" />
-                                    <CheckBox fx:id="digOut2CheckBox" disable="true" layoutX="35.0" layoutY="46.0" mnemonicParsing="false" onAction="#digOut2Click" text="Digital out 2" />
-                                    <CheckBox fx:id="digOut1CheckBox" disable="true" layoutX="35.0" layoutY="23.0" mnemonicParsing="false" onAction="#digOut1Click" text="Digital out 1" />
+                                    <CheckBox fx:id="asymLimitsCheckBox" disable="true" layoutX="35.0" layoutY="78.0" mnemonicParsing="false" onAction="#setAsymmetricLimitation" text="Asymmetric limits" />
+                                    <CheckBox fx:id="digOut2CheckBox" disable="true" layoutX="35.0" layoutY="40.0" mnemonicParsing="false" onAction="#digOut2Click" text="Digital out 2" />
+                                    <CheckBox fx:id="digOut1CheckBox" disable="true" layoutX="35.0" layoutY="19.0" mnemonicParsing="false" onAction="#digOut1Click" text="Digital out 1" />
                                     <Separator layoutX="-322.0" layoutY="-5.0" prefHeight="15.0" prefWidth="1176.0" />
+                                    <CheckBox fx:id="activeDischargeCheckBox" disable="true" layoutX="35.0" layoutY="59.0" mnemonicParsing="false" onAction="#setActiveDischargeClick" text="Active Discharge" />
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
@@ -423,6 +425,8 @@
                               <Label fx:id="sysSocLabel2" layoutX="545.0" layoutY="613.0" text="0" />
                               <Label layoutX="593.0" layoutY="574.0" text="В" />
                               <Label layoutX="592.0" layoutY="613.0" text="\%" />
+                              <Button layoutX="172.0" layoutY="534.0" mnemonicParsing="false" onAction="#editTorqueAction" prefHeight="25.0" prefWidth="114.0" text="Edit Torque" />
+
                            </children>
                         </AnchorPane>
                      </content>
@@ -451,12 +455,12 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="719.0" prefWidth="874.0">
                            <children>
-                              <LineChart fx:id="lineChartSemicron" prefHeight="355.0" prefWidth="866.0">
+                              <LineChart fx:id="lineChartSemicron" prefHeight="355.0" prefWidth="850.0">
                                 <xAxis>
-                                  <NumberAxis prefHeight="32.0" prefWidth="817.0" />
+                                  <NumberAxis  prefHeight="32.0" prefWidth="650.0" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis side="LEFT" />
+                                <StableTicksAxis animated="false" side="LEFT" />
                                 </yAxis>
                               </LineChart>
                               <AnchorPane layoutX="-9.0" layoutY="350.0" prefHeight="370.0" prefWidth="883.0">
@@ -542,13 +546,13 @@
                                     <Label layoutX="237.0" layoutY="244.0" text="W" />
                                     <Label layoutX="238.0" layoutY="275.0" text="С°" />
                                     <Label layoutX="237.0" layoutY="303.0" text="С°" />
-                                    <Label layoutX="557.0" layoutY="15.0" text="A" />
-                                    <Label layoutX="557.0" layoutY="43.0" text="A" />
-                                    <Label layoutX="557.0" layoutY="72.0" text="A" />
-                                    <Label layoutX="557.0" layoutY="102.0" text="A" />
-                                    <Label layoutX="555.0" layoutY="134.0" text="\%" />
-                                    <Label layoutX="556.0" layoutY="170.0" text="\%" />
-                                    <Label layoutX="556.0" layoutY="208.0" text="\%" />
+                                    <Label layoutX="600.0" layoutY="15.0" text="A" />
+                                    <Label layoutX="600.0" layoutY="43.0" text="A" />
+                                    <Label layoutX="600.0" layoutY="72.0" text="A" />
+                                    <Label layoutX="600.0" layoutY="102.0" text="A" />
+                                    <Label layoutX="600.0" layoutY="134.0" text="\%" />
+                                    <Label layoutX="600.0" layoutY="170.0" text="\%" />
+                                    <Label layoutX="600.0" layoutY="208.0" text="\%" />
                                     <Label fx:id="systemWarningDev" layoutX="450.0" layoutY="275.0" prefHeight="17.0" prefWidth="70.0" />
                                     <Button fx:id="strartExperimentButton" layoutX="721.0" layoutY="60.0" mnemonicParsing="false" onAction="#strartExperimentAction" prefHeight="22.0" prefWidth="87.0" text="Start" />
                                     <Button fx:id="autoZoomButton" layoutX="721.0" layoutY="31.0" mnemonicParsing="false" onAction="#autoZoomAction" prefHeight="25.0" prefWidth="85.0" text="Auto Zoom" />

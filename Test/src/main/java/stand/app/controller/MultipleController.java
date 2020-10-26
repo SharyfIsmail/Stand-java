@@ -37,7 +37,7 @@ public class MultipleController implements Initializable
 			public void handle(MouseEvent mouseEvent) {
 				double axisXRelativeMousePosition = lineChartMultiple.getXAxis().getValueForDisplay(mouseEvent.getX()).intValue();
 				double axisYRelativeMousePosition = lineChartMultiple.getYAxis().getValueForDisplay(mouseEvent.getY()).intValue();
-			XYLabel.setText(String.format( "(%d, %d)",(int) axisXRelativeMousePosition, (int)axisYRelativeMousePosition));
+			XYLabel.setText(String.format( "(%d, %d)",(int) axisXRelativeMousePosition / 1000, (int)axisYRelativeMousePosition));
 
 			}
 		});

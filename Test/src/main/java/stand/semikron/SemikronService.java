@@ -2,6 +2,7 @@ package stand.semikron;
 
 import java.io.IOException;
 
+import stand.semikron.rx.ActiveDischargeState;
 import stand.semikron.rx.DigitalState;
 import stand.semikron.rx.LimitationMode;
 import stand.semikron.rx.MotorControlModeRx;
@@ -41,9 +42,12 @@ public interface SemikronService {
 	void setDigitalOutput1(DigitalState digitalState) throws IOException;
 
 	void setDigitalOutput2(DigitalState digitalState) throws IOException;
-
+   
+	void setActiveDischarge(ActiveDischargeState active) throws IOException;
+	
 	void applyPwmValues(MotorControlModeRx motorControlMode, int torque, int speed)
 			throws NumberFormatException, IOException;
+	
 	public void openSdoCommunication() throws IOException;
 	public void closeSdoCommunication() throws IOException;
 

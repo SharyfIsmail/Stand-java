@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import org.gillius.jfxutils.chart.StableTicksAxis?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stand.app.controller.MultipleController">
    <children>
@@ -16,7 +17,7 @@
                 <NumberAxis side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <StableTicksAxis animated ="false" side="LEFT" />
               </yAxis>
             </LineChart>
             <Button fx:id="autoZoomButton" layoutX="509.0" layoutY="52.0" mnemonicParsing="false" onAction="#autoZoomAction" text="Auto Zoom" />

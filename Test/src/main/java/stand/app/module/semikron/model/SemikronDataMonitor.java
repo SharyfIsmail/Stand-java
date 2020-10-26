@@ -20,7 +20,6 @@ public class SemikronDataMonitor {
 
 	public SemikronDataMonitor() {
 		super();
-		semicronValueDeque = new  ArrayList<Deque<? extends Number>>();
 		this.nodeGuardingSlave = new NodeGuardingSlaveModel();
 		this.txPDO1 = new TxPDO1Model();
 		this.txPDO2 = new TxPDO2Model();

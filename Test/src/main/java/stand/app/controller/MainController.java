@@ -59,7 +59,9 @@ import stand.app.thread.ReceiveThread;
 import stand.app.thread.SensorComunicationThread;
 import stand.battery.BatteryService;
 import stand.charger.ChargerService;
+import stand.pcm.tx.TurnoverSensor;
 import stand.semikron.SemikronService;
+import stand.semikron.rx.ActiveDischargeState;
 import stand.semikron.rx.DigitalState;
 import stand.semikron.rx.LimitationMode;
 import stand.util.ExcelPcmFileWriter;
@@ -107,6 +109,8 @@ public class MainController implements Initializable {
 	CheckBox digOut1CheckBox;
 	@FXML
 	CheckBox digOut2CheckBox;
+	@FXML
+	CheckBox activeDischargeCheckBox;
 	@FXML
 	CheckBox asymLimitsCheckBox;
 
@@ -812,6 +816,7 @@ public class MainController implements Initializable {
 			digOut1CheckBox.setDisable(false);
 			digOut2CheckBox.setDisable(false);
 			asymLimitsCheckBox.setDisable(false);
+			activeDischargeCheckBox.setDisable(false);
 		} catch (IOException e) {
 			e.printStackTrace();
 			callAlert("Start Node", e.getMessage());
@@ -831,6 +836,7 @@ public class MainController implements Initializable {
 			digOut1CheckBox.setDisable(true);
 			digOut2CheckBox.setDisable(true);
 			asymLimitsCheckBox.setDisable(true);
+			activeDischargeCheckBox.setDisable(false);
 		} catch (IOException e) {
 			e.printStackTrace();
 			callAlert("Reset Node", e.getMessage());
@@ -956,6 +962,29 @@ public class MainController implements Initializable {
 			}
 	}
 
+	public void setActiveDischargeClick(ActionEvent event)
+	{
+		if(activeDischargeCheckBox.isSelected())
+		{
+			try {
+				semikron.setActiveDischarge(ActiveDischargeState.Active);
+			} catch (IOException e) {
+				activeDischargeCheckBox.setSelected(false);
+				e.printStackTrace();
+				callAlert("Active Discharge", e.getMessage());
+			}
+		}
+		else
+		{
+			try {
+				semikron.setActiveDischarge(ActiveDischargeState.UnActive);
+			} catch (IOException e) {
+				activeDischargeCheckBox.setSelected(true);
+				e.printStackTrace();
+				callAlert("Active Discharge", e.getMessage());
+			}
+		}
+	}
 	public void setAsymmetricLimitation(ActionEvent event) {
 		if (asymLimitsCheckBox.isSelected())
 			try {
@@ -1107,6 +1136,15 @@ public class MainController implements Initializable {
 				
 	}
 	
+	public void editTorqueAction(ActionEvent event)
+	{
+		TurnoverSensor turnoverSensor = (TurnoverSensor) pcmDataMonitor.getTurnoverSensorModel().getDataFromT_45();
+		System.out.println(turnoverSensor.getTorqueT_45());
+		turnoverSensor.setEditTorque(turnoverSensor.getTorqueT_45());
+		pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45().clear();
+		pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45().clear();
+		pcmDataMonitor.getTurnoverSensorModel().getTempT_45().clear();
+	}
 	public void saveParam(ActionEvent event) {
 		boolean isSave = true;
 		boolean isTorqueChoosen = true;
@@ -1272,9 +1310,8 @@ public class MainController implements Initializable {
 	{
 		if(isExperimentStarted == false)
 		{
-			System.out.println();
 			try {
-				if(openComButton.isDisabled())
+				if(!openComButton.isDisabled())
 					semikron.openSdoCommunication();
 				semikronDataMonitor.getTxPDO2().getStopWatch().start();
 				semikronDataMonitor.getTxPDO3().getStopWatch().start();
@@ -1295,7 +1332,7 @@ public class MainController implements Initializable {
 		else
 		{
 			try {
-				if(openComButton.isDisabled())
+				if(!openComButton.isDisabled())
 					semikron.closeSdoCommunication();
 				semikronDataMonitor.getTxPDO2().getStopWatch().reset();
 				semikronDataMonitor.getTxPDO3().getStopWatch().reset();
@@ -1328,7 +1365,7 @@ public class MainController implements Initializable {
 	}
 	public void saveSemicronData(ActionEvent actionEvent)
 	{
-		boolean isSave = true;
+		boolean isSave = false;
 		FileChooser fileChooser = new FileChooser();
 		// Set extension filter
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Microsoft Excel (*.xls)", "*.xls");
@@ -1341,7 +1378,16 @@ public class MainController implements Initializable {
 	
 			try(FileOutputStream outFile = new FileOutputStream(file))  {
 				HSSFWorkbook workbook = writer.writeSemicronData(file, checkBoxSaveList ,names, semikronDataMonitor.getSemicronValueDeques(), semikronDataMonitor.getSemicronTimeDeques());
-				workbook.write(outFile);
+				if (workbook != null)
+				{
+					workbook.write(outFile);
+					isSave = true;
+				}
+				else
+				{
+					callAlert(AlertType.INFORMATION,  "Сохранение файла", "Выберите один из параметров для сохранения!!! ");
+				}
+				
 			}
 			catch (IOException e) {
 				callAlert(AlertType.ERROR, "Сохранение файла", e.getMessage());
@@ -1359,6 +1405,10 @@ public class MainController implements Initializable {
 				semikronDataMonitor.getTxSDO().clearAllQueue();
 				
 			}
+		}
+		else
+		{
+			callAlert(AlertType.INFORMATION,  "Сохранение файла", "Выберите один из параметров для сохранения!!! ");
 		}
 	}
 	/*
