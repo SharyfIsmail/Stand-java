@@ -81,6 +81,10 @@ public class TurnoverSensor extends CanCdr implements DataFromCan, DataFromT_45 
 	{
 		return	TorqueT_45 - editTorque;
 	}
+	public float getEditTorque()
+	{
+		return editTorque;
+	}
 	public float getTempT_45()
 	{
 		return tempT_45;
