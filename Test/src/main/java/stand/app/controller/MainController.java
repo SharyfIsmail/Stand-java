@@ -1139,7 +1139,7 @@ public class MainController implements Initializable {
 	public void editTorqueAction(ActionEvent event)
 	{
 		TurnoverSensor turnoverSensor = (TurnoverSensor) pcmDataMonitor.getTurnoverSensorModel().getDataFromT_45();
-		turnoverSensor.setEditTorque(turnoverSensor.getTorqueT_45());
+		turnoverSensor.setEditTorque(turnoverSensor.getEditTorqueT_45());
 		pcmDataMonitor.getTurnoverSensorModel().getTurnoverT_45().clear();
 		pcmDataMonitor.getTurnoverSensorModel().getTorqueT_45().clear();
 		pcmDataMonitor.getTurnoverSensorModel().getTempT_45().clear();
