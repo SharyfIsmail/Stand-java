@@ -1289,6 +1289,7 @@ public class MainController implements Initializable {
 				primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent event) {
 					parametr.setSelected(false);
+					semikronLineChartUpdater.deleteSeries(seriesName);
 					primaryStage.close();
 				}
 				});
